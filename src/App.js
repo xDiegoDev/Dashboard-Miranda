@@ -16,6 +16,8 @@ import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 
+import { StyledMain } from "./AppStyled";
+
 function App() {
   const { authState } = useContext(AuthContext);
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -49,7 +51,10 @@ function App() {
   };
 
   return (
-    <>
+    <StyledMain
+      isLoggedIn={authState.isLoggedIn}
+      sidebarVisible={sidebarVisible}
+    >
       {authState.isLoggedIn && (
         <Header
           title={getTitle(location.pathname)}
@@ -69,7 +74,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </StyledMain>
   );
 }
 

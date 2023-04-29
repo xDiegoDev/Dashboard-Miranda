@@ -14,17 +14,10 @@ import { authDispatch, AuthContext } from "../contexts/AuthContext";
 
 import {
   StyledHeader,
-  StyledTitle,
   StyledSidebar,
-  Burger,
-  Icons,
-  IconsWhite,
   IconsDashboard,
   StyledLink,
   StyledLinkActive,
-  IconsActive,
-  Logo,
-  CompLogo,
   UserInfo,
   SidebarFooter,
 } from "./StyledHeader";
@@ -65,22 +58,22 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
   return (
     <>
       <StyledSidebar sidebarVisible={sidebarVisible}>
-        <Logo>
-          <CompLogo src={Company} alt="Company Logo" />
-        </Logo>
+        <div className="logo">
+          <img src={Company} alt="Company Logo" />
+        </div>
         <IconsDashboard>
           {location.pathname === "/" ? (
             <StyledLinkActive to="/" onClick={handleItemClick}>
-              <IconsActive>
+              <div className="active">
                 <DashboardRoundedIcon />
-              </IconsActive>
+              </div>
               <h6>Dashboard</h6>
             </StyledLinkActive>
           ) : (
             <StyledLink to="/" onClick={handleItemClick}>
-              <IconsWhite>
+              <div className="white">
                 <DashboardRoundedIcon />
-              </IconsWhite>
+              </div>
               <h6>Dashboard</h6>
             </StyledLink>
           )}
@@ -88,16 +81,16 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
         <IconsDashboard>
           {location.pathname === "/rooms" ? (
             <StyledLinkActive to="/rooms" onClick={handleItemClick}>
-              <IconsActive>
+              <div className="active">
                 <KeyRoundedIcon />
-              </IconsActive>
+              </div>
               <h6>Rooms</h6>
             </StyledLinkActive>
           ) : (
             <StyledLink to="/rooms" onClick={handleItemClick}>
-              <IconsWhite>
+              <div className="white">
                 <KeyRoundedIcon />
-              </IconsWhite>
+              </div>
               <h6>Rooms</h6>
             </StyledLink>
           )}
@@ -105,16 +98,16 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
         <IconsDashboard>
           {location.pathname === "/bookings" ? (
             <StyledLinkActive to="/bookings" onClick={handleItemClick}>
-              <IconsActive>
+              <div className="active">
                 <CalendarMonthRoundedIcon />
-              </IconsActive>
+              </div>
               <h6>Bookings</h6>
             </StyledLinkActive>
           ) : (
             <StyledLink to="/bookings" onClick={handleItemClick}>
-              <IconsWhite>
+              <div className="white">
                 <CalendarMonthRoundedIcon />
-              </IconsWhite>
+              </div>
               <h6>Bookings</h6>
             </StyledLink>
           )}
@@ -122,16 +115,16 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
         <IconsDashboard>
           {location.pathname === "/users" ? (
             <StyledLinkActive to="/users" onClick={handleItemClick}>
-              <IconsActive>
+              <div className="active">
                 <PersonRoundedIcon />
-              </IconsActive>
+              </div>
               <h6>Users</h6>
             </StyledLinkActive>
           ) : (
             <StyledLink to="/users" onClick={handleItemClick}>
-              <IconsWhite>
+              <div className="white">
                 <PersonRoundedIcon />
-              </IconsWhite>
+              </div>
               <h6>Users</h6>
             </StyledLink>
           )}
@@ -139,16 +132,16 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
         <IconsDashboard>
           {location.pathname === "/contacts" ? (
             <StyledLinkActive to="/contacts" onClick={handleItemClick}>
-              <IconsActive>
+              <div className="active">
                 <ExtensionRoundedIcon />
-              </IconsActive>
+              </div>
               <h6>Contact</h6>
             </StyledLinkActive>
           ) : (
             <StyledLink to="/contacts" onClick={handleItemClick}>
-              <IconsWhite>
+              <div className="white">
                 <ExtensionRoundedIcon />
-              </IconsWhite>
+              </div>
               <h6>Contact</h6>
             </StyledLink>
           )}
@@ -157,7 +150,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
           <img src={astro} />
           <h6>Diego Prieto</h6>
           <p>diego.prieto.dev@gmail.com</p>
-          <button>Edit</button>
+          <button>EDIT</button>
         </UserInfo>
         <SidebarFooter>
           <h6>Travi Hotel Admin Dashboard</h6>
@@ -167,20 +160,20 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, isLoggedIn }) => {
       </StyledSidebar>
 
       <StyledHeader sidebarVisible={sidebarVisible}>
-        <StyledTitle>
-          <Burger>
+        <div>
+          <div>
             <HamburgerIcon
               sidebarVisible={sidebarVisible}
               setSidebarVisible={setSidebarVisible}
             />
-          </Burger>
+          </div>
           <h1>{title}</h1>
-        </StyledTitle>
-        <Icons>
+        </div>
+        <div className="icons">
           <MessageIcon />
           <NotificationsIcon />
           <LogoutIcon onClick={handleLogout} />
-        </Icons>
+        </div>
       </StyledHeader>
     </>
   );

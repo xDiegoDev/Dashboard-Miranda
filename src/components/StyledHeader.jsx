@@ -10,16 +10,26 @@ export const StyledHeader = styled.header`
   color: white;
   position: fixed;
   top: 0;
-  left: ${({ sidebarVisible }) => (sidebarVisible ? "300px" : "0")};
+  left: ${({ sidebarVisible }) => (sidebarVisible ? "250px" : "0")};
   width: ${({ sidebarVisible }) =>
-    sidebarVisible ? "calc(100% - 300px)" : "100%"};
+    sidebarVisible ? "calc(100% - 250px)" : "100%"};
   transition: left 0.4s;
-`;
-
-export const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 3%;
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5%;
+    width: 20%;
+    color: #135846;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    margin-left: 3%;
+    div {
+      margin-right: 20px;
+      //color: #135846;
+    }
+  }
 `;
 
 export const StyledSidebar = styled.div`
@@ -27,32 +37,44 @@ export const StyledSidebar = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
-  height: 100vh;
+  width: 250px;
   background-color: #202020;
   color: white;
   padding: 16px;
-  font-size: 150%;
-`;
+  font-size: 15px;
+  height: 100vh;
 
-export const Burger = styled.div`
-  margin-right: 20px;
-  // color: #135846;
-`;
+  .logo {
+    margin-bottom: 10%;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-export const Icons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-right: 5%;
-  width: 20%;
-  color: #135846;
-`;
-export const IconsWhite = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-right: 10%;
-  width: 20%;
-  color: white;
+    img {
+      width: 80%;
+      margin: auto;
+      border: none;
+      margin-bottom: -2%;
+    }
+  }
+
+  .white {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+    width: 20%;
+    color: white;
+  }
+
+  .active {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+    padding-left: 15%;
+    width: 20%;
+    color: red;
+  }
 `;
 
 export const IconsDashboard = styled.div`
@@ -73,34 +95,10 @@ export const StyledLink = styled(RouterLink)`
 
 export const StyledLinkActive = styled(StyledLink)`
   color: red;
-  border-left: 7px solid red;
+  border-left: 4px solid red;
   border-radius: 6px;
   width: 100%;
   margin-left: -16%;
-`;
-
-export const IconsActive = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-right: 10%;
-  padding-left: 15%;
-  width: 20%;
-  color: red;
-`;
-
-export const Logo = styled.div`
-  margin-bottom: 10%;
-  margin-top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const CompLogo = styled.img`
-  width: 80%;
-  margin: auto;
-  border: none;
-  margin-bottom: -2%;
 `;
 
 export const UserInfo = styled.div`
@@ -110,14 +108,34 @@ export const UserInfo = styled.div`
   align-items: center;
   text-align: center;
   margin-top: 180px;
-  background-color: #787878;
+  background-color: #e5e5e5;
   padding-bottom: 10%;
   margin: auto;
-  margin-top: 60px;
-  font-size: 20px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  font-size: 15px;
+  border-radius: 20px;
+  color: #202020;
+  width: 80%;
   img {
-    width: 80px;
+    width: 60px;
     margin-top: -40px;
+    border-radius: 20px;
+  }
+  h6 {
+    margin-bottom: 0px;
+    font-size: 15px;
+  }
+
+  button {
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 12px;
   }
 `;
 
@@ -128,6 +146,6 @@ export const SidebarFooter = styled.div`
   align-items: center;
   text-align: center;
   line-height: 0;
-  font-size: 18px;
+  font-size: 12px;
   margin-top: 30px;
 `;
