@@ -1,25 +1,86 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useContext, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import Header from "./components/Header";
+import Login from "./pages/Login/Login";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Rooms from "./pages/Rooms/Rooms";
+import Users from "./pages/Users/Users";
+import Bookings from "./pages/Bookings/Bookings";
+import Contact from "./pages/Contact/Contact";
+import NotFound from "./pages/NotFound/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 
 function App() {
+  const { authState } = useContext(AuthContext);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (authState.isLoggedIn && location.pathname === "/login") {
+      window.location.reload();
+    }
+  }, [authState.isLoggedIn, location]);
+
+  const getTitle = (pathname) => {
+    switch (true) {
+      case pathname === "/":
+        return "Dashboard";
+      case pathname === "/rooms":
+        return "Rooms";
+      case pathname === "/bookings":
+        return "Bookings";
+      case pathname === "/users":
+        return "Users";
+      case pathname === "/contacts":
+        return "Contacts";
+      case /^\/contacts\/[\w-]+$/i.test(pathname):
+        return "Contact Details";
+      case /^\/rooms\/[\w-]+$/i.test(pathname):
+        return "Room Details";
+      default:
+        return "Dashboard";
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {authState.isLoggedIn && (
+        <Header
+          title={getTitle(location.pathname)}
+          setSidebarVisible={setSidebarVisible}
+          sidebarVisible={sidebarVisible}
+          isLoggedIn={authState.isLoggedIn}
+        />
+      )}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/rooms/*" element={<Rooms />} />
+          <Route path="/users/*" element={<Users />} />
+          <Route path="/bookings/*" element={<Bookings />} />
+          <Route path="/contact/*" element={<Contact />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 
-export default App;
+const WrappedApp = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <App />
+      </Router>
+    </AuthProvider>
+  );
+};
+
+export default WrappedApp;
