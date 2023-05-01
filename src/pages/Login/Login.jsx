@@ -1,25 +1,35 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsersAsync, validateUserAsync } from "../../features/userSlice";
 import { StyledLogin, GlobalStyle } from "./StyledLogin";
+import Loader from "react-loader-spinner";
 
 const Login = () => {
   const { authState, authDispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const usersData = useSelector((state) => state.users.users);
+  const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Replace these with the correct email and password for your application
-    const validEmail = "a@a.com";
-    const validPassword = "123";
-
-    if (email === validEmail && password === validPassword) {
-      authDispatch({ type: "LOGIN" });
-      navigate("/", { replace: true });
-    } else {
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      await dispatch(fetchUsersAsync()).then(async () => {
+        const user = await dispatch(
+          validateUserAsync({ email, password })
+        ).unwrap();
+        authDispatch({ type: "LOGIN", payload: { email: user.Email } });
+        navigate("/", { replace: true });
+      });
+    } catch (error) {
       alert("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 

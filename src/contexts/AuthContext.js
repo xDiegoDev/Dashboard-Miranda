@@ -1,10 +1,13 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 
 const initialState = {
   isLoggedIn: false,
+  userEmail: null,
+  userName: null,
 };
+
 const AuthContext = createContext({
-  authState: { isLoggedIn: false },
+  authState: initialState,
   authDispatch: () => {},
 });
 
@@ -13,33 +16,37 @@ export default AuthContext;
 const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      return { ...state, isLoggedIn: true };
+      return {
+        ...state,
+        isLoggedIn: true,
+        userEmail: action.payload.email,
+        userName: action.payload.name,
+      };
     case "LOGOUT":
-      return { ...state, isLoggedIn: false };
+      return { ...state, isLoggedIn: false, userEmail: null, userName: null };
+    case "UPDATE_USER":
+      return {
+        ...state,
+        userEmail: action.payload.email,
+        userName: action.payload.name,
+      };
     default:
       return state;
   }
 };
 
 const AuthProvider = ({ children }) => {
-  const [authState, authDispatch] = useReducer(
-    authReducer,
-    initialState,
-    () => {
-      const localData = localStorage.getItem("isLoggedIn");
-      return localData ? JSON.parse(localData) : initialState;
-    }
-  );
+  const [authState, authDispatch] = useReducer(authReducer, initialState);
 
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(authState));
-  }, [authState]);
+  const value = {
+    authState,
+    authDispatch,
+    isLoggedIn: authState.isLoggedIn,
+    userEmail: authState.userEmail,
+    userName: authState.userName,
+  };
 
-  return (
-    <AuthContext.Provider value={{ authState, authDispatch }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };

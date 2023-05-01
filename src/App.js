@@ -14,7 +14,10 @@ import Bookings from "./pages/Bookings/Bookings";
 import Contact from "./pages/Contact/Contact";
 import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import SingleUser from "./pages/Users/SingleUser";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
+
+import { StyledMain } from "./AppStyled";
 
 function App() {
   const { authState } = useContext(AuthContext);
@@ -41,6 +44,8 @@ function App() {
         return "Contacts";
       case /^\/contacts\/[\w-]+$/i.test(pathname):
         return "Contact Details";
+      case /^\/users\/[\w-]+$/i.test(pathname):
+        return "User Details";
       case /^\/rooms\/[\w-]+$/i.test(pathname):
         return "Room Details";
       default:
@@ -49,7 +54,10 @@ function App() {
   };
 
   return (
-    <>
+    <StyledMain
+      isLoggedIn={authState.isLoggedIn}
+      sidebarVisible={sidebarVisible}
+    >
       {authState.isLoggedIn && (
         <Header
           title={getTitle(location.pathname)}
@@ -63,13 +71,14 @@ function App() {
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/rooms/*" element={<Rooms />} />
-          <Route path="/users/*" element={<Users />} />
+          <Route path="/users/" element={<Users />} />
+          <Route path="/users/:id" element={<SingleUser />} />
           <Route path="/bookings/*" element={<Bookings />} />
           <Route path="/contact/*" element={<Contact />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </StyledMain>
   );
 }
 
