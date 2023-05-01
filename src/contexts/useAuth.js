@@ -3,5 +3,10 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export const useAuth = () => {
   const { authState } = useContext(AuthContext);
-  return authState;
+  const isLoggedIn = authState.isLoggedIn;
+  const userEmail = authState.userEmail;
+
+  console.log("useAuth values:", { isLoggedIn, userEmail });
+
+  return { isLoggedIn, userEmail };
 };

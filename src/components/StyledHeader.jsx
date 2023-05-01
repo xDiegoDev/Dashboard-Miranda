@@ -7,19 +7,45 @@ export const StyledHeader = styled.header`
   align-items: center;
   padding: 16px;
   background-color: #202020;
-  color: white;
   position: fixed;
   top: 0;
   left: ${({ sidebarVisible }) => (sidebarVisible ? "250px" : "0")};
   width: ${({ sidebarVisible }) =>
     sidebarVisible ? "calc(100% - 250px)" : "100%"};
   transition: left 0.4s;
+  margin-bottom: 0px;
+  z-index: 100;
+
+  .hamburger__div .hamburger__icon {
+    color: #b1b1b1;
+    box-shadow: 0 4px 6px rgba(149, 149, 149, 0.1),
+      0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .hamburger__div .hamburger__icon:hover {
+    box-shadow: 0 8px 12px rgba(150, 148, 148, 0.12),
+      0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .title {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #5a14a1, #9966cc);
+    transition: color 0.5s ease-out;
+    &:hover {
+      color: #e6ceff;
+      text-shadow: 0 0 3px #e6ceff;
+    }
+  }
+
   .icons {
     display: flex;
     justify-content: space-between;
     margin-right: 5%;
     width: 20%;
-    color: #135846;
+    color: white;
   }
   div {
     display: flex;
@@ -27,7 +53,7 @@ export const StyledHeader = styled.header`
     margin-left: 3%;
     div {
       margin-right: 20px;
-      //color: #135846;
+      //color: #E6E6FA
     }
   }
 `;
@@ -45,11 +71,12 @@ export const StyledSidebar = styled.div`
   height: 100vh;
 
   .logo {
-    margin-bottom: 10%;
+    margin-bottom: 30px;
     margin-top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 70px;
 
     img {
       width: 80%;
@@ -73,7 +100,18 @@ export const StyledSidebar = styled.div`
     margin-right: 20px;
     padding-left: 15%;
     width: 20%;
-    color: red;
+    color: #9966cc;
+  }
+
+  .sidebar__fullheight {
+    height: 100%;
+  }
+
+  .sidebar__spacebetween {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
   }
 `;
 
@@ -82,7 +120,6 @@ export const IconsDashboard = styled.div`
   align-items: center;
   justify-content: left;
   margin-left: 10%;
-  margin-top: -10px;
 `;
 
 export const StyledLink = styled(RouterLink)`
@@ -91,14 +128,17 @@ export const StyledLink = styled(RouterLink)`
   text-decoration: none;
   align-items: center;
   width: 100%;
+  margin-top: 0px;
+  height: 50px;
 `;
 
 export const StyledLinkActive = styled(StyledLink)`
-  color: red;
-  border-left: 4px solid red;
+  color: #9966cc;
+  border-left: 4px solid #5a14a1;
   border-radius: 6px;
   width: 100%;
   margin-left: -16%;
+  background-image: linear-gradient(to right, #5a14a1, #202020);
 `;
 
 export const UserInfo = styled.div`
@@ -107,20 +147,19 @@ export const UserInfo = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: 180px;
   background-color: #e5e5e5;
-  padding-bottom: 10%;
   margin: auto;
-  margin-top: 100px;
-  margin-bottom: 50px;
   font-size: 15px;
   border-radius: 20px;
   color: #202020;
   width: 80%;
+  border: 2px solid #5a14a1;
+  padding: 20px 0px;
   img {
     width: 60px;
     margin-top: -40px;
     border-radius: 20px;
+    border: 2px solid #5a14a1;
   }
   h6 {
     margin-bottom: 0px;
@@ -140,6 +179,7 @@ export const UserInfo = styled.div`
 `;
 
 export const SidebarFooter = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -148,4 +188,10 @@ export const SidebarFooter = styled.div`
   line-height: 0;
   font-size: 12px;
   margin-top: 30px;
+  bottom: 33px;
+  left: 0;
+  width: 100%;
+  background-color: #161616;
+  color: #7f31cd;
+  padding-bottom: 10px;
 `;

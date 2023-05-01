@@ -1,0 +1,79 @@
+[
+  {
+    "IMG": "https://via.placeholder.com/150",
+    "Name": "John Smith",
+    "ID": "12345",
+    "Email": "john.smith@example.com",
+    "Start Date": "2022-01-01",
+    "Description": "Software developer with experience in Python and Java",
+    "Contact": "+34 612 345 678",
+    "Status": "active",
+    "Password": 123
+  },
+  {
+    "IMG": "/images/profile.JPG",
+    "Name": "Diego Prieto",
+    "ID": "12345",
+    "Email": "diegoprietoiniguez@gmail.com",
+    "Start Date": "2022-01-01",
+    "Description": "Software developer with experience in Python and Java",
+    "Contact": "+34 612 345 678",
+    "Status": "active",
+    "Password": 123
+  },
+  {
+    "IMG": "https://via.placeholder.com/150",
+    "Name": "Jane Doe",
+    "ID": "67890",
+    "Email": "jane.doe@example.com",
+    "Start Date": "2022-02-01",
+    "Description": "Graphic designer with expertise in Adobe Creative Suite",
+    "Contact": "+34 612 345 679",
+    "Status": "active",
+    "Password": 123
+  },
+  {
+    "IMG": "https://via.placeholder.com/150",
+    "Name": "Bob Johnson",
+    "ID": "24680",
+    "Email": "bob.johnson@example.com",
+    "Start Date": "2022-03-01",
+    "Description": "Marketing specialist with experience in social media and content creation",
+    "Contact": "+34 612 345 680",
+    "Status": "inactive",
+    "Password": 123
+  },
+  {
+    "IMG": "https://via.placeholder.com/150",
+    "Name": "Sarah Lee",
+    "ID": "13579",
+    "Email": "sarah.lee@example.com",
+    "Start Date": "2022-04-01",
+    "Description": "Sales representative with experience in B2B sales",
+    "Contact": "+34 612 345 681",
+    "Status": "active",
+    "Password": 123
+  },
+  {
+    "IMG": "https://via.placeholder.com/150",
+    "Name": "David Brown",
+    "ID": "98765",
+    "Email": "david.brown@example.com",
+    "Start Date": "2022-05-01",
+    "Description": "Data analyst with proficiency in SQL and Excel",
+    "Contact": "+34 612 345 682",
+    "Status": "active",
+    "Password": 123
+  },
+  {
+    "IMG": "https://via.placeholder.com/150",
+    "Name": "Emily Taylor",
+    "ID": "43210",
+    "Email": "emily.taylor@example.com",
+    "Start Date": "2022-06-01",
+    "Description": "Human resources specialist with experience in recruiting and onboarding",
+    "Contact": "+34 612 345 683",
+    "Status": "inactive",
+    "Password": 123
+  }
+]
