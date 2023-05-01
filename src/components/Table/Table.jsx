@@ -51,7 +51,7 @@ const Table = ({
           alt="Profile"
           style={{
             marginRight: "10px",
-            width: "30px",
+            width: "50px",
             borderRadius: "10px",
             border: "1px solid white",
           }}

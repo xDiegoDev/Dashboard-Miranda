@@ -123,6 +123,8 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
               margin: "auto",
               marginBottom: "40px",
               marginTop: "20px",
+              border: "3px solid #8440c8",
+              borderRadius: "10px",
             }}
           />
         </div>
@@ -221,7 +223,11 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
                   <p>{loggedInUser.Email}</p>
                   <button
                     onClick={handleEditClick}
-                    style={{ color: "#9966cc", backgroundColor: "#222" }}
+                    style={{
+                      color: "#9966cc",
+                      backgroundColor: "white",
+                      border: "3px solid #b174ee ",
+                    }}
                   >
                     EDIT
                   </button>

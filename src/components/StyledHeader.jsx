@@ -147,11 +147,11 @@ export const UserInfo = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #e5e5e5;
+  background-color: #202020;
   margin: auto;
   font-size: 15px;
   border-radius: 20px;
-  color: #202020;
+  color: white;
   width: 80%;
   border: 2px solid #5a14a1;
   padding: 20px 0px;
@@ -164,6 +164,7 @@ export const UserInfo = styled.div`
   h6 {
     margin-bottom: 0px;
     font-size: 15px;
+    padding: 10px 0;
   }
 
   button {
@@ -171,10 +172,12 @@ export const UserInfo = styled.div`
     border: 1px solid black;
     padding: 10px;
     font-weight: bold;
+    background-color: white;
   }
 
   p {
     font-size: 12px;
+    padding: 20px 0;
   }
 `;
 

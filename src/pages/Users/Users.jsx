@@ -7,10 +7,12 @@ import {
 } from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import { ColorRing as Loader } from "react-loader-spinner";
 
 const Users = () => {
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.users.users);
+  const loading = useSelector((state) => state.users.status === "loading");
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   useEffect(() => {
@@ -50,78 +52,66 @@ const Users = () => {
 
   return (
     <div>
-      <Table initialData={usersData} onDelete={handleDelete} route="users" />
-      {createModalOpen && (
+      {loading ? (
         <div
           style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 1000,
-            background: "white",
-            padding: "20px",
-            borderRadius: "5px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
           }}
         >
-          <h2>Create New User</h2>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Image URL:
-              <input type="text" name="img" />
-            </label>
-            <label>
-              Name:
-              <input type="text" name="name" required />
-            </label>
-            <label>
-              Email:
-              <input type="email" name="email" required />
-            </label>
-            <label>
-              Start Date:
-              <input type="date" name="startDate" required />
-            </label>
-            <label>
-              Description:
-              <input type="text" name="description" required />
-            </label>
-            <label>
-              Contact:
-              <input type="text" name="contact" required />
-            </label>
-            <label>
-              Status:
-              <select name="status" required>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </label>
-            <label>
-              Password:
-              <input type="password" name="password" required />
-            </label>
-            <button type="submit">Create User</button>
-          </form>
-          <button onClick={() => setCreateModalOpen(false)}>Cancel</button>
+          <Loader
+            type="ThreeDots"
+            colors={["white", "black", "#5a14a1", "#9966cc", "#734c99"]}
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
         </div>
+      ) : (
+        <>
+          <Table
+            initialData={usersData}
+            onDelete={handleDelete}
+            route="users"
+          />
+          {createModalOpen && (
+            <div
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                zIndex: 1000,
+                background: "white",
+                padding: "20px",
+                borderRadius: "5px",
+              }}
+            >
+              <h2>Create New User</h2>
+              <form onSubmit={handleSubmit}>{/* ... */}</form>
+              <button onClick={() => setCreateModalOpen(false)}>Cancel</button>
+            </div>
+          )}
+          <button
+            style={{
+              display: "block",
+              margin: "auto",
+              marginTop: "50px",
+              padding: "10px 20px",
+              color: "white",
+              fontSize: "15px",
+              backgroundColor: "#222",
+              border: "3px solid #9966cc",
+              borderRadius: "20px",
+            }}
+            onClick={handleAddUser}
+          >
+            Add User
+          </button>
+        </>
       )}
-      <button
-        style={{
-          display: "block",
-          margin: "auto",
-          marginTop: "50px",
-          padding: "10px 20px",
-          color: "white",
-          fontSize: "15px",
-          backgroundColor: "#222",
-          border: "3px solid #9966cc",
-          borderRadius: "20px",
-        }}
-        onClick={handleAddUser}
-      >
-        Add User
-      </button>
     </div>
   );
 };

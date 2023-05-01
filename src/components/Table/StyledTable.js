@@ -6,8 +6,8 @@ export const StyledTable = styled.table`
   color: white;
   display: block;
   margin: auto;
-  font-size: 14px;
-  margin-top: 100px;
+  font-size: 13px;
+  margin-top: 250px;
   border-collapse: collapse;
   width: 95%;
 
@@ -25,7 +25,7 @@ export const StyledTable = styled.table`
 
   th,
   td {
-    padding: 10px;
+    padding: 20px;
     text-align: center;
   }
 `;
