@@ -18,23 +18,10 @@ const Users = () => {
   const usersData = useSelector((state) => state.users.users);
   const loading = useSelector((state) => state.users.status === "loading");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const usersFetched = useRef(false);
 
   useEffect(() => {
-    if (!usersFetched.current) {
-      dispatch(fetchUsersAsync());
-      usersFetched.current = true;
-    }
+    dispatch(fetchUsersAsync());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (location.state && location.state.updatedUser) {
-      dispatch(fetchUsersAsync());
-    }
-  }, [location, dispatch]);
 
   const handleDelete = (user) => {
     dispatch(deleteUserAsync(user.ID));

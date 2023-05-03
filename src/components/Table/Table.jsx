@@ -72,6 +72,90 @@ const Table = ({
       </div>
     </div>
   );
+  const renderGuestIdImageColumn = (row) => (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {row.IMG && (
+        <img
+          src={row.IMG}
+          alt="Profile"
+          style={{
+            marginRight: "30px",
+            width: "50px",
+            borderRadius: "10px",
+            border: "1px solid white",
+          }}
+        />
+      )}
+      <div>
+        <Link
+          to={`/users/${row.ID}`}
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          {row.Guest}
+          <br />
+          <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
+        </Link>
+      </div>
+    </div>
+  );
+
+  const renderRoomIdImageColumn = (row) => (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {row.IMG && (
+        <img
+          src={row.IMG}
+          alt="Profile"
+          style={{
+            marginRight: "30px",
+            width: "50px",
+            borderRadius: "10px",
+            border: "1px solid white",
+          }}
+        />
+      )}
+      <div>
+        <Link
+          to={`/rooms/${row.ID}`}
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          {row["Room Name"]}
+          <br />
+          <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
+        </Link>
+      </div>
+    </div>
+  );
+
+  const renderRateColumn = (row) => {
+    const originalRate = parseFloat(row.Rate.slice(1).split(" ")[0]);
+    const offerPercentage = row.Offer;
+    const discountedRate = originalRate * (1 - offerPercentage / 100);
+
+    return (
+      <div>
+        {offerPercentage > 0 ? (
+          <>
+            <span
+              style={{
+                textDecoration: "line-through",
+                marginRight: "10px",
+                color: "gray",
+              }}
+            >
+              {row.Rate}
+            </span>
+            <span>${discountedRate.toFixed(2)} / night</span>
+          </>
+        ) : (
+          <span>{row.Rate}</span>
+        )}
+      </div>
+    );
+  };
+
+  const renderOfferColumn = (row) => {
+    return row.Offer > 0 ? <div>{row.Offer}%</div> : <div></div>;
+  };
 
   const columnName = columns.find((col) => col === "Contact");
 
@@ -80,6 +164,16 @@ const Table = ({
       return { color: "lightgreen", letterSpacing: "1.5px" };
     } else if (status === "Inactive") {
       return { color: "red", letterSpacing: "1.5px" };
+    } else if (status === "Available") {
+      return { color: "lightgreen", letterSpacing: "1.5px" };
+    } else if (status === "Booked") {
+      return { color: "red", letterSpacing: "1.5px" };
+    } else if (status === "Check In") {
+      return { color: "lightgreen", letterSpacing: "1.5px" };
+    } else if (status === "Check Out") {
+      return { color: "red", letterSpacing: "1.5px" };
+    } else if (status === "Progress") {
+      return { color: "yellow", letterSpacing: "1.5px" };
     }
     return {};
   };
@@ -141,7 +235,7 @@ const Table = ({
           <tr>
             {columns.map((col, index) => (
               <th key={index} style={{ textAlign: "center" }}>
-                {col === "Name" && route === "users" ? "Name" : col}
+                {col}
               </th>
             ))}
             <th>Delete</th>
@@ -165,8 +259,40 @@ const Table = ({
                       </Link>
                     </td>
                   );
+                } else if (route === "bookings" && col === "Guest") {
+                  return (
+                    <td
+                      key={colIndex}
+                      onClick={onRowClick ? () => onRowClick(row) : undefined}
+                    >
+                      <Link
+                        to={`/bookings/${row.ID}`}
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        {renderGuestIdImageColumn(row)}
+                      </Link>
+                    </td>
+                  );
                 } else if (col === "ID" || col === "Image") {
                   return null;
+                } else if (col === "Room Name" && route === "rooms") {
+                  return (
+                    <td
+                      key={colIndex}
+                      onClick={onRowClick ? () => onRowClick(row) : undefined}
+                    >
+                      <Link
+                        to={`/rooms/${row.ID}`}
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        {renderRoomIdImageColumn(row)}
+                      </Link>
+                    </td>
+                  );
+                } else if (col === "Rate" && route === "rooms") {
+                  return <td key={colIndex}>{renderRateColumn(row)}</td>;
+                } else if (col === "Offer" && route === "rooms") {
+                  return <td key={colIndex}>{renderOfferColumn(row)}</td>;
                 } else {
                   const cellContent = row[col];
                   return (
