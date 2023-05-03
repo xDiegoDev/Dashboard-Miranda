@@ -5,7 +5,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Rooms from "./pages/Rooms/Rooms";

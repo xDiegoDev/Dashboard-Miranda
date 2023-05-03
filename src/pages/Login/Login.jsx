@@ -46,7 +46,7 @@ const Login = () => {
         {loading ? (
           <Loader
             type="ThreeDots"
-            colors={["white", "black", "#5a14a1", "#9966cc", "#734c99"]}
+            colors={["white", "black", "#414141", "#8f8f8f", "#212121"]}
             height={100}
             width={100}
             timeout={3000} //3 secs

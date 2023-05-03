@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StyledTable } from "./StyledTable";
+import { StyledTable, Modal } from "./StyledTable";
 import { Link, useHistory } from "react-router-dom";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
 const Table = ({
   initialData,
@@ -15,6 +16,8 @@ const Table = ({
   const [showModal, setShowModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [filter, setFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     setData(initialData);
@@ -50,7 +53,7 @@ const Table = ({
           src={row.IMG}
           alt="Profile"
           style={{
-            marginRight: "10px",
+            marginRight: "30px",
             width: "50px",
             borderRadius: "10px",
             border: "1px solid white",
@@ -64,13 +67,72 @@ const Table = ({
         >
           {row.Name}
           <br />
-          {row.ID}
+          <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
         </Link>
       </div>
     </div>
   );
 
   const columnName = columns.find((col) => col === "Contact");
+
+  const getStatusStyle = (status) => {
+    if (status === "Active") {
+      return { color: "lightgreen", letterSpacing: "1.5px" };
+    } else if (status === "Inactive") {
+      return { color: "red", letterSpacing: "1.5px" };
+    }
+    return {};
+  };
+
+  const getDescriptionWrapperStyle = () => {
+    return {
+      maxHeight: "3.6em",
+      overflow: "hidden",
+      display: "-webkit-box",
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: "vertical",
+      textOverflow: "ellipsis",
+    };
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderPagination = () => {
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    return (
+      <div
+        className="pagination"
+        style={{ margin: "50px 30px", marginLeft: "42%" }}
+      >
+        {pages.map((page) => (
+          <button
+            style={{
+              margin: "30px 30px",
+              padding: "10px 15px",
+              background: "#202020",
+              border: "1px solid #b189d9",
+              borderRadius: "10px",
+              color: "white",
+            }}
+            key={page}
+            className={`page-button ${currentPage === page ? "active" : ""}`}
+            onClick={() => handlePageChange(page)}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  const paginatedData = data.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <>
@@ -86,7 +148,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => (
+          {paginatedData.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {columns.map((col, colIndex) => {
                 if (route === "users" && col === "Name") {
@@ -111,33 +173,52 @@ const Table = ({
                     <td
                       key={colIndex}
                       onClick={onRowClick ? () => onRowClick(row) : undefined}
+                      style={
+                        col === "Status" ? getStatusStyle(cellContent) : {}
+                      }
                     >
-                      {cellContent}
+                      {col === "Description" ? (
+                        <div style={getDescriptionWrapperStyle()}>
+                          {cellContent}
+                        </div>
+                      ) : col === "Contact" ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <LocalPhoneIcon
+                            fontSize="small"
+                            style={{ marginRight: "4px" }}
+                          />
+                          {cellContent}
+                        </div>
+                      ) : (
+                        cellContent
+                      )}
                     </td>
                   );
                 }
               })}
               <td>
-                <button onClick={() => handleDeleteClick(row)}>Delete</button>
+                <button
+                  className="delete__button"
+                  onClick={() => handleDeleteClick(row)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </StyledTable>
+      {data.length > itemsPerPage && renderPagination()}
       {showModal && (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 1000,
-            background: "white",
-            padding: "20px",
-            borderRadius: "5px",
-          }}
-        >
-          <p>Are you sure you want to delete this user?</p>
+        <Modal>
+          <p style={{ letterSpacing: "1.5px" }}>
+            Are you sure you want to delete this user?
+          </p>
           <div
             style={{
               display: "flex",
@@ -145,10 +226,14 @@ const Table = ({
               marginTop: "20px",
             }}
           >
-            <button onClick={toggleModal}>Cancel</button>
-            <button onClick={handleDeleteConfirm}>Delete</button>
+            <button className="cancel__button" onClick={toggleModal}>
+              <p style={{ letterSpacing: "1.5px" }}>Cancel</p>
+            </button>
+            <button className="confirm__delete" onClick={handleDeleteConfirm}>
+              <p style={{ letterSpacing: "1.5px" }}>Delete</p>
+            </button>
           </div>
-        </div>
+        </Modal>
       )}
     </>
   );

@@ -8,28 +8,45 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 import { ColorRing as Loader } from "react-loader-spinner";
+import { useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Modal from "../../components/Modal";
+import { Form } from "./StyledUser";
 
 const Users = () => {
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.users.users);
   const loading = useSelector((state) => state.users.status === "loading");
-  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const usersFetched = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchUsersAsync());
+    if (!usersFetched.current) {
+      dispatch(fetchUsersAsync());
+      usersFetched.current = true;
+    }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (location.state && location.state.updatedUser) {
+      dispatch(fetchUsersAsync());
+    }
+  }, [location, dispatch]);
 
   const handleDelete = (user) => {
     dispatch(deleteUserAsync(user.ID));
   };
 
   const handleAddUser = () => {
-    setCreateModalOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleCreateUser = (newUser) => {
     dispatch(addUserAsync(newUser));
-    setCreateModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const handleSubmit = (e) => {
@@ -63,7 +80,7 @@ const Users = () => {
         >
           <Loader
             type="ThreeDots"
-            colors={["white", "black", "#5a14a1", "#9966cc", "#734c99"]}
+            colors={["white", "black", "#8f8f8f", "#212121", "#414141"]}
             height={100}
             width={100}
             timeout={3000} //3 secs
@@ -76,35 +93,81 @@ const Users = () => {
             onDelete={handleDelete}
             route="users"
           />
-          {createModalOpen && (
-            <div
-              style={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                zIndex: 1000,
-                background: "white",
-                padding: "20px",
-                borderRadius: "5px",
-              }}
-            >
-              <h2>Create New User</h2>
-              <form onSubmit={handleSubmit}>{/* ... */}</form>
-              <button onClick={() => setCreateModalOpen(false)}>Cancel</button>
-            </div>
-          )}
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+          >
+            <h2 style={{ color: "white" }}>Create New User</h2>
+            <Form onSubmit={handleSubmit}>
+              <label htmlFor="img">
+                Image URL:
+                <input type="text" id="img" name="img" />
+              </label>
+              <label htmlFor="name">
+                Name:
+                <input required type="text" id="name" name="name" />
+              </label>
+              <label htmlFor="email">
+                Email:
+                <input required type="email" id="email" name="email" />
+              </label>
+              <label htmlFor="startDate">
+                Start Date:
+                <input required type="date" id="startDate" name="startDate" />
+              </label>
+              <label htmlFor="description">
+                Description:
+                <input
+                  required
+                  type="text"
+                  id="description"
+                  name="description"
+                />
+              </label>
+              <label htmlFor="contact">
+                Contact:
+                <input required type="text" id="contact" name="contact" />
+              </label>
+              <label htmlFor="status">
+                Status:
+                <select required id="status" name="status">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </label>
+              <label htmlFor="password">
+                Password:
+                <input required type="password" id="password" name="password" />
+              </label>{" "}
+              <button
+                type="submit"
+                style={{
+                  display: "block",
+                  margin: "auto",
+                  marginTop: "50px",
+                  padding: "10px 20px",
+                  color: "white",
+                  fontSize: "15px",
+                  backgroundColor: "#222",
+                  border: "3px solid #414141",
+                  borderRadius: "20px",
+                }}
+              >
+                Save
+              </button>
+            </Form>
+          </Modal>
           <button
             style={{
               display: "block",
-              margin: "auto",
-              marginTop: "50px",
               padding: "10px 20px",
               color: "white",
               fontSize: "15px",
               backgroundColor: "#222",
-              border: "3px solid #9966cc",
+              border: "3px solid #414141",
               borderRadius: "20px",
+              margin: "auto",
+              marginTop: "50px",
             }}
             onClick={handleAddUser}
           >

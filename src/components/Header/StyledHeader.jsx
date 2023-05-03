@@ -32,11 +32,11 @@ export const StyledHeader = styled.header`
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    background-image: linear-gradient(to right, #5a14a1, #9966cc);
+    background-image: linear-gradient(to right, #8f8f8f, white);
     transition: color 0.5s ease-out;
     &:hover {
-      color: #e6ceff;
-      text-shadow: 0 0 3px #e6ceff;
+      color: white;
+      text-shadow: 0 0 3px #010101;
     }
   }
 
@@ -100,7 +100,7 @@ export const StyledSidebar = styled.div`
     margin-right: 20px;
     padding-left: 15%;
     width: 20%;
-    color: #9966cc;
+    color: white;
   }
 
   .sidebar__fullheight {
@@ -133,12 +133,12 @@ export const StyledLink = styled(RouterLink)`
 `;
 
 export const StyledLinkActive = styled(StyledLink)`
-  color: #9966cc;
-  border-left: 4px solid #5a14a1;
+  color: white;
+  border-left: 4px solid #010101;
   border-radius: 6px;
-  width: 100%;
+  width: 120%;
   margin-left: -16%;
-  background-image: linear-gradient(to right, #5a14a1, #202020);
+  background-image: linear-gradient(to right, #010101, #8f8f8f);
 `;
 
 export const UserInfo = styled.div`
@@ -147,19 +147,18 @@ export const UserInfo = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #202020;
+  background-color: #d4d4d4;
   margin: auto;
   font-size: 15px;
   border-radius: 20px;
-  color: white;
+  color: #212121;
   width: 80%;
-  border: 2px solid #5a14a1;
+  border: 2px solid #010101;
   padding: 20px 0px;
   img {
     width: 60px;
     margin-top: -40px;
     border-radius: 20px;
-    border: 2px solid #5a14a1;
   }
   h6 {
     margin-bottom: 0px;
@@ -194,7 +193,7 @@ export const SidebarFooter = styled.div`
   bottom: 33px;
   left: 0;
   width: 100%;
-  background-color: #161616;
-  color: #7f31cd;
+  background-color: #414141;
+  color: white;
   padding-bottom: 10px;
 `;
