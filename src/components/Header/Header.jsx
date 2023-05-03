@@ -10,10 +10,10 @@ import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ExtensionRoundedIcon from "@mui/icons-material/ExtensionRounded";
-import { authDispatch, AuthContext } from "../contexts/AuthContext";
+import { authDispatch, AuthContext } from "../../contexts/AuthContext";
 import { useSelector, useDispatch } from "react-redux";
-import { useAuth } from "../contexts/useAuth";
-import { updateUserAsync } from "../features/userSlice";
+import { useAuth } from "../../contexts/useAuth";
+import { updateUserAsync } from "../../features/userSlice";
 
 import {
   StyledHeader,
@@ -25,10 +25,9 @@ import {
   SidebarFooter,
 } from "./StyledHeader";
 
-import Company from "../images/D logo.png";
+import Company from "../../images/D logo.png";
 
-import astro from "../images/profile.JPG";
-import Modal from "./Modal";
+import Modal from "../Modal";
 
 const HamburgerIcon = (props) => {
   const { sidebarVisible, setSidebarVisible, className } = props;
@@ -60,24 +59,6 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
     ? usersData.find((u) => u.Email === userEmail)
     : null;
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      handleLogout();
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    console.log("loggedInUser", loggedInUser);
-    console.log(usersData);
-    console.log(userEmail);
-  }, [loggedInUser]);
-
-  useEffect(() => {
-    if (!loggedInUser) {
-      handleLogout();
-    }
-  }, [loggedInUser]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
@@ -94,10 +75,13 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
     };
     try {
       await dispatch(updateUserAsync(updatedUser));
-      authDispatch({
-        type: "UPDATE_USER",
-        payload: { email: updatedUser.Email, name: updatedUser.Name },
-      });
+      if (loggedInUser.Email !== updatedUser.Email) {
+        authDispatch({
+          type: "UPDATE_USER",
+          payload: { email: updatedUser.Email, name: updatedUser.Name },
+        });
+      }
+      setIsModalOpen(false);
     } catch (error) {
       console.error("Failed to update user:", error);
     }
@@ -123,6 +107,8 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
               margin: "auto",
               marginBottom: "40px",
               marginTop: "20px",
+              border: "3px solid #414141",
+              borderRadius: "10px",
             }}
           />
         </div>
@@ -213,7 +199,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
                 </StyledLink>
               )}
             </IconsDashboard>
-            <UserInfo style={{ border: "1px solid #9966cc;" }}>
+            <UserInfo>
               {loggedInUser && (
                 <>
                   <img src={loggedInUser.IMG} />
@@ -221,7 +207,11 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
                   <p>{loggedInUser.Email}</p>
                   <button
                     onClick={handleEditClick}
-                    style={{ color: "#9966cc", backgroundColor: "#222" }}
+                    style={{
+                      color: "#010101",
+                      backgroundColor: "white",
+                      border: "3px solid #414141 ",
+                    }}
                   >
                     EDIT
                   </button>
@@ -236,31 +226,89 @@ const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
             isOpen={isModalOpen}
             onRequestClose={() => setIsModalOpen(false)}
           >
-            <h2>Edit User</h2>
+            <h2
+              style={{
+                marginBottom: "30px",
+                fontSize: "27px",
+              }}
+            >
+              EDIT USER
+            </h2>
             <form onSubmit={handleEditSubmit}>
-              <label>
+              <label
+                style={{
+                  marginBottom: "32px",
+                  fontSize: "17px",
+                }}
+              >
                 Name:
                 <input
+                  style={{
+                    marginLeft: "30px",
+                    marginBottom: "20px",
+                    height: "30px",
+                    borderRadius: "10px",
+                    border: "2px solid #414141",
+                    paddingLeft: "10px",
+                    fontSize: "15px",
+                  }}
                   type="text"
                   value={editedName}
                   onChange={(e) => setEditedName(e.target.value)}
                 />
               </label>
               <br />
-              <label>
+              <label
+                style={{
+                  fontSize: "17px",
+                }}
+              >
                 Email:
                 <input
+                  style={{
+                    marginLeft: "30px",
+                    marginBottom: "20px",
+                    height: "30px",
+                    borderRadius: "10px",
+                    border: "2px solid #414141",
+                    paddingLeft: "10px",
+                    fontSize: "15px",
+                  }}
                   type="email"
                   value={editedEmail}
                   onChange={(e) => setEditedEmail(e.target.value)}
                 />
               </label>
               <br />
-              <button onSubmit={handleEditSubmit}>Save</button>
-              <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+              <button
+                style={{
+                  marginTop: "32px",
+                  height: "30px",
+                  borderRadius: "10px",
+                  border: "2px solid #414141",
+                  padding: "0 10px",
+                  fontSize: "15px",
+                }}
+                onSubmit={handleEditSubmit}
+              >
+                Save
+              </button>
+              <button
+                style={{
+                  marginTop: "32px",
+                  marginLeft: "30px",
+                  height: "30px",
+                  borderRadius: "10px",
+                  border: "2px solid #414141",
+                  padding: "0 10px",
+                  fontSize: "15px",
+                }}
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
             </form>
           </Modal>
-          {/* Rest of the Header component JSX */}
         </>
 
         <SidebarFooter>

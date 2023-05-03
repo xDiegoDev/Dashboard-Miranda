@@ -1,13 +1,13 @@
 [
   {
-    "IMG": "https://via.placeholder.com/150",
+    "IMG": "https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTJ8OTg2NTg3OXx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
     "Name": "John Smith",
     "ID": "12345",
     "Email": "john.smith@example.com",
     "Start Date": "2022-01-01",
     "Description": "Software developer with experience in Python and Java",
     "Contact": "+34 612 345 678",
-    "Status": "active",
+    "Status": "Active",
     "Password": 123
   },
   {
@@ -18,62 +18,62 @@
     "Start Date": "2022-01-01",
     "Description": "Software developer with experience in Python and Java",
     "Contact": "+34 612 345 678",
-    "Status": "active",
+    "Status": "Active",
     "Password": 123
   },
   {
-    "IMG": "https://via.placeholder.com/150",
+    "IMG": "https://images.unsplash.com/photo-1518157542428-1be9739022f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
     "Name": "Jane Doe",
     "ID": "67890",
     "Email": "jane.doe@example.com",
     "Start Date": "2022-02-01",
     "Description": "Graphic designer with expertise in Adobe Creative Suite",
     "Contact": "+34 612 345 679",
-    "Status": "active",
+    "Status": "Active",
     "Password": 123
   },
   {
-    "IMG": "https://via.placeholder.com/150",
+    "IMG": "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXw5ODY1ODc5fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
     "Name": "Bob Johnson",
     "ID": "24680",
     "Email": "bob.johnson@example.com",
     "Start Date": "2022-03-01",
     "Description": "Marketing specialist with experience in social media and content creation",
     "Contact": "+34 612 345 680",
-    "Status": "inactive",
+    "Status": "Inactive",
     "Password": 123
   },
   {
-    "IMG": "https://via.placeholder.com/150",
+    "IMG": "https://images.unsplash.com/photo-1519105548049-8e4ad05e2fa5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDd8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
     "Name": "Sarah Lee",
     "ID": "13579",
     "Email": "sarah.lee@example.com",
     "Start Date": "2022-04-01",
     "Description": "Sales representative with experience in B2B sales",
     "Contact": "+34 612 345 681",
-    "Status": "active",
+    "Status": "Active",
     "Password": 123
   },
   {
-    "IMG": "https://via.placeholder.com/150",
+    "IMG": "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
     "Name": "David Brown",
     "ID": "98765",
     "Email": "david.brown@example.com",
     "Start Date": "2022-05-01",
     "Description": "Data analyst with proficiency in SQL and Excel",
     "Contact": "+34 612 345 682",
-    "Status": "active",
+    "Status": "Inactive",
     "Password": 123
   },
   {
-    "IMG": "https://via.placeholder.com/150",
+    "IMG": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
     "Name": "Emily Taylor",
     "ID": "43210",
     "Email": "emily.taylor@example.com",
     "Start Date": "2022-06-01",
     "Description": "Human resources specialist with experience in recruiting and onboarding",
     "Contact": "+34 612 345 683",
-    "Status": "inactive",
+    "Status": "Inactive",
     "Password": 123
   }
 ]

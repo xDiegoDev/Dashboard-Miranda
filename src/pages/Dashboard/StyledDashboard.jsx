@@ -5,12 +5,12 @@ export const DashDivs = styled.div`
   align-items: center;
   width: 100%;
   justify-content: space-around;
-  margin-top: -400px;
+  margin-top: 200px;
 
   .info__container {
     display: flex;
     align-items: center;
-    border: 2px solid #5a14a1;
+    border: 2px solid #f0f0f0;
     border-radius: 10px;
     color: white;
     justify-content: space-around;
@@ -19,8 +19,8 @@ export const DashDivs = styled.div`
     align-items: center;
 
     .icon {
-      border: 3px solid #5a14a1;
-      background-color: #9966cc;
+      border: 3px solid #414141;
+      background-color: #010101;
       padding: 10px;
       border-radius: 10px;
       margin-top: 25px;

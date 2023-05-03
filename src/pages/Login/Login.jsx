@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersAsync, validateUserAsync } from "../../features/userSlice";
 import { StyledLogin, GlobalStyle } from "./StyledLogin";
-import Loader from "react-loader-spinner";
+import { ColorRing as Loader } from "react-loader-spinner";
 
 const Login = () => {
   const { authState, authDispatch } = useContext(AuthContext);
@@ -43,28 +43,38 @@ const Login = () => {
     <>
       <GlobalStyle />
       <StyledLogin>
-        <div className="login-form">
-          <h1>Login</h1>
-          <div className="input-container">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+        {loading ? (
+          <Loader
+            type="ThreeDots"
+            colors={["white", "black", "#414141", "#8f8f8f", "#212121"]}
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        ) : (
+          <div className="login-form">
+            <h1>Login</h1>
+            <div className="input-container">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="input-container">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button onClick={handleLogin}>Log In</button>
           </div>
-          <div className="input-container">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button onClick={handleLogin}>Log In</button>
-        </div>
+        )}
       </StyledLogin>
     </>
   );
