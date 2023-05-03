@@ -1,14 +1,13 @@
 import { nanoid } from "nanoid";
-import RoomsData from "./roomData.json";
 import ContactData from "./ContactData.json";
 
 const assignUniqueIds = (data) => {
   return data.map((item) => ({
     ...item,
-    ID: nanoid(),
+    "Order ID": "ORD" + nanoid(),
   }));
 };
 
-const updatedRoomsData = assignUniqueIds(RoomsData);
+const updatedContactData = assignUniqueIds(ContactData);
 
-export default updatedRoomsData;
+export default updatedContactData;

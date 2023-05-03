@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyledTable, Modal } from "./StyledTable";
 import { Link, useHistory } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import StarIcon from "@mui/icons-material/Star";
 
 const Table = ({
   initialData,
@@ -18,6 +19,7 @@ const Table = ({
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const filterOptions = ["all", "published", "archived"];
 
   useEffect(() => {
     setData(initialData);
@@ -42,8 +44,20 @@ const Table = ({
     return <div>No data available</div>;
   }
 
+  const filteredData = data.filter((row) => {
+    if (filter === "all") return true;
+    if (filter === "published") return row.Action === "Archive";
+    if (filter === "archived") return row.Action == "Publish";
+    return false;
+  });
+
   const columns = Object.keys(data[0]).filter(
-    (col) => col !== "Password" && col !== "IMG" && col !== "ID"
+    (col) =>
+      col !== "Password" &&
+      col !== "IMG" &&
+      col !== "ID" &&
+      col !== "Stars" && // Add this line
+      !(route === "contacts" && (col === "Telephone" || col === "Mail"))
   );
 
   const renderNameIdImageColumn = (row) => (
@@ -72,32 +86,16 @@ const Table = ({
       </div>
     </div>
   );
-  const renderGuestIdImageColumn = (row) => (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      {row.IMG && (
-        <img
-          src={row.IMG}
-          alt="Profile"
-          style={{
-            marginRight: "30px",
-            width: "50px",
-            borderRadius: "10px",
-            border: "1px solid white",
-          }}
-        />
-      )}
-      <div>
-        <Link
-          to={`/users/${row.ID}`}
-          style={{ textDecoration: "none", color: "white" }}
-        >
-          {row.Guest}
-          <br />
-          <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
-        </Link>
-      </div>
-    </div>
-  );
+
+  const renderStarIcons = (stars) => {
+    return Array.from({ length: stars }, (_, i) => (
+      <StarIcon
+        key={i}
+        fontSize="small"
+        style={{ marginRight: "4px", fontSize: "10px", marginBottom: "10px" }}
+      />
+    ));
+  };
 
   const renderRoomIdImageColumn = (row) => (
     <div style={{ display: "flex", alignItems: "center" }}>
@@ -119,6 +117,33 @@ const Table = ({
           style={{ textDecoration: "none", color: "white" }}
         >
           {row["Room Name"]}
+          <br />
+          <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
+        </Link>
+      </div>
+    </div>
+  );
+
+  const renderGuestColumn = (row) => (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      {row.IMG && (
+        <img
+          src={row.IMG}
+          alt="Profile"
+          style={{
+            marginRight: "30px",
+            width: "50px",
+            borderRadius: "10px",
+            border: "1px solid white",
+          }}
+        />
+      )}
+      <div>
+        <Link
+          to={`/bookings/${row.ID}`}
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          {row.Guest}
           <br />
           <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
         </Link>
@@ -156,8 +181,6 @@ const Table = ({
   const renderOfferColumn = (row) => {
     return row.Offer > 0 ? <div>{row.Offer}%</div> : <div></div>;
   };
-
-  const columnName = columns.find((col) => col === "Contact");
 
   const getStatusStyle = (status) => {
     if (status === "Active") {
@@ -223,13 +246,63 @@ const Table = ({
     );
   };
 
-  const paginatedData = data.slice(
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const getActionStyle = (action) => {
+    if (action === "Archive") {
+      return { color: "red", letterSpacing: "1.5px" };
+    } else {
+      return { color: "lightgreen", letterSpacing: "1.5px" };
+    }
+  };
+
+  const handleToggleAction = (event, row) => {
+    event.stopPropagation();
+    const updatedRow = {
+      ...row,
+      Action: row.Action === "Publish" ? "Archive" : "Publish",
+    };
+    setData(
+      data.map((item) => (item.ID === updatedRow.ID ? updatedRow : item))
+    );
+  };
+
+  const renderCommentColumn = (row) => (
+    <Link
+      to={`/contacts/${row.ID}`}
+      style={{ textDecoration: "none", color: "white" }}
+    >
+      {row.Comment}
+    </Link>
+  );
+
   return (
     <>
+      {route === "contacts" && (
+        <div
+          style={{ marginBottom: "-100px", marginTop: "200px", color: "white" }}
+        >
+          <label htmlFor="action-filter">Filter by action: </label>
+          <select
+            id="action-filter"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            style={{ marginLeft: "8px" }}
+          >
+            <option value="all">All</option>
+            <option value="published">Published</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+      )}
+
       <StyledTable>
         <thead>
           <tr>
@@ -238,7 +311,7 @@ const Table = ({
                 {col}
               </th>
             ))}
-            <th>Delete</th>
+            {route !== "contacts" && <th>Delete</th>}
           </tr>
         </thead>
         <tbody>
@@ -265,12 +338,16 @@ const Table = ({
                       key={colIndex}
                       onClick={onRowClick ? () => onRowClick(row) : undefined}
                     >
-                      <Link
-                        to={`/bookings/${row.ID}`}
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        {renderGuestIdImageColumn(row)}
-                      </Link>
+                      {renderGuestColumn(row)}
+                    </td>
+                  );
+                } else if (route === "contacts" && col === "Guest") {
+                  return (
+                    <td
+                      key={colIndex}
+                      onClick={onRowClick ? () => onRowClick(row) : undefined}
+                    >
+                      {renderGuestColumn(row)}
                     </td>
                   );
                 } else if (col === "ID" || col === "Image") {
@@ -298,7 +375,11 @@ const Table = ({
                   return (
                     <td
                       key={colIndex}
-                      onClick={onRowClick ? () => onRowClick(row) : undefined}
+                      onClick={
+                        onRowClick && route !== "contacts"
+                          ? () => onRowClick(row)
+                          : undefined
+                      }
                       style={
                         col === "Status" ? getStatusStyle(cellContent) : {}
                       }
@@ -307,6 +388,8 @@ const Table = ({
                         <div style={getDescriptionWrapperStyle()}>
                           {cellContent}
                         </div>
+                      ) : col === "Comment" && route === "contacts" ? (
+                        renderCommentColumn(row)
                       ) : col === "Contact" ? (
                         <div
                           style={{
@@ -320,6 +403,19 @@ const Table = ({
                           />
                           {cellContent}
                         </div>
+                      ) : col === "Action" ? (
+                        <button
+                          style={{
+                            ...getActionStyle(cellContent),
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                            textDecoration: "underline",
+                          }}
+                          onClick={(event) => handleToggleAction(event, row)}
+                        >
+                          {cellContent}
+                        </button>
                       ) : (
                         cellContent
                       )}
@@ -327,14 +423,16 @@ const Table = ({
                   );
                 }
               })}
-              <td>
-                <button
-                  className="delete__button"
-                  onClick={() => handleDeleteClick(row)}
-                >
-                  Delete
-                </button>
-              </td>
+              {route !== "contacts" && (
+                <td>
+                  <button
+                    className="delete__button"
+                    onClick={() => handleDeleteClick(row)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

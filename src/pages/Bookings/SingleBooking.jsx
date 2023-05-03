@@ -55,7 +55,7 @@ const SingleBooking = () => {
     <UserComp>
       <User>
         <Slider {...settings} style={{ width: "300px", height: "300px" }}>
-          {booking.IMG.map((image, index) => (
+          {[booking.IMG].map((image, index) => (
             <div key={index} style={{ width: "100%", height: "100%" }}>
               <img
                 src={image}

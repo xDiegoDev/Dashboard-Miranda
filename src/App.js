@@ -20,6 +20,7 @@ import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 import { StyledMain } from "./AppStyled";
 import SingleRoom from "./pages/Rooms/SingleRoom";
 import SingleBooking from "./pages/Bookings/SingleBooking";
+import SingleContact from "./pages/Contact/SingleContact";
 
 function App() {
   const { authState } = useContext(AuthContext);
@@ -80,7 +81,8 @@ function App() {
           <Route path="/users/:id" element={<SingleUser />} />
           <Route path="/bookings/" element={<Bookings />} />
           <Route path="/bookings/:id" element={<SingleBooking />} />
-          <Route path="/contact/*" element={<Contact />} />
+          <Route path="/contacts/" element={<Contact />} />
+          <Route path="/contacts/:id" element={<SingleContact />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
