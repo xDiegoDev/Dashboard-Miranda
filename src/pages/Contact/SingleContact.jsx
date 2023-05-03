@@ -10,6 +10,7 @@ const ContactContainer = styled.div`
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-top: 150px;
+  color: blue;
 `;
 
 const Detail = styled.div`
