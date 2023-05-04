@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchContactsAsync } from "../../features/contactSlice";
 import styled from "styled-components";
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ContactContainer = styled.div`
   background-color: white;
@@ -10,7 +12,6 @@ const ContactContainer = styled.div`
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-top: 150px;
-  color: blue;
 `;
 
 const Detail = styled.div`

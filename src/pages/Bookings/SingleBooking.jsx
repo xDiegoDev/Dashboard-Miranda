@@ -3,10 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBookingAsync } from "../../features/bookingSlice";
 import Modal from "../../components/Modal";
-import { User, UserComp, Form } from "../Users/StyledUser";
+import { User, Form } from "../Users/StyledUser";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import styled from "styled-components";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import MessageIcon from "@mui/icons-material/Message";
+import { BookingComp, BookingSlider, Ribbon } from "./StyledSingleBook";
 
 const SingleBooking = () => {
   const { id } = useParams();
@@ -51,31 +55,121 @@ const SingleBooking = () => {
     slidesToScroll: 1,
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Check In":
+        return "#4CAF50"; // Green
+      case "Progress":
+        return "#FFC107"; // Yellow
+      case "Check Out":
+        return "#F44336"; // Red
+    }
+  };
+
   return (
-    <UserComp>
-      <User>
-        <Slider {...settings} style={{ width: "300px", height: "300px" }}>
-          {[booking.IMG].map((image, index) => (
-            <div key={index} style={{ width: "100%", height: "100%" }}>
-              <img
-                src={image}
-                alt={`Booking image ${index}`}
+    <BookingComp>
+      <div className="details" style={{ width: "45%" }}>
+        <div className="guest">
+          <img src={booking.UserIMG} />
+          <div>
+            <h2>{booking.Guest}</h2>
+            <p>ID: {booking.ID}</p>
+            <div className="inner__div">
+              <LocalPhoneIcon style={{ color: "white" }} />
+              <button>
+                <MessageIcon />
+                <p>Send message</p>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="checks">
+          <div>
+            <p>Check in</p>
+            <p>
+              <strong>{booking["Check In"]}</strong>
+            </p>
+          </div>
+          <div>
+            <p>Check out</p>
+            <p>
+              <strong>{booking["Check Out"]}</strong>
+            </p>
+          </div>
+        </div>
+        <div className="line">
+          <div></div>
+        </div>
+        <div className="room_details">
+          <div className="info__price">
+            <div>
+              <p>Room info</p>
+              <p>
+                <strong>{booking["Room Type"]}</strong>
+              </p>
+            </div>
+            <div>
+              <p>Price</p>
+              <p>
+                <strong>{booking.price}</strong>
+              </p>
+            </div>
+          </div>
+          <p className="text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Pellentesque tincidunt dui vitae ante facilisis, nec blandit eros
+            lacinia. Sed quam lacus, auctor id sem in, molestie maximus ex.
+            Etiam facilisis congue sapien, eget convallis nibh elementum at.
+            Nullam vehicula placerat ipsum ut accumsan. Fusce commodo quam
+            tincidunt, aliquam augue vel, fermentum ipsum. Cras semper iaculis
+            risus, vel aliquam nisi tincidunt vitae. Sed elit sapien, rhoncus at
+            tellus lacinia, luctus placerat nisl. Donec dapibus neque in ipsum
+            porttitor, ac rutrum neque vulputate.
+          </p>
+          <div className="facilities__div">
+            <p>Facilities</p>
+            <div className="facilities">
+              {booking.facilities.map((item, index) => {
+                return <div key={index}>{item}</div>;
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+      <BookingSlider>
+        <Slider {...settings} style={{ width: "95%", height: "970px" }}>
+          {booking.IMG.map((image, index) => (
+            <div
+              key={index}
+              style={{ width: "100%", height: "1000px", position: "relative" }}
+            >
+              <div
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
                   borderRadius: "30px",
+                  overflow: "hidden",
+                  position: "relative",
+                  width: "100%",
+                  height: "970px",
                 }}
-              />
+              >
+                <Ribbon color={getStatusColor(booking.Status)}>
+                  {booking.Status}
+                </Ribbon>
+                <img
+                  src={image}
+                  alt={`Booking image ${index}`}
+                  style={{
+                    width: "100%",
+                    height: "970px",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
             </div>
           ))}
         </Slider>
+      </BookingSlider>
 
-        <h1>{booking["Guest"]}</h1>
-        <h6>{booking.ID}</h6>
-        {/* Add other room properties to display */}
-      </User>
-      <button onClick={handleEditClick}>Edit Booking</button>
       <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)}>
         <Form onSubmit={handleEditSubmit}>
           <label htmlFor="guest">
@@ -94,7 +188,7 @@ const SingleBooking = () => {
           <button onClick={() => setIsModalOpen(false)}>Cancel</button>
         </Form>
       </Modal>
-    </UserComp>
+    </BookingComp>
   );
 };
 

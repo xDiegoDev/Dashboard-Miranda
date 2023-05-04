@@ -5,7 +5,7 @@ export const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 0px;
   background-color: #202020;
   position: fixed;
   top: 0;
@@ -17,27 +17,15 @@ export const StyledHeader = styled.header`
   z-index: 100;
 
   .hamburger__div .hamburger__icon {
-    color: #b1b1b1;
-    box-shadow: 0 4px 6px rgba(149, 149, 149, 0.1),
-      0 1px 3px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease;
-  }
-
-  .hamburger__div .hamburger__icon:hover {
-    box-shadow: 0 8px 12px rgba(150, 148, 148, 0.12),
-      0 3px 6px rgba(0, 0, 0, 0.1);
+    color: white;
   }
 
   .title {
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
-    background-image: linear-gradient(to right, #8f8f8f, white);
-    transition: color 0.5s ease-out;
-    &:hover {
-      color: white;
-      text-shadow: 0 0 3px #010101;
-    }
+    color: white;
+    font-size: 30px;
+    letter-spacing: 1.5px;
   }
 
   .icons {

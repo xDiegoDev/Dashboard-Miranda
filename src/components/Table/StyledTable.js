@@ -9,7 +9,7 @@ export const StyledTable = styled.table`
   font-size: 11px;
   margin-top: 200px;
   border-collapse: collapse;
-  width: 100%;
+  width: 70%;
   min-width: 1100px;
   letter-spacing: 1.5px;
   height: auto;

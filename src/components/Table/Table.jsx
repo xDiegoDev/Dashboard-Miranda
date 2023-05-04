@@ -4,22 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import StarIcon from "@mui/icons-material/Star";
 
-const Table = ({
-  initialData,
-  onRowClick,
-  onDelete,
-  renderCustomColumns,
-  onToggleAction,
-  onEdit,
-  route,
-}) => {
+const Table = ({ initialData, onRowClick, onDelete, route }) => {
   const [data, setData] = useState(initialData);
   const [showModal, setShowModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const filterOptions = ["all", "published", "archived"];
 
   useEffect(() => {
     setData(initialData);
@@ -56,6 +47,9 @@ const Table = ({
       col !== "Password" &&
       col !== "IMG" &&
       col !== "ID" &&
+      col !== "UserIMG" &&
+      col !== "price" &&
+      col !== "facilities" &&
       col !== "Stars" && // Add this line
       !(route === "contacts" && (col === "Telephone" || col === "Mail"))
   );
@@ -86,16 +80,6 @@ const Table = ({
       </div>
     </div>
   );
-
-  const renderStarIcons = (stars) => {
-    return Array.from({ length: stars }, (_, i) => (
-      <StarIcon
-        key={i}
-        fontSize="small"
-        style={{ marginRight: "4px", fontSize: "10px", marginBottom: "10px" }}
-      />
-    ));
-  };
 
   const renderRoomIdImageColumn = (row) => (
     <div style={{ display: "flex", alignItems: "center" }}>
@@ -251,10 +235,6 @@ const Table = ({
     currentPage * itemsPerPage
   );
 
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
-
   const getActionStyle = (action) => {
     if (action === "Archive") {
       return { color: "red", letterSpacing: "1.5px" };
@@ -274,27 +254,35 @@ const Table = ({
     );
   };
 
-  const renderCommentColumn = (row) => (
-    <Link
-      to={`/contacts/${row.ID}`}
-      style={{ textDecoration: "none", color: "white" }}
-    >
-      {row.Comment}
-    </Link>
-  );
-
   return (
     <>
       {route === "contacts" && (
         <div
-          style={{ marginBottom: "-100px", marginTop: "200px", color: "white" }}
+          style={{
+            marginLeft: "15%",
+            marginTop: "100px",
+            marginBottom: "-100px",
+            color: "white",
+          }}
         >
-          <label htmlFor="action-filter">Filter by action: </label>
+          <label
+            htmlFor="action-filter"
+            style={{ fontSize: "20px", textDecoration: "Underline" }}
+          >
+            Filter by action:
+          </label>
           <select
             id="action-filter"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            style={{ marginLeft: "8px" }}
+            style={{
+              marginLeft: "8px",
+              padding: "10px 20px",
+              color: "white",
+              border: "1px solid white",
+              borderRadius: "10px",
+              background: "#212121",
+            }}
           >
             <option value="all">All</option>
             <option value="published">Published</option>
@@ -388,8 +376,6 @@ const Table = ({
                         <div style={getDescriptionWrapperStyle()}>
                           {cellContent}
                         </div>
-                      ) : col === "Comment" && route === "contacts" ? (
-                        renderCommentColumn(row)
                       ) : col === "Contact" ? (
                         <div
                           style={{

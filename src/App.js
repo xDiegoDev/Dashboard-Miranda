@@ -26,6 +26,7 @@ function App() {
   const { authState } = useContext(AuthContext);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const location = useLocation();
+  const authDispatch = useContext(AuthContext).authDispatch;
 
   useEffect(() => {
     if (authState.isLoggedIn && location.pathname === "/login") {
@@ -58,6 +59,10 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    authDispatch({ type: "LOGOUT" });
+  };
+
   return (
     <StyledMain
       isLoggedIn={authState.isLoggedIn}
@@ -65,6 +70,7 @@ function App() {
     >
       {authState.isLoggedIn && (
         <Header
+          handleLogout={handleLogout}
           title={getTitle(location.pathname)}
           setSidebarVisible={setSidebarVisible}
           sidebarVisible={sidebarVisible}
@@ -77,7 +83,10 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/rooms/" element={<Rooms />} />
           <Route path="/rooms/:id" element={<SingleRoom />} />
-          <Route path="/users/" element={<Users />} />
+          <Route
+            path="/users/"
+            element={<Users handleLogout={handleLogout} />}
+          />
           <Route path="/users/:id" element={<SingleUser />} />
           <Route path="/bookings/" element={<Bookings />} />
           <Route path="/bookings/:id" element={<SingleBooking />} />
