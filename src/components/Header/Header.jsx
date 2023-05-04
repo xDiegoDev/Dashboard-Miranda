@@ -42,12 +42,9 @@ const HamburgerIcon = (props) => {
   );
 };
 
-const Header = ({ title, sidebarVisible, setSidebarVisible }) => {
+const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
   const handleItemClick = () => {
     setSidebarVisible(false);
-  };
-  const handleLogout = () => {
-    authDispatch({ type: "LOGOUT" });
   };
   const location = useLocation();
 

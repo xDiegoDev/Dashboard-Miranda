@@ -18,11 +18,15 @@ import SingleUser from "./pages/Users/SingleUser";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 
 import { StyledMain } from "./AppStyled";
+import SingleRoom from "./pages/Rooms/SingleRoom";
+import SingleBooking from "./pages/Bookings/SingleBooking";
+import SingleContact from "./pages/Contact/SingleContact";
 
 function App() {
   const { authState } = useContext(AuthContext);
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const location = useLocation();
+  const authDispatch = useContext(AuthContext).authDispatch;
 
   useEffect(() => {
     if (authState.isLoggedIn && location.pathname === "/login") {
@@ -48,9 +52,15 @@ function App() {
         return "User Details";
       case /^\/rooms\/[\w-]+$/i.test(pathname):
         return "Room Details";
+      case /^\/bookings\/[\w-]+$/i.test(pathname):
+        return "Booking Details";
       default:
         return "Dashboard";
     }
+  };
+
+  const handleLogout = () => {
+    authDispatch({ type: "LOGOUT" });
   };
 
   return (
@@ -60,6 +70,7 @@ function App() {
     >
       {authState.isLoggedIn && (
         <Header
+          handleLogout={handleLogout}
           title={getTitle(location.pathname)}
           setSidebarVisible={setSidebarVisible}
           sidebarVisible={sidebarVisible}
@@ -70,11 +81,17 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/rooms/*" element={<Rooms />} />
-          <Route path="/users/" element={<Users />} />
+          <Route path="/rooms/" element={<Rooms />} />
+          <Route path="/rooms/:id" element={<SingleRoom />} />
+          <Route
+            path="/users/"
+            element={<Users handleLogout={handleLogout} />}
+          />
           <Route path="/users/:id" element={<SingleUser />} />
-          <Route path="/bookings/*" element={<Bookings />} />
-          <Route path="/contact/*" element={<Contact />} />
+          <Route path="/bookings/" element={<Bookings />} />
+          <Route path="/bookings/:id" element={<SingleBooking />} />
+          <Route path="/contacts/" element={<Contact />} />
+          <Route path="/contacts/:id" element={<SingleContact />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

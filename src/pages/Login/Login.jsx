@@ -35,7 +35,7 @@ const Login = () => {
 
   useEffect(() => {
     if (authState.isLoggedIn) {
-      navigate("/", { replace: true });
+      navigate("/");
     }
   }, [authState.isLoggedIn, navigate]);
 

@@ -8,36 +8,30 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
 import { ColorRing as Loader } from "react-loader-spinner";
-import { useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import Modal from "../../components/Modal";
 import { Form } from "./StyledUser";
+import { useAuth } from "../../contexts/useAuth";
+import { BookingComp } from "../Bookings/StyledSingleBook";
 
-const Users = () => {
+const Users = ({ handleLogout }) => {
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.users.users);
+  const usersStatus = useSelector((state) => state.users.status);
   const loading = useSelector((state) => state.users.status === "loading");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const usersFetched = useRef(false);
+  const { isLoggedIn, userEmail } = useAuth();
 
   useEffect(() => {
-    if (!usersFetched.current) {
+    if (usersStatus === "idle") {
       dispatch(fetchUsersAsync());
-      usersFetched.current = true;
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    if (location.state && location.state.updatedUser) {
-      dispatch(fetchUsersAsync());
-    }
-  }, [location, dispatch]);
-
   const handleDelete = (user) => {
     dispatch(deleteUserAsync(user.ID));
+    if (isLoggedIn && user.Email === userEmail) {
+      handleLogout();
+    }
   };
 
   const handleAddUser = () => {

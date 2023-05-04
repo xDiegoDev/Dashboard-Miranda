@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUserAsync } from "../../features/userSlice";
 import Modal from "../../components/Modal";
 import { User, UserComp, Form } from "./StyledUser";
+import { BookingComp } from "../Bookings/StyledSingleBook";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import MessageIcon from "@mui/icons-material/Message";
 
 const SingleUser = () => {
   const { id } = useParams();
@@ -39,6 +42,7 @@ const SingleUser = () => {
       console.error("Failed to update user:", error);
     }
     setIsModalOpen(false);
+    navigate("/users");
   };
 
   const handleEditClick = () => {
@@ -46,75 +50,158 @@ const SingleUser = () => {
   };
 
   return (
-    <UserComp>
-      <User>
-        <img
-          src={user.IMG}
+    <>
+      <BookingComp>
+        <div
+          className="details"
           style={{
-            width: "300px",
-            borderRadius: "30px",
+            display: "block",
+            margin: "auto",
+            letterSpacing: "2px",
+            position: "relative",
           }}
-        />
-        <h1>{user.Name}</h1>
-        <h6>{user.ID}</h6>
-        <h5>{user.Email}</h5>
-        <p>{user.Description}</p>
-        <p>{user.Status}</p>
-      </User>
-      <button onClick={handleEditClick}>Edit User</button>
-      <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)}>
-        <Form onSubmit={handleEditSubmit}>
-          <label htmlFor="name">
-            Name:
-            <input
-              required
-              type="text"
-              id="name"
-              name="name"
-              value={editedName}
-              onChange={(e) => setEditedName(e.target.value)}
-            />
-          </label>
-          <label htmlFor="email">
-            Email:
-            <input
-              required
-              type="email"
-              id="email"
-              name="email"
-              value={editedEmail}
-              onChange={(e) => setEditedEmail(e.target.value)}
-            />
-          </label>
-          <label htmlFor="description">
-            Description:
-            <input
-              required
-              type="text"
-              id="description"
-              name="description"
-              value={editedDescription}
-              onChange={(e) => setEditedDescription(e.target.value)}
-            />
-          </label>
-          <label htmlFor="status">
-            Status:
-            <select
-              required
-              id="status"
-              name="status"
-              value={editedStatus}
-              onChange={(e) => setEditedStatus(e.target.value)}
+        >
+          <button
+            style={{
+              position: "absolute",
+              right: "30px",
+              top: "30px",
+              border: "1px solid white",
+              borderRadius: "5px",
+              padding: "10px 20px ",
+              fontSize: "15px",
+              background: "#424242",
+              color: "white",
+            }}
+            onClick={handleEditClick}
+          >
+            Edit User
+          </button>
+          <div
+            className="guest"
+            style={{ alignItems: "center", marginTop: "30px" }}
+          >
+            <img src={user.IMG} style={{ width: "400px" }} />
+            <div>
+              <h2>{user.Name}</h2>
+              <h2 style={{ fontSize: "20px" }}>{user.Email}</h2>
+              <p>{user.ID}</p>
+              <p>{user.Status}</p>
+              <div className="inner__div">
+                <LocalPhoneIcon style={{ color: "white" }} />
+                <button>
+                  <MessageIcon />
+                  <p>Send message</p>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="line">
+            <div></div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              textAlign: "center",
+              width: "100%",
+              color: "white",
+              justifyContent: "center",
+              marginBottom: "30px",
+            }}
+          >
+            <h3 className="text">{user.Description}</h3>
+          </div>
+        </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+        >
+          <Form onSubmit={handleEditSubmit}>
+            <label htmlFor="name">
+              Name:
+              <input
+                required
+                type="text"
+                id="name"
+                name="name"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+              />
+            </label>
+            <label htmlFor="email">
+              Email:
+              <input
+                required
+                type="email"
+                id="email"
+                name="email"
+                value={editedEmail}
+                onChange={(e) => setEditedEmail(e.target.value)}
+              />
+            </label>
+            <label htmlFor="description">
+              Description:
+              <input
+                required
+                type="text"
+                id="description"
+                name="description"
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+              />
+            </label>
+            <label htmlFor="status">
+              Status:
+              <select
+                required
+                id="status"
+                name="status"
+                value={editedStatus}
+                onChange={(e) => setEditedStatus(e.target.value)}
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </label>
+            <button
+              type="submit"
+              style={{
+                width: "30%",
+                display: "block",
+                margin: "auto",
+                marginTop: "30px",
+                border: "1px solid white",
+                borderRadius: "5px",
+                padding: "10px 20px ",
+                fontSize: "15px",
+                background: "#424242",
+                color: "white",
+              }}
             >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </label>
-          <button type="submit">Save</button>
-          <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-        </Form>
-      </Modal>
-    </UserComp>
+              Save
+            </button>
+            <button
+              style={{
+                width: "30%",
+                display: "block",
+                margin: "auto",
+                marginTop: "30px",
+                border: "1px solid white",
+                borderRadius: "5px",
+                padding: "10px 20px ",
+                fontSize: "15px",
+                background: "#424242",
+                color: "white",
+              }}
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </Form>
+        </Modal>
+      </BookingComp>
+    </>
   );
 };
 

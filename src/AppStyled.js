@@ -6,7 +6,7 @@ export const StyledMain = styled.main`
   padding: ${({ isLoggedIn }) => (isLoggedIn ? "0" : "0")};
   transition: all 0.4s;
   width: ${({ sidebarVisible, isLoggedIn }) =>
-    isLoggedIn && sidebarVisible ? "calc(90% - 300px)" : "80%"};
+    isLoggedIn && sidebarVisible ? "calc(100% - 300px)" : "100%"};
   background-color: #171717;
   display: flex;
   justify-content: center;
