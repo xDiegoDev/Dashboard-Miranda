@@ -9,20 +9,22 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Card = styled.div`
-  background-color: white;
+  background-color: #212121;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 0px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   height: 200px;
+  border: 2px solid white;
+  color: white;
 `;
 
 const SliderContainer = styled.div`
   width: 1100px;
   margin: auto;
   margin-bottom: 20px;
-  margin-top: 200px;
+  margin-top: 150px;
   border-radius: 20px;
 `;
 
@@ -56,8 +58,7 @@ const Img = styled.img`
 `;
 
 const CardWrapper = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
 `;
 
 export const ContactSlider = () => {
@@ -108,16 +109,56 @@ const Contact = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const contactsData = useSelector((state) => state.contacts.contacts);
+  const [filter, setFilter] = useState("all");
+
+  const filterData = (data) => {
+    return data.filter((row) => {
+      if (filter === "all") return true;
+      if (filter === "published") return row.Action === "Archive";
+      if (filter === "archived") return row.Action == "Publish";
+      return false;
+    });
+  };
 
   useEffect(() => {
     dispatch(fetchContactsAsync());
   }, [dispatch]);
 
   return (
-    <div>
+    <div style={{ marginBottom: "100px" }}>
       <ContactSlider />
+      <div
+        style={{
+          marginLeft: "69%",
+          marginTop: "50px",
+          marginBottom: "-150px",
+          color: "white",
+        }}
+      >
+        <label htmlFor="action-filter" style={{ fontSize: "20px" }}>
+          Filter by action:
+        </label>
+        <select
+          id="action-filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          style={{
+            marginLeft: "18px",
+            padding: "10px 20px",
+            color: "white",
+            border: "1px solid white",
+            borderRadius: "10px",
+            background: "#212121",
+            fontSize: "15px",
+          }}
+        >
+          <option value="all">All</option>
+          <option value="published">Published</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
       {Array.isArray(contactsData) ? (
-        <Table initialData={contactsData} route="contacts" />
+        <Table initialData={filterData(contactsData)} route="contacts" />
       ) : (
         <p>Loading...</p>
       )}

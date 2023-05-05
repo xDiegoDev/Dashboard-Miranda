@@ -10,16 +10,31 @@ import { nanoid } from "nanoid";
 import { ColorRing as Loader } from "react-loader-spinner";
 import Modal from "../../components/Modal";
 import { Form } from "../Users/StyledUser";
+import Select from "react-select";
 
 const Bookings = () => {
   const dispatch = useDispatch();
   const bookingsData = useSelector((state) => state.bookings.bookings);
+  const bookingsStatus = useSelector((state) => state.bookings.status);
   const loading = useSelector((state) => state.rooms.status === "loading");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [facilities, setFacilities] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchBookingsAsync());
+    if (bookingsStatus === "idle") {
+      dispatch(fetchBookingsAsync());
+    }
   }, [dispatch]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleStatusFilterChange = (status) => {
+    setStatusFilter(status);
+  };
 
   const handleDelete = (booking) => {
     dispatch(deleteBookingAsync(booking.ID));
@@ -32,8 +47,17 @@ const Bookings = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const imgUrls = e.target.elements.img.value
+      .split(",")
+      .map((url) => url.trim());
+
+    if (imgUrls.length < 3 || imgUrls.length > 5) {
+      alert("Please provide between 3 and 5 image URLs");
+      return;
+    }
+
     const newBooking = {
-      IMG: e.target.elements.img.value,
+      IMG: imgUrls,
       Guest: e.target.elements.guest.value,
       ID: nanoid(),
       "Order Date": e.target.elements.orderDate.value,
@@ -42,11 +66,39 @@ const Bookings = () => {
       "Special Request": "View Notes",
       "Room Type": e.target.elements.roomType.value,
       Status: e.target.elements.status.value,
+      facilities: facilities.map((facility) => facility.value),
     };
 
     dispatch(addBookingAsync(newBooking));
     setIsModalOpen(false);
   };
+
+  let filteredBookings = [];
+
+  if (bookingsData) {
+    filteredBookings = bookingsData
+      .filter((booking) => {
+        if (searchTerm === "") {
+          return true;
+        }
+        return booking.Guest.toLowerCase().includes(searchTerm.toLowerCase());
+      })
+      .filter((booking) => {
+        if (statusFilter === "all") {
+          return true;
+        }
+        return booking.Status === statusFilter;
+      });
+  }
+
+  const facilityOptions = [
+    { value: "TV", label: "TV" },
+    { value: "AC", label: "AC" },
+    { value: "Double Bed", label: "Double Bed" },
+    { value: "Parking Spot", label: "Parking Spot" },
+    { value: "WiFi", label: "WiFi" },
+    { value: "Fridge", label: "Fridge" },
+  ];
 
   return (
     <div>
@@ -69,8 +121,113 @@ const Bookings = () => {
         </div>
       ) : (
         <>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "150px",
+              marginLeft: "12%",
+              marginBottom: "-130px",
+              color: "white",
+              width: "85%",
+            }}
+          >
+            <div>
+              <label
+                htmlFor="search-user"
+                style={{
+                  fontSize: "20px",
+                  letterSpacing: "1.5px",
+                  marginTop: "5px",
+                }}
+              >
+                Search Guest
+              </label>
+              <input
+                type="text"
+                placeholder="Search Guest"
+                onChange={handleSearchChange}
+                style={{
+                  marginLeft: "18px",
+                  padding: "10px 20px",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                  background: "#212121",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                marginLeft: "23%",
+                fontSize: "18px",
+                letterSpacing: "1.5px",
+              }}
+            >
+              <button
+                onClick={() => handleStatusFilterChange("Check In")}
+                style={{
+                  fontSize: "18px",
+                  letterSpacing: "1.5px",
+                  background: "#282828",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                  padding: "0 10px",
+                  marginRight: "20px",
+                }}
+              >
+                <p>Check In</p>
+              </button>
+              <button
+                onClick={() => handleStatusFilterChange("Check Out")}
+                style={{
+                  fontSize: "18px",
+                  letterSpacing: "1.5px",
+                  background: "#282828",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                  padding: "0 10px",
+                  marginRight: "20px",
+                }}
+              >
+                <p>Check Out</p>
+              </button>
+              <button
+                onClick={() => handleStatusFilterChange("Progress")}
+                style={{
+                  fontSize: "18px",
+                  letterSpacing: "1.5px",
+                  background: "#282828",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                  padding: "0 10px",
+                  marginRight: "20px",
+                }}
+              >
+                <p>In Progress</p>
+              </button>
+              <button
+                onClick={() => handleStatusFilterChange("all")}
+                style={{
+                  fontSize: "18px",
+                  letterSpacing: "1.5px",
+                  background: "#282828",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                  padding: "0 10px",
+                  marginRight: "20px",
+                }}
+              >
+                <p>All</p>
+              </button>
+            </div>
+          </div>
           <Table
-            initialData={bookingsData}
+            initialData={filteredBookings}
             onDelete={handleDelete}
             route="bookings"
           />
@@ -81,24 +238,24 @@ const Bookings = () => {
             <h2 style={{ color: "white" }}>Create New Booking</h2>
             <Form onSubmit={handleSubmit}>
               <label htmlFor="img">
-                Image URL:
+                Image URLs (comma separated)
                 <input type="text" id="img" name="img" />
               </label>
               <label htmlFor="guest">
                 Guest:
-                <input type="text" id="guest" name="guest" />
+                <input type="text" id="guest" name="guest" required />
               </label>
               <label htmlFor="orderDate">
                 Order Date:
-                <input type="date" id="orderDate" name="orderDate" />
+                <input type="date" id="orderDate" name="orderDate" required />
               </label>
               <label htmlFor="checkIn">
                 Check In:
-                <input type="date" id="checkIn" name="checkIn" />
+                <input type="date" id="checkIn" name="checkIn" required />
               </label>
               <label htmlFor="checkOut">
                 Check Out:
-                <input type="date" id="checkOut" name="checkOut" />
+                <input type="date" id="checkOut" name="checkOut" required />
               </label>
               <label htmlFor="roomType">
                 Room Type:
@@ -116,6 +273,18 @@ const Bookings = () => {
                   <option value="Check Out">Check Out</option>
                   <option value="Progress">Progress</option>
                 </select>
+              </label>
+              <label htmlFor="facilities">
+                Facilities:
+                <Select
+                  isMulti
+                  id="facilities"
+                  name="facilities"
+                  options={facilityOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={setFacilities}
+                />
               </label>
               <label htmlFor="cancellation">
                 Cancellation:
@@ -155,6 +324,7 @@ const Bookings = () => {
               borderRadius: "20px",
               margin: "auto",
               marginTop: "50px",
+              marginBottom: "50px",
             }}
             onClick={handleAddRoom}
           >

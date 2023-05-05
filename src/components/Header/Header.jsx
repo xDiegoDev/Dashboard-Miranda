@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -10,7 +10,7 @@ import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ExtensionRoundedIcon from "@mui/icons-material/ExtensionRounded";
-import { authDispatch, AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/useAuth";
 import { updateUserAsync } from "../../features/userSlice";
@@ -48,7 +48,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
   };
   const location = useLocation();
 
-  const { isLoggedIn, userEmail, userName } = useAuth();
+  const { isLoggedIn, userEmail } = useAuth();
 
   const usersData = useSelector((state) => state.users.users);
 
@@ -99,7 +99,6 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
             alt="Personal Logo"
             style={{
               width: "70px",
-              marginBottom: "20px",
               display: "block",
               margin: "auto",
               marginBottom: "40px",
@@ -199,7 +198,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
             <UserInfo>
               {loggedInUser && (
                 <>
-                  <img src={loggedInUser.IMG} />
+                  <img src={loggedInUser.IMG} alt="User Profile" />
                   <h6>{loggedInUser.Name}</h6>
                   <p>{loggedInUser.Email}</p>
                   <button

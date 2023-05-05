@@ -1,27 +1,30 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBookingAsync } from "../../features/bookingSlice";
 import Modal from "../../components/Modal";
-import { User, Form } from "../Users/StyledUser";
+import { Form } from "../Users/StyledUser";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import styled from "styled-components";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MessageIcon from "@mui/icons-material/Message";
 import { BookingComp, BookingSlider, Ribbon } from "./StyledSingleBook";
+import { useNavigate } from "react-router-dom";
 
 const SingleBooking = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const bookings = useSelector((state) => state.bookings.bookings);
-
+  const navigate = useNavigate();
   const booking = bookings.find((booking) => String(booking.ID) === String(id));
 
   const [editedGuest, setEditedGuest] = useState(booking["Guest"]);
-  // Add other room properties that need to be edited
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editedCheckIn, setEditedCheckIn] = useState(booking["Check In"]);
+  const [editedCheckOut, setEditedCheckOut] = useState(booking["Check Out"]);
+  const [editedRoomType, setEditedRoomType] = useState(booking["Room Type"]);
+  const [editedPrice, setEditedPrice] = useState(booking.price);
 
   if (!booking) {
     return <div>Booking not found</div>;
@@ -32,7 +35,10 @@ const SingleBooking = () => {
     const updatedBooking = {
       ...booking,
       Guest: editedGuest,
-      // Update other room properties here
+      "Check In": editedCheckIn,
+      "Check Out": editedCheckOut,
+      "Room Type": editedRoomType,
+      price: editedPrice,
     };
 
     try {
@@ -41,6 +47,7 @@ const SingleBooking = () => {
       console.error("Failed to update booking:", error);
     }
     setIsModalOpen(false);
+    navigate("/bookings");
   };
 
   const handleEditClick = () => {
@@ -63,14 +70,33 @@ const SingleBooking = () => {
         return "#FFC107"; // Yellow
       case "Check Out":
         return "#F44336"; // Red
+      case "default":
+        return "white";
     }
   };
 
   return (
     <BookingComp>
-      <div className="details" style={{ width: "45%" }}>
+      <div className="details" style={{ width: "45%", position: "relative" }}>
         <div className="guest">
-          <img src={booking.UserIMG} />
+          <button
+            style={{
+              position: "absolute",
+              right: "30px",
+              bottom: "25px",
+              border: "1px solid white",
+              borderRadius: "5px",
+              padding: "10px 20px ",
+              fontSize: "15px",
+              background: "#424242",
+              color: "white",
+              zIndex: "10000",
+            }}
+            onClick={handleEditClick}
+          >
+            Edit Booking
+          </button>
+          <img src={booking.UserIMG} alt="UserIMG" />
           <div>
             <h2>{booking.Guest}</h2>
             <p>ID: {booking.ID}</p>
@@ -129,7 +155,7 @@ const SingleBooking = () => {
           <div className="facilities__div">
             <p>Facilities</p>
             <div className="facilities">
-              {booking.facilities.map((item, index) => {
+              {booking.facilities?.map((item, index) => {
                 return <div key={index}>{item}</div>;
               })}
             </div>
@@ -183,7 +209,54 @@ const SingleBooking = () => {
               onChange={(e) => setEditedGuest(e.target.value)}
             />
           </label>
-          {/* Add other form fields to match the room data properties */}
+
+          <label htmlFor="checkin">
+            Check In:
+            <input
+              required
+              type="date"
+              id="checkin"
+              name="checkin"
+              value={editedCheckIn}
+              onChange={(e) => setEditedCheckIn(e.target.value)}
+            />
+          </label>
+
+          <label htmlFor="checkout">
+            Check Out:
+            <input
+              required
+              type="date"
+              id="checkout"
+              name="checkout"
+              value={editedCheckOut}
+              onChange={(e) => setEditedCheckOut(e.target.value)}
+            />
+          </label>
+
+          <label htmlFor="roomtype">
+            Room Type:
+            <input
+              required
+              type="text"
+              id="roomtype"
+              name="roomtype"
+              value={editedRoomType}
+              onChange={(e) => setEditedRoomType(e.target.value)}
+            />
+          </label>
+
+          <label htmlFor="price">
+            Price:
+            <input
+              required
+              type="text"
+              id="price"
+              name="price"
+              value={editedPrice}
+              onChange={(e) => setEditedPrice(e.target.value)}
+            />
+          </label>
           <button type="submit">Save</button>
           <button onClick={() => setIsModalOpen(false)}>Cancel</button>
         </Form>
