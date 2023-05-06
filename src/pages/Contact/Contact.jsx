@@ -7,6 +7,27 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+const Arrow = ({ direction, onClick }) => {
+  const styles = {
+    position: "absolute",
+    zIndex: 2,
+    top: direction === "left" ? "32%" : "35%",
+    cursor: "pointer",
+    fontSize: "3rem",
+    color: "white",
+    marginLeft: direction === "left" ? "-7%" : "102%",
+  };
+
+  const transform = direction === "left" ? "rotate(180deg)" : "rotate(0deg)";
+
+  return (
+    <div style={{ ...styles, transform }} onClick={onClick}>
+      <FaChevronRight />
+    </div>
+  );
+};
 
 const Card = styled.div`
   background-color: #212121;
@@ -16,7 +37,6 @@ const Card = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   height: 200px;
-  border: 2px solid white;
   color: white;
 `;
 
@@ -24,7 +44,6 @@ const SliderContainer = styled.div`
   width: 1100px;
   margin: auto;
   margin-bottom: 20px;
-  margin-top: 150px;
   border-radius: 20px;
 `;
 
@@ -48,6 +67,8 @@ const SliderSettings = {
   speed: 500,
   slidesToShow: 3,
   slidesToScroll: 1,
+  nextArrow: <Arrow direction="right" />,
+  prevArrow: <Arrow direction="left" />,
 };
 
 const Img = styled.img`
@@ -68,7 +89,17 @@ export const ContactSlider = () => {
     navigate(`/contacts/${id}`);
   };
   return (
-    <div>
+    <div
+      style={{
+        margin: "auto",
+        marginTop: "150px",
+        borderRadius: "10px",
+        width: "80%",
+      }}
+    >
+      <h2 style={{ marginLeft: "8%", marginBottom: "30px", color: "white" }}>
+        Latest Reviews by Customers
+      </h2>
       {Array.isArray(contactsData) && (
         <SliderContainer>
           <Slider {...SliderSettings} style={{}}>
@@ -146,7 +177,6 @@ const Contact = () => {
             marginLeft: "18px",
             padding: "10px 20px",
             color: "white",
-            border: "1px solid white",
             borderRadius: "10px",
             background: "#212121",
             fontSize: "15px",

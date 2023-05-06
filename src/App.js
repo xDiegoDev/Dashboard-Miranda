@@ -45,7 +45,7 @@ function App() {
       case pathname === "/users":
         return "Users";
       case pathname === "/contacts":
-        return "Contacts";
+        return "Reviews";
       case /^\/contacts\/[\w-]+$/i.test(pathname):
         return "Contact Details";
       case /^\/users\/[\w-]+$/i.test(pathname):
@@ -53,7 +53,7 @@ function App() {
       case /^\/rooms\/[\w-]+$/i.test(pathname):
         return "Room Details";
       case /^\/bookings\/[\w-]+$/i.test(pathname):
-        return "Booking Details";
+        return "Review Details";
       default:
         return "Dashboard";
     }
