@@ -7,22 +7,43 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+const Arrow = ({ direction, onClick }) => {
+  const styles = {
+    position: "absolute",
+    zIndex: 2,
+    top: direction === "left" ? "32%" : "35%",
+    cursor: "pointer",
+    fontSize: "3rem",
+    color: "white",
+    marginLeft: direction === "left" ? "-7%" : "102%",
+  };
+
+  const transform = direction === "left" ? "rotate(180deg)" : "rotate(0deg)";
+
+  return (
+    <div style={{ ...styles, transform }} onClick={onClick}>
+      <FaChevronRight />
+    </div>
+  );
+};
 
 const Card = styled.div`
-  background-color: white;
+  background-color: #212121;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 0px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   height: 200px;
+  color: white;
 `;
 
 const SliderContainer = styled.div`
   width: 1100px;
   margin: auto;
   margin-bottom: 20px;
-  margin-top: 200px;
   border-radius: 20px;
 `;
 
@@ -46,6 +67,8 @@ const SliderSettings = {
   speed: 500,
   slidesToShow: 3,
   slidesToScroll: 1,
+  nextArrow: <Arrow direction="right" />,
+  prevArrow: <Arrow direction="left" />,
 };
 
 const Img = styled.img`
@@ -56,8 +79,7 @@ const Img = styled.img`
 `;
 
 const CardWrapper = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
 `;
 
 export const ContactSlider = () => {
@@ -67,7 +89,17 @@ export const ContactSlider = () => {
     navigate(`/contacts/${id}`);
   };
   return (
-    <div>
+    <div
+      style={{
+        margin: "auto",
+        marginTop: "150px",
+        borderRadius: "10px",
+        width: "80%",
+      }}
+    >
+      <h2 style={{ marginLeft: "8%", marginBottom: "30px", color: "white" }}>
+        Latest Reviews by Customers
+      </h2>
       {Array.isArray(contactsData) && (
         <SliderContainer>
           <Slider {...SliderSettings} style={{}}>
@@ -108,16 +140,55 @@ const Contact = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const contactsData = useSelector((state) => state.contacts.contacts);
+  const [filter, setFilter] = useState("all");
+
+  const filterData = (data) => {
+    return data.filter((row) => {
+      if (filter === "all") return true;
+      if (filter === "published") return row.Action === "Archive";
+      if (filter === "archived") return row.Action == "Publish";
+      return false;
+    });
+  };
 
   useEffect(() => {
     dispatch(fetchContactsAsync());
   }, [dispatch]);
 
   return (
-    <div>
+    <div style={{ marginBottom: "100px" }}>
       <ContactSlider />
+      <div
+        style={{
+          marginLeft: "69%",
+          marginTop: "50px",
+          marginBottom: "-150px",
+          color: "white",
+        }}
+      >
+        <label htmlFor="action-filter" style={{ fontSize: "20px" }}>
+          Filter by action:
+        </label>
+        <select
+          id="action-filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          style={{
+            marginLeft: "18px",
+            padding: "10px 20px",
+            color: "white",
+            borderRadius: "10px",
+            background: "#212121",
+            fontSize: "15px",
+          }}
+        >
+          <option value="all">All</option>
+          <option value="published">Published</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
       {Array.isArray(contactsData) ? (
-        <Table initialData={contactsData} route="contacts" />
+        <Table initialData={filterData(contactsData)} route="contacts" />
       ) : (
         <p>Loading...</p>
       )}

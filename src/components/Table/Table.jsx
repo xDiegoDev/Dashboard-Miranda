@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyledTable, Modal } from "./StyledTable";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import StarIcon from "@mui/icons-material/Star";
 
 const Table = ({ initialData, onRowClick, onDelete, route }) => {
   const [data, setData] = useState(initialData);
   const [showModal, setShowModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -35,13 +33,6 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     return <div>No data available</div>;
   }
 
-  const filteredData = data.filter((row) => {
-    if (filter === "all") return true;
-    if (filter === "published") return row.Action === "Archive";
-    if (filter === "archived") return row.Action == "Publish";
-    return false;
-  });
-
   const columns = Object.keys(data[0]).filter(
     (col) =>
       col !== "Password" &&
@@ -50,6 +41,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
       col !== "UserIMG" &&
       col !== "price" &&
       col !== "facilities" &&
+      col !== "Number" &&
       col !== "Stars" && // Add this line
       !(route === "contacts" && (col === "Telephone" || col === "Mail"))
   );
@@ -100,7 +92,11 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
           to={`/rooms/${row.ID}`}
           style={{ textDecoration: "none", color: "white" }}
         >
-          {row["Room Name"]}
+          <p style={{ color: "white" }}>
+            {row["Room Name"]}
+            {row.Number}
+          </p>
+
           <br />
           <p style={{ color: "gray", fontSize: "10px" }}>{row.ID}</p>
         </Link>
@@ -136,7 +132,15 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
   );
 
   const renderRateColumn = (row) => {
-    const originalRate = parseFloat(row.Rate.slice(1).split(" ")[0]);
+    const roomMap = {
+      "Deluxe A-": { bedType: "Single", price: 100 },
+      "Deluxe B-": { bedType: "Double", price: 200 },
+      "Deluxe C-": { bedType: "Double Deluxe", price: 300 },
+      "Deluxe D-": { bedType: "Suite", price: 400 },
+    };
+
+    const roomInfo = roomMap[row["Room Name"]];
+    const originalRate = roomInfo.price;
     const offerPercentage = row.Offer;
     const discountedRate = originalRate * (1 - offerPercentage / 100);
 
@@ -151,12 +155,12 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
                 color: "gray",
               }}
             >
-              {row.Rate}
+              ${originalRate.toFixed(2)} / night
             </span>
             <span>${discountedRate.toFixed(2)} / night</span>
           </>
         ) : (
-          <span>{row.Rate}</span>
+          <span>${originalRate.toFixed(2)} / night</span>
         )}
       </div>
     );
@@ -215,7 +219,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
               margin: "30px 30px",
               padding: "10px 15px",
               background: "#202020",
-              border: "1px solid #b189d9",
+              border: "2px solid #424242",
               borderRadius: "10px",
               color: "white",
             }}
@@ -230,7 +234,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     );
   };
 
-  const paginatedData = filteredData.slice(
+  const paginatedData = data.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -256,41 +260,6 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
 
   return (
     <>
-      {route === "contacts" && (
-        <div
-          style={{
-            marginLeft: "15%",
-            marginTop: "100px",
-            marginBottom: "-100px",
-            color: "white",
-          }}
-        >
-          <label
-            htmlFor="action-filter"
-            style={{ fontSize: "20px", textDecoration: "Underline" }}
-          >
-            Filter by action:
-          </label>
-          <select
-            id="action-filter"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            style={{
-              marginLeft: "8px",
-              padding: "10px 20px",
-              color: "white",
-              border: "1px solid white",
-              borderRadius: "10px",
-              background: "#212121",
-            }}
-          >
-            <option value="all">All</option>
-            <option value="published">Published</option>
-            <option value="archived">Archived</option>
-          </select>
-        </div>
-      )}
-
       <StyledTable>
         <thead>
           <tr>

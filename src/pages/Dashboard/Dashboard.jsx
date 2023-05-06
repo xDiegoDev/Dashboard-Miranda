@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import KingBedIcon from "@mui/icons-material/KingBed";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
@@ -10,15 +10,19 @@ import { DashDivs } from "./StyledDashboard";
 import { ContactSlider } from "../Contact/Contact";
 import { useDispatch } from "react-redux";
 import { fetchContactsAsync } from "../../features/contactSlice";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./calendarStyles.css";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const [value, onChange] = useState(new Date());
   useEffect(() => {
     dispatch(fetchContactsAsync);
   }, [dispatch]);
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ width: "100%" }}>
       <DashDivs>
         <div className="info__container">
           <div className="icon">
@@ -61,7 +65,12 @@ const Dashboard = () => {
           </div>
         </div>
       </DashDivs>
-      <ContactSlider />
+      <div style={{ display: "flex" }}>
+        <Calendar onChange={onChange} value={value} />
+      </div>
+      <div style={{ marginTop: "-70px", marginBottom: "50px" }}>
+        <ContactSlider />
+      </div>
     </div>
   );
 };

@@ -2,14 +2,10 @@ import { nanoid } from "nanoid";
 import ContactData from "./ContactData.json";
 
 const assignUniqueIds = (data) => {
-  return data.map((item) => {
-    const ID = "ORD" + nanoid();
-    return {
-      ...item,
-      ID: ID,
-      "Order ID": ID,
-    };
-  });
+  return data.map((item) => ({
+    ...item,
+    ID: "ORD" + nanoid(),
+  }));
 };
 
 const updatedContactData = assignUniqueIds(ContactData);

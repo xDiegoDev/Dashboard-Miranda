@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const DashDivs = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 80%;
   justify-content: space-around;
-  margin-top: 200px;
+  margin: auto;
+  margin-top: 130px;
 
   .info__container {
     display: flex;

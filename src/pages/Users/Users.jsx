@@ -20,6 +20,9 @@ const Users = ({ handleLogout }) => {
   const loading = useSelector((state) => state.users.status === "loading");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoggedIn, userEmail } = useAuth();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [sortByName, setSortByName] = useState(false);
 
   useEffect(() => {
     if (usersStatus === "idle") {
@@ -32,6 +35,13 @@ const Users = ({ handleLogout }) => {
     if (isLoggedIn && user.Email === userEmail) {
       handleLogout();
     }
+  };
+
+  const filterUsersByName = (users) => {
+    if (!searchTerm) return users;
+    return users.filter((user) =>
+      user.Name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   };
 
   const handleAddUser = () => {
@@ -61,6 +71,30 @@ const Users = ({ handleLogout }) => {
     handleCreateUser(newUser);
   };
 
+  const sortUsers = (users) => {
+    let sortedUsers = [...users];
+
+    switch (sortOrder) {
+      case "newest":
+        sortedUsers.sort(
+          (a, b) => new Date(b["Start Date"]) - new Date(a["Start Date"])
+        );
+        break;
+      case "oldest":
+        sortedUsers.sort(
+          (a, b) => new Date(a["Start Date"]) - new Date(b["Start Date"])
+        );
+        break;
+      case "name":
+        sortedUsers.sort((a, b) => a.Name.localeCompare(b.Name));
+        break;
+      default:
+        break;
+    }
+
+    return sortedUsers;
+  };
+
   return (
     <div>
       {loading ? (
@@ -82,8 +116,84 @@ const Users = ({ handleLogout }) => {
         </div>
       ) : (
         <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginLeft: "3%",
+              marginRight: "3%",
+              marginBottom: "-100px",
+              color: "white",
+              marginTop: "150px",
+            }}
+          >
+            <div
+              style={{
+                marginLeft: "12%",
+                marginBottom: "-150px",
+                color: "white",
+              }}
+            >
+              <label
+                htmlFor="search-user"
+                style={{ fontSize: "20px", letterSpacing: "1.5px" }}
+              >
+                Search User:
+              </label>
+              <input
+                type="text"
+                id="search-user"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  marginLeft: "18px",
+                  padding: "10px 20px",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                  background: "#212121",
+                }}
+              />
+            </div>{" "}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginLeft: "15%",
+                marginRight: "15%",
+                marginBottom: "-100px",
+                color: "white",
+              }}
+            >
+              <div>
+                <label
+                  htmlFor="sort-order"
+                  style={{ fontSize: "20px", letterSpacing: "1.5px" }}
+                >
+                  Sort by:
+                </label>
+                <select
+                  id="sort-order"
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                  style={{
+                    marginLeft: "18px",
+                    padding: "10px 20px",
+                    color: "white",
+                    border: "1px solid white",
+                    borderRadius: "10px",
+                    background: "#212121",
+                  }}
+                >
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                  <option value="name">By Name</option>
+                </select>
+              </div>
+            </div>
+          </div>
           <Table
-            initialData={usersData}
+            initialData={sortUsers(filterUsersByName(usersData))}
             onDelete={handleDelete}
             route="users"
           />
@@ -158,10 +268,11 @@ const Users = ({ handleLogout }) => {
               color: "white",
               fontSize: "15px",
               backgroundColor: "#222",
-              border: "3px solid #414141",
+              border: "3px solid #424242",
               borderRadius: "20px",
               margin: "auto",
               marginTop: "50px",
+              marginBottom: "50px",
             }}
             onClick={handleAddUser}
           >

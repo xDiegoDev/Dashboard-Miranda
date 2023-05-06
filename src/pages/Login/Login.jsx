@@ -24,7 +24,7 @@ const Login = () => {
           validateUserAsync({ email, password })
         ).unwrap();
         authDispatch({ type: "LOGIN", payload: { email: user.Email } });
-        navigate("/", { replace: true });
+        navigate("/");
       });
     } catch (error) {
       alert("Invalid email or password");
