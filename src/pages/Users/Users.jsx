@@ -205,23 +205,42 @@ const Users = ({ handleLogout }) => {
             <Form onSubmit={handleSubmit}>
               <label htmlFor="img">
                 Image URL:
-                <input type="text" id="img" name="img" />
+                <input data-cy="img" type="text" id="img" name="img" />
               </label>
               <label htmlFor="name">
                 Name:
-                <input required type="text" id="name" name="name" />
+                <input
+                  data-cy="name"
+                  required
+                  type="text"
+                  id="name"
+                  name="name"
+                />
               </label>
               <label htmlFor="email">
                 Email:
-                <input required type="email" id="email" name="email" />
+                <input
+                  data-cy="email"
+                  required
+                  type="email"
+                  id="email"
+                  name="email"
+                />
               </label>
               <label htmlFor="startDate">
                 Start Date:
-                <input required type="date" id="startDate" name="startDate" />
+                <input
+                  data-cy="startDate"
+                  required
+                  type="date"
+                  id="startDate"
+                  name="startDate"
+                />
               </label>
               <label htmlFor="description">
                 Description:
                 <input
+                  data-cy="job"
                   required
                   type="text"
                   id="description"
@@ -234,17 +253,24 @@ const Users = ({ handleLogout }) => {
               </label>
               <label htmlFor="status">
                 Status:
-                <select required id="status" name="status">
+                <select data-cy="status" required id="status" name="status">
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>
                 </select>
               </label>
               <label htmlFor="password">
                 Password:
-                <input required type="password" id="password" name="password" />
+                <input
+                  data-cy="password"
+                  required
+                  type="password"
+                  id="password"
+                  name="password"
+                />
               </label>{" "}
               <button
                 type="submit"
+                data-cy="submit"
                 style={{
                   display: "block",
                   margin: "auto",
@@ -262,6 +288,7 @@ const Users = ({ handleLogout }) => {
             </Form>
           </Modal>
           <button
+            data-cy="addUser"
             style={{
               display: "block",
               padding: "10px 20px",

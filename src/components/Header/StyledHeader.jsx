@@ -154,14 +154,6 @@ export const UserInfo = styled.div`
     padding: 10px 0;
   }
 
-  button {
-    border-radius: 10px;
-    border: 1px solid black;
-    padding: 10px;
-    font-weight: bold;
-    background-color: white;
-  }
-
   p {
     font-size: 12px;
     padding: 20px 0;
@@ -184,4 +176,14 @@ export const SidebarFooter = styled.div`
   background-color: #414141;
   color: white;
   padding-bottom: 10px;
+`;
+
+export const Button = styled.button`
+  button {
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    font-weight: bold;
+    background-color: white;
+  }
 `;

@@ -59,6 +59,7 @@ const Login = () => {
               <input
                 type="email"
                 id="email"
+                data-cy="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -68,11 +69,14 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
+                data-cy="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button onClick={handleLogin}>Log In</button>
+            <button data-cy="submit" onClick={handleLogin}>
+              Log In
+            </button>
           </div>
         )}
       </StyledLogin>

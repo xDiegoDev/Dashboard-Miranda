@@ -23,6 +23,7 @@ import {
   StyledLinkActive,
   UserInfo,
   SidebarFooter,
+  Button,
 } from "./StyledHeader";
 
 import Company from "../../images/D logo.png";
@@ -163,14 +164,22 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
             </IconsDashboard>
             <IconsDashboard>
               {location.pathname === "/users" ? (
-                <StyledLinkActive to="/users" onClick={handleItemClick}>
+                <StyledLinkActive
+                  to="/users"
+                  onClick={handleItemClick}
+                  data-cy="Users"
+                >
                   <div className="active">
                     <PersonRoundedIcon />
                   </div>
                   <h6>Users</h6>
                 </StyledLinkActive>
               ) : (
-                <StyledLink to="/users" onClick={handleItemClick}>
+                <StyledLink
+                  to="/users"
+                  onClick={handleItemClick}
+                  data-cy="Users"
+                >
                   <div className="white">
                     <PersonRoundedIcon />
                   </div>
@@ -201,7 +210,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
                   <img src={loggedInUser.IMG} alt="User Profile" />
                   <h6>{loggedInUser.Name}</h6>
                   <p>{loggedInUser.Email}</p>
-                  <button
+                  <Button
                     onClick={handleEditClick}
                     style={{
                       color: "#010101",
@@ -210,7 +219,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
                     }}
                   >
                     EDIT
-                  </button>
+                  </Button>
                 </>
               )}
             </UserInfo>
@@ -316,7 +325,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
 
       <StyledHeader sidebarVisible={sidebarVisible}>
         <div>
-          <div className="hamburger__div">
+          <div className="hamburger__div" data-cy="burger">
             <HamburgerIcon
               sidebarVisible={sidebarVisible}
               setSidebarVisible={setSidebarVisible}
@@ -330,7 +339,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
         <div className="icons">
           <MessageIcon />
           <NotificationsIcon />
-          <LogoutIcon onClick={handleLogout} />
+          <LogoutIcon onClick={handleLogout} data-cy="logout" />
         </div>
       </StyledHeader>
     </>

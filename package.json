@@ -1,5 +1,6 @@
 {
   "homepage": "https://resplendent-douhua-78a1b6.netlify.app",
+  "baseUrl": "http://localhost:3000",
   "name": "final-dashboard",
   "version": "0.1.0",
   "private": true,
@@ -9,9 +10,8 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.2",
     "@reduxjs/toolkit": "^1.9.5",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "jest": "^27.5.1",
     "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-calendar": "^4.2.1",
@@ -28,10 +28,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start & wait-on http://localhost:3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +51,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "cypress": "^12.12.0"
   }
 }
