@@ -1,9 +1,12 @@
-import { Button } from "./components/Header/StyledHeader";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import styled from "styled-components";
 
-const StyledButton = styled.button`
+interface StyledButtonProps {
+  variant?: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
   background: ${(props) =>
     props.variant ? "rgb(241, 235, 235)" : "rgb(235, 241, 239)"};
   color: ${(props) => (props.variant ? "rgb(88, 19, 19)" : "rgb(19, 88, 70)")};
@@ -23,7 +26,7 @@ describe("Color and background color", () => {
   });
 
   test("Props on button", () => {
-    render(<StyledButton variant>Test</StyledButton>);
+    render(<StyledButton variant={true}>Test</StyledButton>);
 
     const button = screen.getByRole("button");
     const buttonStyles = window.getComputedStyle(button);
