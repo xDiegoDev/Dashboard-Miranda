@@ -15,7 +15,7 @@ import Contact from "./pages/Contact/Contact";
 import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SingleUser from "./pages/Users/SingleUser";
-import { AuthProvider, AuthContext } from "./contexts/AuthContext";
+import { AuthProvider, AuthContext } from "./contexts/AuthContext.tsx";
 
 import { StyledMain } from "./AppStyled";
 import SingleRoom from "./pages/Rooms/SingleRoom";

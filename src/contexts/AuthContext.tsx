@@ -1,41 +1,53 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, Dispatch } from "react";
 
-const initialState = {
+interface AuthState {
+  isLoggedIn: boolean;
+  userEmail: string | null;
+  userName: string | null;
+}
+
+interface AuthAction {
+  type: "LOGIN" | "LOGOUT" | "UPDATE_USER";
+  payload?: { email: string; name: string };
+}
+
+const initialState: AuthState = {
   isLoggedIn: false,
   userEmail: null,
   userName: null,
 };
 
-const AuthContext = createContext({
+const AuthContext = createContext<{
+  authState: AuthState;
+  authDispatch: Dispatch<AuthAction>;
+}>({
   authState: initialState,
   authDispatch: () => {},
 });
 
-export default AuthContext;
-
-const authReducer = (state, action) => {
+const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
     case "LOGIN":
       return {
         ...state,
         isLoggedIn: true,
-        userEmail: action.payload.email,
-        userName: action.payload.name,
+        userEmail: action.payload?.email || null,
+        userName: action.payload?.name || null,
       };
     case "LOGOUT":
       return { ...state, isLoggedIn: false, userEmail: null, userName: null };
     case "UPDATE_USER":
       return {
         ...state,
-        userEmail: action.payload.email,
-        userName: action.payload.name,
+        userEmail: action.payload?.email || null,
+        userName: action.payload?.name || null,
       };
     default:
       return state;
   }
 };
 
-const AuthProvider = ({ children }) => {
+const AuthProvider: React.FC = ({ children }: React.PropsWithChildren<{}>) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);
 
   const value = {

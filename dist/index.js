@@ -4,14 +4,8 @@ import "./index.css";
 import WrappedApp from "./App";
 import store from "./store/store";
 import { Provider } from "react-redux";
-
 import { AuthProvider } from "./contexts/AuthContext.tsx";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <Provider store={store}>
-    <AuthProvider>
-      <WrappedApp />
-    </AuthProvider>
-  </Provider>
-);
+var root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(React.createElement(Provider, { store: store },
+    React.createElement(AuthProvider, null,
+        React.createElement(WrappedApp, null))));
