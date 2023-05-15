@@ -17,7 +17,7 @@ const initialState: AuthState = {
   userName: null,
 };
 
-const AuthContext = createContext<{
+export const AuthContext = createContext<{
   authState: AuthState;
   authDispatch: Dispatch<AuthAction>;
 }>({
@@ -61,4 +61,4 @@ const AuthProvider: React.FC = ({ children }: React.PropsWithChildren<{}>) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export { AuthContext, AuthProvider };
+export { AuthProvider };
