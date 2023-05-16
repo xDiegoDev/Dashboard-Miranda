@@ -1,16 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersAsync, validateUserAsync } from "../../features/userSlice";
-import { StyledLogin, GlobalStyle } from "./StyledLogin";
+import { useDispatch as useReduxDispatch } from "react-redux";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import {
+  fetchUsersAsync,
+  validateUserAsync,
+} from "../../features/userSlice.tsx";
+import { StyledLogin, GlobalStyle } from "./StyledLogin.jsx";
 import { ColorRing as Loader } from "react-loader-spinner";
+
+type AppDispatch = ThunkDispatch<any, any, AnyAction>;
+const useDispatch = () => useReduxDispatch<AppDispatch>();
 
 const Login = () => {
   const { authState, authDispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const usersData = useSelector((state) => state.users.users);
   const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -23,7 +30,10 @@ const Login = () => {
         const user = await dispatch(
           validateUserAsync({ email, password })
         ).unwrap();
-        authDispatch({ type: "LOGIN", payload: { email: user.Email } });
+        authDispatch({
+          type: "LOGIN",
+          payload: { email: user.Email, name: user.Name },
+        });
         navigate("/");
       });
     } catch (error) {
@@ -45,11 +55,9 @@ const Login = () => {
       <StyledLogin>
         {loading ? (
           <Loader
-            type="ThreeDots"
             colors={["white", "black", "#414141", "#8f8f8f", "#212121"]}
             height={100}
             width={100}
-            timeout={3000} //3 secs
           />
         ) : (
           <div className="login-form">
