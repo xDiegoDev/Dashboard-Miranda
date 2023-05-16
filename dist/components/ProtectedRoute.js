@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../contexts/useAuth.tsx";
+import { useAuth } from "../contexts/useAuth.ts";
 import { Navigate, Outlet } from "react-router-dom";
 function ProtectedRoute() {
     var auth = useAuth();

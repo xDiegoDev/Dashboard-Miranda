@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./AuthContext.tsx";
 
-interface UseAuthReturn {
+interface IUseAuthReturn {
   isLoggedIn: boolean;
   userEmail: string | null;
 }
 
-export const useAuth = (): UseAuthReturn => {
+export const useAuth = (): IUseAuthReturn => {
   const { authState } = useContext(AuthContext);
   const isLoggedIn = authState.isLoggedIn;
   const userEmail = authState.userEmail;

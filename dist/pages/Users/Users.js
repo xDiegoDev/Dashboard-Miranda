@@ -15,7 +15,7 @@ import { nanoid } from "nanoid";
 import { ColorRing as Loader } from "react-loader-spinner";
 import Modal from "../../components/Modal";
 import { Form } from "./StyledUser";
-import { useAuth } from "../../contexts/useAuth.tsx";
+import { useAuth } from "../../contexts/useAuth.ts";
 var Users = function (_a) {
     var handleLogout = _a.handleLogout;
     var dispatch = useDispatch();

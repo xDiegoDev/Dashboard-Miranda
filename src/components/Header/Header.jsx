@@ -12,7 +12,7 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ExtensionRoundedIcon from "@mui/icons-material/ExtensionRounded";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { useSelector, useDispatch } from "react-redux";
-import { useAuth } from "../../contexts/useAuth.tsx";
+import { useAuth } from "../../contexts/useAuth.ts";
 import { updateUserAsync } from "../../features/userSlice";
 
 import {

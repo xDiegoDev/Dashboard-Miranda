@@ -15,7 +15,7 @@ var initialState = {
     userEmail: null,
     userName: null,
 };
-var AuthContext = createContext({
+export var AuthContext = createContext({
     authState: initialState,
     authDispatch: function () { },
 });
@@ -44,4 +44,4 @@ var AuthProvider = function (_a) {
     };
     return React.createElement(AuthContext.Provider, { value: value }, children);
 };
-export { AuthContext, AuthProvider };
+export { AuthProvider };

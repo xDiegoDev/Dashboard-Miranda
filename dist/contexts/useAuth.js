@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./AuthContext.tsx";
 export var useAuth = function () {
     var authState = useContext(AuthContext).authState;
     var isLoggedIn = authState.isLoggedIn;

@@ -42,11 +42,13 @@ var initialState = {
     error: null,
 };
 export var fetchUsersAsync = createAsyncThunk("users/fetchUsersAsync", function () { return __awaiter(void 0, void 0, void 0, function () {
+    var userList;
     return __generator(this, function (_a) {
+        userList = updatedUsersData;
         return [2 /*return*/, new Promise(function (resolve) {
                 return setTimeout(function () {
-                    console.log("Fetched data:", updatedUsersData);
-                    resolve(updatedUsersData);
+                    console.log("Fetched data:", userList);
+                    resolve(userList);
                 }, 200);
             })];
     });
@@ -57,7 +59,7 @@ export var validateUserAsync = createAsyncThunk("users/validateUserAsync", funct
     return __awaiter(void 0, void 0, void 0, function () {
         var usersData, user;
         return __generator(this, function (_c) {
-            usersData = getState().users.users;
+            usersData = updatedUsersData;
             user = usersData.find(function (u) { return u.Email === email && u.Password.toString() === password; });
             if (user) {
                 return [2 /*return*/, user];
@@ -102,20 +104,21 @@ var userSlice = createSlice({
     reducers: {},
     extraReducers: function (builder) {
         builder
-            // Fetch users
             .addCase(fetchUsersAsync.pending, function (state) {
             state.status = "loading";
         })
             .addCase(fetchUsersAsync.fulfilled, function (state, action) {
             state.status = "succeeded";
             state.users = action.payload;
-            console.log("Data set in state:", state.initialData);
         })
-            .addCase(fetchUsersAsync.rejected, function (state, action) {
-            state.status = "failed";
-            state.error = action.error.message;
-        })
-            // Add user
+            // .addCase(
+            //   fetchUsersAsync.rejected,
+            //   (state, action: PayloadAction<null, string, unknown, Error>) => {
+            //     state.status = "failed";
+            //     state.error = action.error.message;
+            //   }
+            // )
+            // // Add user
             .addCase(addUserAsync.pending, function (state) {
             state.status = "loading";
         })
@@ -123,11 +126,14 @@ var userSlice = createSlice({
             state.status = "succeeded";
             state.users.push(action.payload);
         })
-            .addCase(addUserAsync.rejected, function (state, action) {
-            state.status = "failed";
-            state.error = action.error.message;
-        })
-            // Update user
+            // .addCase(
+            //   addUserAsync.rejected,
+            //   (state, action: PayloadAction<null, string, unknown, Error>) => {
+            //     state.status = "failed";
+            //     state.error = action.error.message;
+            //   }
+            // )
+            // // Update user
             .addCase(updateUserAsync.pending, function (state) {
             state.status = "loading";
         })
@@ -138,23 +144,32 @@ var userSlice = createSlice({
                 state.users[index] = action.payload;
             }
         })
-            .addCase(updateUserAsync.rejected, function (state, action) {
-            state.status = "failed";
-            state.error = action.error.message;
-        })
-            // Delete user
+            // .addCase(
+            //   updateUserAsync.rejected,
+            //   (state, action: PayloadAction<null, string, unknown, Error>) => {
+            //     state.status = "failed";
+            //     state.error = action.error.message;
+            //   }
+            // )
+            // // Delete user
             .addCase(deleteUserAsync.pending, function (state) {
             state.status = "loading";
-        })
-            .addCase(deleteUserAsync.fulfilled, function (state, action) {
-            state.status = "succeeded";
-            var userId = action.payload;
-            state.users = state.users.filter(function (user) { return user.ID !== userId; });
-        })
-            .addCase(deleteUserAsync.rejected, function (state, action) {
-            state.status = "failed";
-            state.error = action.error.message;
         });
+        // .addCase(
+        //   deleteUserAsync.fulfilled,
+        //   (state, action: PayloadAction<string>) => {
+        //     state.status = "succeeded";
+        //     const userId = action.payload;
+        //     state.users = state.users.filter((user) => user.ID !== userId);
+        //   }
+        // )
+        // .addCase(
+        //   deleteUserAsync.rejected,
+        //   (state, action: PayloadAction<string>) => {
+        //     state.status = "failed";
+        //     state.error = action.payload;
+        //   }
+        // );
     },
 });
 export default userSlice.reducer;
