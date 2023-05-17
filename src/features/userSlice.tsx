@@ -42,7 +42,6 @@ export const fetchUsersAsync = createAsyncThunk(
     const userList = updatedUsersData as User[];
     return new Promise<User[]>((resolve) =>
       setTimeout(() => {
-        console.log("Fetched data:", userList);
         resolve(userList);
       }, 200)
     );
