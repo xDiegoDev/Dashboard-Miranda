@@ -38,9 +38,8 @@ const Login = () => {
       });
     } catch (error) {
       alert("Invalid email or password");
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
