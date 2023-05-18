@@ -28,7 +28,7 @@ type Booking = {
   facilities: string[];
 };
 
-type BookingState = {
+export type BookingState = {
   bookings: Booking[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -37,10 +37,8 @@ type BookingState = {
 export const fetchBookingsAsync = createAsyncThunk(
   "bookings/fetchBookingsAsync",
   async () => {
-    const bookingList = formattedData as Booking[];
     return new Promise<Booking[]>((resolve) =>
       setTimeout(() => {
-        console.log("Fetched rooms data:", formattedData);
         resolve(formattedData);
       }, 200)
     );
@@ -91,13 +89,10 @@ const bookingSlice = createSlice({
       .addCase(fetchBookingsAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(
-        fetchBookingsAsync.fulfilled,
-        (state, action: PayloadAction<Booking[]>) => {
-          state.status = "succeeded";
-          state.bookings = action.payload;
-        }
-      )
+      .addCase(fetchBookingsAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.bookings = action.payload;
+      })
       .addCase(
         fetchBookingsAsync.rejected,
         (state, action: { error: SerializedError }) => {

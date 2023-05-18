@@ -25,7 +25,7 @@ type Contact = {
   ID: string;
 };
 
-type ContactState = {
+export type ContactState = {
   contacts: Contact[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;

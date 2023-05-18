@@ -7,7 +7,7 @@ import {
 
 import updatedUsersData from "../data/userDataId";
 
-type User = {
+export type User = {
   ID: string;
   Email: string;
   Password: string;
@@ -19,7 +19,7 @@ type User = {
   Status: string;
 };
 
-type UserState = {
+export type UserState = {
   users: User[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -139,45 +139,33 @@ const userSlice = createSlice({
       .addCase(updateUserAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(
-        updateUserAsync.fulfilled,
-        (state, action: PayloadAction<User>) => {
-          state.status = "succeeded";
-          const index = state.users.findIndex(
-            (user) => user.ID === action.payload.ID
-          );
-          if (index !== -1) {
-            state.users[index] = action.payload;
-          }
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const index = state.users.findIndex(
+          (user) => user.ID === action.payload.ID
+        );
+        if (index !== -1) {
+          state.users[index] = action.payload;
         }
-      )
-      .addCase(
-        updateUserAsync.rejected,
-        (state, action: { error: SerializedError }) => {
-          state.status = "failed";
-          state.error = action.error?.message || null;
-        }
-      )
+      })
+      .addCase(updateUserAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error?.message || null;
+      })
 
       // // Delete user
       .addCase(deleteUserAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(
-        deleteUserAsync.fulfilled,
-        (state, action: PayloadAction<string>) => {
-          state.status = "succeeded";
-          const userId = action.payload;
-          state.users = state.users.filter((user) => user.ID !== userId);
-        }
-      )
-      .addCase(
-        deleteUserAsync.rejected,
-        (state, action: { error: SerializedError }) => {
-          state.status = "failed";
-          state.error = action.error?.message || null;
-        }
-      );
+      .addCase(deleteUserAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const userId = action.payload;
+        state.users = state.users.filter((user) => user.ID !== userId);
+      })
+      .addCase(deleteUserAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error?.message || null;
+      });
   },
 });
 

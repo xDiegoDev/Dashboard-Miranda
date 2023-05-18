@@ -25,7 +25,7 @@ type Room = {
   Number: number;
 };
 
-type RoomState = {
+export type RoomState = {
   rooms: Room[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
