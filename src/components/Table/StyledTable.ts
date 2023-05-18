@@ -100,3 +100,12 @@ export const Modal = styled.div`
     margin-top: 50px;
   }
 `;
+
+export const TruncatedText = styled.div`
+  max-height: 3.6em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+`;

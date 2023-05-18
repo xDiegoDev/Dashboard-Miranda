@@ -3,11 +3,51 @@ import { StyledTable, Modal } from "./StyledTable";
 import { Link } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
-const Table = ({ initialData, onRowClick, onDelete, route }) => {
-  const [data, setData] = useState(initialData);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+interface TableRow {
+  [key: string]: any; // this allows for flexibility with the data properties, modify as per your data structure
+  ID: string;
+  IMG?: string;
+  Name?: string;
+  "Room Name": "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
+  Number?: string;
+  Guest?: string;
+  Offer: number;
+  Rate?: number;
+  Status?: string;
+  Description?: string;
+  Contact?: string;
+  Action?: string;
+}
+
+interface TableProps {
+  initialData: TableRow[];
+  onRowClick?: (row: TableRow) => void;
+  onDelete: (row: TableRow) => void;
+  route?: string;
+}
+
+// interface IRow {
+//   ID: string;
+//   Name?: string;
+//   IMG?: string;
+//   "Room Name": "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
+//   Number: string;
+//   Guest: string | undefined;
+//   Offer: number;
+//   Action: "Publish" | "Archive";
+//   // ... include all other properties of a row object here
+// }
+
+const Table: React.FC<TableProps> = ({
+  initialData,
+  onRowClick,
+  onDelete,
+  route,
+}) => {
+  const [data, setData] = useState<TableRow[]>(initialData);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedRow, setSelectedRow] = useState<TableRow | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -18,14 +58,16 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     setShowModal(!showModal);
   };
 
-  const handleDeleteClick = (row) => {
+  const handleDeleteClick = (row: TableRow) => {
     setSelectedRow(row);
     toggleModal();
   };
 
   const handleDeleteConfirm = () => {
-    onDelete(selectedRow);
-    setShowModal(false);
+    if (selectedRow !== null) {
+      onDelete(selectedRow);
+      setShowModal(false);
+    }
   };
 
   // Add a conditional check for data before accessing its properties
@@ -46,7 +88,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
       !(route === "contacts" && (col === "Telephone" || col === "Mail"))
   );
 
-  const renderNameIdImageColumn = (row) => (
+  const renderNameIdImageColumn = (row: TableRow) => (
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
@@ -73,7 +115,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     </div>
   );
 
-  const renderRoomIdImageColumn = (row) => (
+  const renderRoomIdImageColumn = (row: TableRow) => (
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
@@ -104,7 +146,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     </div>
   );
 
-  const renderGuestColumn = (row) => (
+  const renderGuestColumn = (row: TableRow) => (
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
@@ -131,7 +173,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     </div>
   );
 
-  const renderRateColumn = (row) => {
+  const renderRateColumn = (row: TableRow) => {
     const roomMap = {
       "Deluxe A-": { bedType: "Single", price: 100 },
       "Deluxe B-": { bedType: "Double", price: 200 },
@@ -140,9 +182,12 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     };
 
     const roomInfo = roomMap[row["Room Name"]];
+    if (!roomInfo) {
+      throw new Error(`No room found for name "${row["Room Name"]}"`);
+    }
     const originalRate = roomInfo.price;
-    const offerPercentage = row.Offer;
-    const discountedRate = originalRate * (1 - offerPercentage / 100);
+    const offerPercentage: number = row.Offer;
+    const discountedRate: number = originalRate * (1 - offerPercentage / 100);
 
     return (
       <div>
@@ -166,11 +211,11 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     );
   };
 
-  const renderOfferColumn = (row) => {
+  const renderOfferColumn = (row: TableRow) => {
     return row.Offer > 0 ? <div>{row.Offer}%</div> : <div></div>;
   };
 
-  const getStatusStyle = (status) => {
+  const getStatusStyle = (status: string) => {
     if (status === "Active") {
       return { color: "lightgreen", letterSpacing: "1.5px" };
     } else if (status === "Inactive") {
@@ -189,7 +234,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     return {};
   };
 
-  const getDescriptionWrapperStyle = () => {
+  const getDescriptionWrapperStyle = (): React.CSSProperties => {
     return {
       maxHeight: "3.6em",
       overflow: "hidden",
@@ -200,7 +245,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     };
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
@@ -239,7 +284,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     currentPage * itemsPerPage
   );
 
-  const getActionStyle = (action) => {
+  const getActionStyle = (action: string) => {
     if (action === "Archive") {
       return { color: "red", letterSpacing: "1.5px" };
     } else {
@@ -247,7 +292,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
     }
   };
 
-  const handleToggleAction = (event, row) => {
+  const handleToggleAction = (event: React.MouseEvent, row: TableRow) => {
     event.stopPropagation();
     const updatedRow = {
       ...row,
