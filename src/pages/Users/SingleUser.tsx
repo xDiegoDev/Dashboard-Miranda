@@ -3,30 +3,39 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserAsync } from "../../features/userSlice";
 import Modal from "../../components/Modal";
-import { User, UserComp, Form } from "./StyledUser";
+import { Form } from "./StyledUser";
 import { BookingComp } from "../Bookings/StyledSingleBook";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MessageIcon from "@mui/icons-material/Message";
+import { RootState } from "../../store/store.tsx";
+import { AppDispatch } from "../../store/store.tsx";
+import { User } from "../../features/userSlice.tsx";
 
 const SingleUser = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const users = useSelector((state) => state.users.users);
+  const users = useSelector((state: RootState) => state.users.users);
 
   const user = users.find((user) => String(user.ID) === String(id));
 
-  const [editedName, setEditedName] = useState(user.Name);
-  const [editedEmail, setEditedEmail] = useState(user.Email);
-  const [editedDescription, setEditedDescription] = useState(user.Description);
-  const [editedStatus, setEditedStatus] = useState(user.Status);
+  const [editedName, setEditedName] = useState(user?.Name || "");
+  const [editedEmail, setEditedEmail] = useState(user?.Email || "");
+  const [editedDescription, setEditedDescription] = useState(
+    user?.Description || ""
+  );
+  const [editedStatus, setEditedStatus] = useState(user?.Status || "");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!user) {
     return <div>User not found</div>;
   }
 
-  const handleEditSubmit = async (e) => {
+  const handleEditClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const updatedUser = {
       ...user,
@@ -43,10 +52,6 @@ const SingleUser = () => {
     }
     setIsModalOpen(false);
     navigate("/users");
-  };
-
-  const handleEditClick = () => {
-    setIsModalOpen(true);
   };
 
   return (
