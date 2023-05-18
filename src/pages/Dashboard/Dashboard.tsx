@@ -13,13 +13,22 @@ import { fetchContactsAsync } from "../../features/contactSlice";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarStyles.css";
+import { AppDispatch } from "../../store/store";
 
-const Dashboard = () => {
-  const dispatch = useDispatch();
-  const [value, onChange] = useState(new Date());
+const Dashboard: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const [date, setDate] = useState<Date | Date[]>(new Date());
+
   useEffect(() => {
     dispatch(fetchContactsAsync);
-  }, [dispatch]);
+  }, []);
+
+  const onChange = (
+    value: any,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setDate(value as Date | Date[]);
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -66,7 +75,7 @@ const Dashboard = () => {
         </div>
       </DashDivs>
       <div style={{ display: "flex" }}>
-        <Calendar onChange={onChange} value={value} />
+        <Calendar onChange={onChange} value={date as any} />
       </div>
       <div style={{ marginTop: "-70px", marginBottom: "50px" }}>
         <ContactSlider />
