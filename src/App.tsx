@@ -5,36 +5,26 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import Header from "./components/Header/Header";
-import Login from "./pages/Login/Login";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Rooms from "./pages/Rooms/Rooms";
-import Users from "./pages/Users/Users";
-import Bookings from "./pages/Bookings/Bookings";
-import Contact from "./pages/Contact/Contact";
-import NotFound from "./pages/NotFound/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
-import SingleUser from "./pages/Users/SingleUser";
+import Header from "./components/Header/Header.jsx";
+import Login from "./pages/Login/Login.tsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Rooms from "./pages/Rooms/Rooms.jsx";
+import Users from "./pages/Users/Users.tsx";
+import Bookings from "./pages/Bookings/Bookings.jsx";
+import Contact from "./pages/Contact/Contact.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import SingleUser from "./pages/Users/SingleUser.tsx";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext.tsx";
 
-import { StyledMain } from "./AppStyled";
-import SingleRoom from "./pages/Rooms/SingleRoom";
-import SingleBooking from "./pages/Bookings/SingleBooking";
-import SingleContact from "./pages/Contact/SingleContact";
+import { StyledMain } from "./AppStyled.js";
+import SingleRoom from "./pages/Rooms/SingleRoom.jsx";
+import SingleBooking from "./pages/Bookings/SingleBooking.jsx";
+import SingleContact from "./pages/Contact/SingleContact.jsx";
 
-function App() {
-  const { authState } = useContext(AuthContext);
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+const useAppLocation = () => {
   const location = useLocation();
-  const authDispatch = useContext(AuthContext).authDispatch;
-
-  useEffect(() => {
-    if (authState.isLoggedIn && location.pathname === "/login") {
-      window.location.reload();
-    }
-  }, [authState.isLoggedIn, location]);
-
-  const getTitle = (pathname) => {
+  const getTitle = (pathname: string) => {
     switch (true) {
       case pathname === "/":
         return "Dashboard";
@@ -58,6 +48,21 @@ function App() {
         return "Dashboard";
     }
   };
+
+  return { location, getTitle };
+};
+
+function App() {
+  const { authState } = useContext(AuthContext);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const { location, getTitle } = useAppLocation();
+  const authDispatch = useContext(AuthContext).authDispatch;
+
+  useEffect(() => {
+    if (authState.isLoggedIn && location.pathname === "/login") {
+      window.location.reload();
+    }
+  }, [authState.isLoggedIn, location]);
 
   const handleLogout = () => {
     authDispatch({ type: "LOGOUT" });

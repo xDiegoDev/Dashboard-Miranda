@@ -47,7 +47,11 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   }
 };
 
-const AuthProvider: React.FC = ({ children }: React.PropsWithChildren<{}>) => {
+type AuthProviderProps = {
+  children: React.ReactNode;
+};
+
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);
 
   const value = {

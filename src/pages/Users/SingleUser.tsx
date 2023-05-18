@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserAsync } from "../../features/userSlice";
+import { User, updateUserAsync } from "../../features/userSlice";
 import Modal from "../../components/Modal";
 import { Form } from "./StyledUser";
 import { BookingComp } from "../Bookings/StyledSingleBook";
@@ -9,7 +9,6 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MessageIcon from "@mui/icons-material/Message";
 import { RootState } from "../../store/store.tsx";
 import { AppDispatch } from "../../store/store.tsx";
-import { User } from "../../features/userSlice.tsx";
 
 const SingleUser = () => {
   const { id } = useParams();

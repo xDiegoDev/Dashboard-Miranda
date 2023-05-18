@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  FormEvent,
+} from "react";
 import { useLocation } from "react-router-dom";
-import { useContext } from "react";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -13,8 +18,7 @@ import ExtensionRoundedIcon from "@mui/icons-material/ExtensionRounded";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/useAuth.ts";
-import { updateUserAsync } from "../../features/userSlice";
-
+import { updateUserAsync } from "../../features/userSlice.tsx";
 import {
   StyledHeader,
   StyledSidebar,
@@ -24,14 +28,24 @@ import {
   UserInfo,
   SidebarFooter,
   Button,
-} from "./StyledHeader";
+} from "./StyledHeader.jsx";
+import { AppDispatch } from "../../store/store.tsx";
 
-import Company from "../../images/D logo.png";
-
+import { RootState } from "../../store/store.tsx";
 import Modal from "../Modal";
+import Company from "../../images/DLogo.png";
 
-const HamburgerIcon = (props) => {
-  const { sidebarVisible, setSidebarVisible, className } = props;
+interface HamburgerProps {
+  sidebarVisible: boolean;
+  setSidebarVisible: Dispatch<SetStateAction<boolean>>;
+  className: string;
+}
+
+const HamburgerIcon: React.FC<HamburgerProps> = ({
+  sidebarVisible,
+  setSidebarVisible,
+  className,
+}) => {
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
@@ -43,15 +57,29 @@ const HamburgerIcon = (props) => {
   );
 };
 
-const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
+interface HeaderProps {
+  handleLogout: () => void;
+  title: string;
+  setSidebarVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  sidebarVisible: boolean;
+  isLoggedIn: boolean; // add this line
+}
+
+const Header: React.FC<HeaderProps> = ({
+  handleLogout,
+  title,
+  setSidebarVisible,
+  sidebarVisible,
+  isLoggedIn,
+}) => {
   const handleItemClick = () => {
     setSidebarVisible(false);
   };
   const location = useLocation();
 
-  const { isLoggedIn, userEmail } = useAuth();
+  const { userEmail } = useAuth();
 
-  const usersData = useSelector((state) => state.users.users);
+  const usersData = useSelector((state: RootState) => state.users.users);
 
   const loggedInUser = isLoggedIn
     ? usersData.find((u) => u.Email === userEmail)
@@ -61,11 +89,15 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const authDispatch = useContext(AuthContext).authDispatch;
 
-  const handleEditSubmit = async (e) => {
+  const handleEditSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!loggedInUser) {
+      console.error("No logged in user");
+      return;
+    }
     const updatedUser = {
       ...loggedInUser,
       Email: editedEmail,
@@ -86,6 +118,10 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
   };
 
   const handleEditClick = () => {
+    if (!loggedInUser) {
+      console.error("No logged in user");
+      return;
+    }
     setEditedName(loggedInUser.Name);
     setEditedEmail(loggedInUser.Email);
     setIsModalOpen(true);
@@ -93,7 +129,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
 
   return (
     <>
-      <StyledSidebar sidebarVisible={sidebarVisible}>
+      <StyledSidebar sidebarVisible={true}>
         <div className="logo">
           <img
             src={Company}
@@ -294,7 +330,7 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
                   padding: "0 10px",
                   fontSize: "15px",
                 }}
-                onSubmit={handleEditSubmit}
+                type="submit"
               >
                 Save
               </button>

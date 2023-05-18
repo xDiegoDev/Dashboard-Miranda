@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export const StyledMain = styled.main`
+interface StyledMainProps {
+  isLoggedIn: boolean;
+  sidebarVisible: boolean;
+}
+
+export const StyledMain = styled.main<StyledMainProps>`
   margin-top: ${({ isLoggedIn }) => (isLoggedIn ? "0" : "0")};
   margin-left: ${({ sidebarVisible }) => (sidebarVisible ? "350px" : "30px")};
   padding: ${({ isLoggedIn }) => (isLoggedIn ? "0" : "0")};

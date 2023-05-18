@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 
-export const StyledHeader = styled.header`
+export const StyledHeader = styled.header<StyledSidebarProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,7 +46,11 @@ export const StyledHeader = styled.header`
   }
 `;
 
-export const StyledSidebar = styled.div`
+interface StyledSidebarProps {
+  sidebarVisible: boolean;
+}
+
+export const StyledSidebar = styled.div<StyledSidebarProps>`
   display: ${({ sidebarVisible }) => (sidebarVisible ? "block" : "none")};
   position: fixed;
   top: 0;
