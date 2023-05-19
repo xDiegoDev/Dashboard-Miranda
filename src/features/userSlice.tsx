@@ -11,7 +11,7 @@ export type User = {
   ID: string;
   Email: string;
   Password: string;
-  IMG: string;
+  UserIMG: string;
   Name: string;
   "Start Date": Date;
   Description: string;

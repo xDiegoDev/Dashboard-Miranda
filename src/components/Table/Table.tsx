@@ -3,20 +3,23 @@ import { StyledTable, Modal } from "./StyledTable";
 import { Link } from "react-router-dom";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
-interface TableRow {
+export interface TableRow {
   [key: string]: any; // this allows for flexibility with the data properties, modify as per your data structure
   ID: string;
-  IMG?: string;
+  UserIMG?: string;
   Name?: string;
-  "Room Name": "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
+  "Room Name"?: "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
+  "Room Type"?: string;
   Number?: string;
   Guest?: string;
-  Offer: number;
+  Offer?: number;
   Rate?: number;
   Status?: string;
   Description?: string;
   Contact?: string;
   Action?: string;
+  facilities: string[];
+  IMG: string[];
 }
 
 interface TableProps {
@@ -25,18 +28,6 @@ interface TableProps {
   onDelete: (row: TableRow) => void;
   route?: string;
 }
-
-// interface IRow {
-//   ID: string;
-//   Name?: string;
-//   IMG?: string;
-//   "Room Name": "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
-//   Number: string;
-//   Guest: string | undefined;
-//   Offer: number;
-//   Action: "Publish" | "Archive";
-//   // ... include all other properties of a row object here
-// }
 
 const Table: React.FC<TableProps> = ({
   initialData,
@@ -92,7 +83,7 @@ const Table: React.FC<TableProps> = ({
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
-          src={row.IMG}
+          src={row.UserIMG}
           alt="Profile"
           style={{
             marginRight: "30px",
@@ -119,7 +110,7 @@ const Table: React.FC<TableProps> = ({
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
-          src={row.IMG}
+          src={row.IMG[0]}
           alt="Profile"
           style={{
             marginRight: "30px",
@@ -150,7 +141,7 @@ const Table: React.FC<TableProps> = ({
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
-          src={row.IMG}
+          src={row.IMG[0]}
           alt="Profile"
           style={{
             marginRight: "30px",
@@ -180,39 +171,43 @@ const Table: React.FC<TableProps> = ({
       "Deluxe C-": { bedType: "Double Deluxe", price: 300 },
       "Deluxe D-": { bedType: "Suite", price: 400 },
     };
+    if (row["Room Name"] && row.Offer) {
+      const roomInfo = roomMap[row["Room Name"]];
 
-    const roomInfo = roomMap[row["Room Name"]];
-    if (!roomInfo) {
-      throw new Error(`No room found for name "${row["Room Name"]}"`);
+      if (!roomInfo) {
+        throw new Error(`No room found for name "${row["Room Name"]}"`);
+      }
+      const originalRate = roomInfo.price;
+      const offerPercentage: number = row.Offer;
+      const discountedRate: number = originalRate * (1 - offerPercentage / 100);
+
+      return (
+        <div>
+          {offerPercentage > 0 ? (
+            <>
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  marginRight: "10px",
+                  color: "gray",
+                }}
+              >
+                ${originalRate.toFixed(2)} / night
+              </span>
+              <span>${discountedRate.toFixed(2)} / night</span>
+            </>
+          ) : (
+            <span>${originalRate.toFixed(2)} / night</span>
+          )}
+        </div>
+      );
     }
-    const originalRate = roomInfo.price;
-    const offerPercentage: number = row.Offer;
-    const discountedRate: number = originalRate * (1 - offerPercentage / 100);
-
-    return (
-      <div>
-        {offerPercentage > 0 ? (
-          <>
-            <span
-              style={{
-                textDecoration: "line-through",
-                marginRight: "10px",
-                color: "gray",
-              }}
-            >
-              ${originalRate.toFixed(2)} / night
-            </span>
-            <span>${discountedRate.toFixed(2)} / night</span>
-          </>
-        ) : (
-          <span>${originalRate.toFixed(2)} / night</span>
-        )}
-      </div>
-    );
   };
 
   const renderOfferColumn = (row: TableRow) => {
-    return row.Offer > 0 ? <div>{row.Offer}%</div> : <div></div>;
+    if (row.Offer) {
+      return row.Offer > 0 ? <div>{row.Offer}%</div> : <div></div>;
+    }
   };
 
   const getStatusStyle = (status: string) => {

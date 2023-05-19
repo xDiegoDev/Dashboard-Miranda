@@ -12,7 +12,7 @@ const initialState: BookingState = {
   error: null,
 };
 
-type Booking = {
+export type Booking = {
   ID: string;
   Guest: string;
   IMG: string[];
