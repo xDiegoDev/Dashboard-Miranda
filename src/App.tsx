@@ -5,19 +5,19 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import Header from "./components/Header/Header.jsx";
+import Header from "./components/Header/Header.tsx";
 import Login from "./pages/Login/Login.tsx";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
 import Users from "./pages/Users/Users.tsx";
 import Bookings from "./pages/Bookings/Bookings.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
-import NotFound from "./pages/NotFound/NotFound.jsx";
+import NotFound from "./pages/NotFound/NotFound.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import SingleUser from "./pages/Users/SingleUser.tsx";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext.tsx";
 
-import { StyledMain } from "./AppStyled.js";
+import { StyledMain } from "./AppStyled.ts";
 import SingleRoom from "./pages/Rooms/SingleRoom.jsx";
 import SingleBooking from "./pages/Bookings/SingleBooking.jsx";
 import SingleContact from "./pages/Contact/SingleContact.jsx";
@@ -93,7 +93,7 @@ function App() {
             element={<Users handleLogout={handleLogout} />}
           />
           <Route path="/users/:id" element={<SingleUser />} />
-          <Route path="/bookings/" element={<Bookings />} />
+          {/* <Route path="/bookings/" element={<Bookings />} /> */}
           <Route path="/bookings/:id" element={<SingleBooking />} />
           <Route path="/contacts/" element={<Contact />} />
           <Route path="/contacts/:id" element={<SingleContact />} />

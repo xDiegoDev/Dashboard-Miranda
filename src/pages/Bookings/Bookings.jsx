@@ -16,23 +16,15 @@ import { RootState } from "../../store/store";
 import { Booking, BookingState } from "../../features/bookingSlice";
 import { TableRow } from "../../components/Table/Table";
 
-type StatusFilter = Booking["Status"] | "all";
-
 const Bookings = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const bookingsData = useSelector(
-    (state: RootState) => state.bookings.bookings
-  );
-  const bookingsStatus = useSelector(
-    (state: RootState) => state.bookings.status
-  );
-  const loading = useSelector(
-    (state: RootState) => state.rooms.status === "loading"
-  );
+  const dispatch = useDispatch();
+  const bookingsData = useSelector((state) => state.bookings.bookings);
+  const bookingsStatus = useSelector((state) => state.bookings.status);
+  const loading = useSelector((state) => state.rooms.status === "loading");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [facilities, setFacilities] = useState<string[]>([]);
+  const [facilities, setFacilities] = useState([]);
 
   useEffect(() => {
     if (bookingsStatus === "idle") {
@@ -40,15 +32,15 @@ const Bookings = () => {
     }
   }, [dispatch]);
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleStatusFilterChange = (status: StatusFilter) => {
+  const handleStatusFilterChange = (status) => {
     setStatusFilter(status);
   };
 
-  const handleDelete = (booking: TableRow) => {
+  const handleDelete = (booking) => {
     dispatch(deleteBookingAsync(booking.ID));
   };
 
@@ -56,54 +48,39 @@ const Bookings = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const target = e.target as typeof e.target & {
-      img: { value: string };
-      guest: { value: string };
-      orderDate: { value: string };
-      checkIn: { value: string };
-      checkOut: { value: string };
-      roomType: { value: string };
-      status: { value: string };
-      price: { value: string };
-      userImg: { value: string }; // Added userImg field
-    };
 
-    const imgElement = e.currentTarget.elements.namedItem(
-      "img"
-    ) as HTMLInputElement | null;
+    const imgElement = e.currentTarget.elements.namedItem("img");
 
     if (imgElement) {
-      const imgUrls = imgElement.value
-        .split(",")
-        .map((url: string) => url.trim());
+      const imgUrls = imgElement.value.split(",").map((url) => url.trim());
 
       if (imgUrls.length < 3 || imgUrls.length > 5) {
         alert("Please provide between 3 and 5 image URLs");
         return;
       }
 
-      const newBooking: Booking = {
-        IMG: imgUrls as string[],
-        UserIMG: target.userImg.value,
-        Guest: target.guest.value,
+      const newBooking = {
+        IMG: imgUrls,
+        UserIMG: e.value.userImg.value,
+        Guest: e.value.guest.value,
         ID: nanoid(),
-        "Order Data": target.orderDate.value,
-        "Check In": target.checkIn.value,
-        "Check Out": target.checkOut.value,
+        "Order Data": e.value.orderDate.value,
+        "Check In": e.value.checkIn.value,
+        "Check Out": e.value.checkOut.value,
         "Special Request": "View Notes",
-        "Room Type": target.roomType.value,
-        Status: target.status.value,
+        "Room Type": e.value.roomType.value,
+        Status: e.value.status.value,
         facilities: facilities,
-        price: target.price.value,
+        price: e.value.price.value,
       };
 
       dispatch(addBookingAsync(newBooking));
       setIsModalOpen(false);
     }
 
-    let filteredBookings: Booking[] = [];
+    let filteredBookings = [];
 
     if (bookingsData) {
       filteredBookings = bookingsData
@@ -129,21 +106,6 @@ const Bookings = () => {
       { value: "WiFi", label: "WiFi" },
       { value: "Fridge", label: "Fridge" },
     ];
-
-    const bookingToTableRow = (booking: Booking): TableRow => ({
-      UserIMG: booking.UserIMG,
-      Guest: booking.Guest,
-      ID: booking.ID,
-      "Order Data": booking["Order Data"],
-      "Check In": booking["Check In"],
-      "Check Out": booking["Check Out"],
-      "Special Request": booking["Special Request"],
-      "Room Type": booking["Room Type"],
-      Status: booking.Status,
-      facilities: booking.facilities,
-      price: booking.price,
-      IMG: booking.IMG,
-    });
 
     return (
       <div>

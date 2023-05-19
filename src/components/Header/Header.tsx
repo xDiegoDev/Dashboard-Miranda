@@ -28,12 +28,12 @@ import {
   UserInfo,
   SidebarFooter,
   Button,
-} from "./StyledHeader.jsx";
+} from "./StyledHeader.tsx";
 import { AppDispatch } from "../../store/store.tsx";
 
 import { RootState } from "../../store/store.tsx";
 import Modal from "../Modal";
-import Company from "../../images/DLogo.png";
+import Company from "../../images/Dlogo.png";
 
 interface HamburgerProps {
   sidebarVisible: boolean;
@@ -129,7 +129,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <StyledSidebar sidebarVisible={true}>
+      <StyledSidebar sidebarVisible={sidebarVisible}>
         <div className="logo">
           <img
             src={Company}

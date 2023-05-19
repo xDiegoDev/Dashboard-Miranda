@@ -6,20 +6,14 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 export interface TableRow {
   [key: string]: any; // this allows for flexibility with the data properties, modify as per your data structure
   ID: string;
-  UserIMG?: string;
+  Email: string;
   Name?: string;
   "Room Name"?: "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
-  "Room Type"?: string;
   Number?: string;
-  Guest?: string;
-  Offer?: number;
-  Rate?: number;
   Status?: string;
   Description?: string;
   Contact?: string;
-  Action?: string;
-  facilities: string[];
-  IMG: string[];
+  IMG: string;
 }
 
 interface TableProps {
@@ -83,7 +77,7 @@ const Table: React.FC<TableProps> = ({
     <div style={{ display: "flex", alignItems: "center" }}>
       {row.IMG && (
         <img
-          src={row.UserIMG}
+          src={row.IMG}
           alt="Profile"
           style={{
             marginRight: "30px",

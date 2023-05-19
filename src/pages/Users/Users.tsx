@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Table from "../../components/Table/Table.jsx";
+import Table from "../../components/Table/Table.tsx";
 import {
   fetchUsersAsync,
   deleteUserAsync,
@@ -46,7 +46,7 @@ const Users: React.FC<UserProps> = ({ handleLogout }) => {
 
   const filterUsersByName = (users: User[]) => {
     if (!searchTerm) return users;
-    return users.filter((user) =>
+    return users.filter((user: User) =>
       user.Name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   };
