@@ -6,7 +6,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 export interface TableRow {
   [key: string]: any; // this allows for flexibility with the data properties, modify as per your data structure
   ID: string;
-  Email: string;
+  Email?: string;
   Name?: string;
   "Room Name"?: "Deluxe A-" | "Deluxe B-" | "Deluxe C-" | "Deluxe D-";
   Number?: string;

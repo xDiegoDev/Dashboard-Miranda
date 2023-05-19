@@ -1,4 +1,4 @@
-type User = {
+export type User = {
     ID: string;
     Email: string;
     Password: string;
@@ -9,7 +9,7 @@ type User = {
     Contact: string;
     Status: string;
 };
-type UserState = {
+export type UserState = {
     users: User[];
     status: "idle" | "loading" | "succeeded" | "failed";
     error: string | null;
@@ -58,7 +58,7 @@ export declare const updateUserAsync: import("@reduxjs/toolkit").AsyncThunk<User
     fulfilledMeta?: unknown;
     rejectedMeta?: unknown;
 }>;
-export declare const deleteUserAsync: import("@reduxjs/toolkit").AsyncThunk<number, number, {
+export declare const deleteUserAsync: import("@reduxjs/toolkit").AsyncThunk<string, string, {
     state?: unknown;
     dispatch?: import("redux").Dispatch<import("redux").AnyAction> | undefined;
     extra?: unknown;

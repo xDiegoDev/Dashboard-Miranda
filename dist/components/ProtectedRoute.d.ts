@@ -1,3 +1,2 @@
 export default ProtectedRoute;
-declare function ProtectedRoute(): React.JSX.Element;
-import React from "react";
+declare function ProtectedRoute(): import("react/jsx-runtime").JSX.Element;

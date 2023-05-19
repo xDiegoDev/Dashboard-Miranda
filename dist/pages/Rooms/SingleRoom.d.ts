@@ -1,3 +1,2 @@
 export default SingleRoom;
-declare function SingleRoom(): React.JSX.Element;
-import React from "react";
+declare function SingleRoom(): import("react/jsx-runtime").JSX.Element;

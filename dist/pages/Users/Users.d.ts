@@ -1,5 +1,6 @@
-export default Users;
-declare function Users({ handleLogout }: {
-    handleLogout: any;
-}): React.JSX.Element;
 import React from "react";
+interface UserProps {
+    handleLogout: () => void;
+}
+declare const Users: React.FC<UserProps>;
+export default Users;

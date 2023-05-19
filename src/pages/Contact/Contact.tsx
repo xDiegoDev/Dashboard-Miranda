@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import Table from "../../components/Table/Table";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavigateFunction } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchContactsAsync } from "../../features/contactSlice";
 import styled from "styled-components";
@@ -8,9 +8,18 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { CSSProperties } from "react";
+import { RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
+import { Contact } from "../../features/contactSlice";
 
-const Arrow = ({ direction, onClick }) => {
-  const styles = {
+interface ArrowProps {
+  direction: string;
+  onClick?: () => void;
+}
+
+const Arrow: FC<ArrowProps> = ({ direction, onClick }) => {
+  const styles: CSSProperties = {
     position: "absolute",
     zIndex: 2,
     top: direction === "left" ? "32%" : "35%",
@@ -28,6 +37,15 @@ const Arrow = ({ direction, onClick }) => {
     </div>
   );
 };
+
+interface ContactData {
+  "Order ID": string;
+  Comment: string;
+  IMG: string;
+  Customer: string;
+  Date: string;
+  Action: string;
+}
 
 const Card = styled.div`
   background-color: #212121;
@@ -83,9 +101,11 @@ const CardWrapper = styled.div`
 `;
 
 export const ContactSlider = () => {
-  const contactsData = useSelector((state) => state.contacts.contacts);
+  const contactsData = useSelector(
+    (state: RootState) => state.contacts.contacts
+  );
   const navigate = useNavigate();
-  const handleCardClick = (id) => {
+  const handleCardClick = (id: string) => {
     navigate(`/contacts/${id}`);
   };
   return (
@@ -102,7 +122,7 @@ export const ContactSlider = () => {
       </h2>
       {Array.isArray(contactsData) && (
         <SliderContainer>
-          <Slider {...SliderSettings} style={{}}>
+          <Slider {...SliderSettings}>
             {contactsData.map((contact) => (
               <CardWrapper>
                 <Card
@@ -138,11 +158,13 @@ export const ContactSlider = () => {
 
 const Contact = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const contactsData = useSelector((state) => state.contacts.contacts);
+  const dispatch: AppDispatch = useDispatch();
+  const contactsData = useSelector(
+    (state: RootState) => state.contacts.contacts
+  );
   const [filter, setFilter] = useState("all");
 
-  const filterData = (data) => {
+  const filterData = (data: Contact[]) => {
     return data.filter((row) => {
       if (filter === "all") return true;
       if (filter === "published") return row.Action === "Archive";
@@ -188,7 +210,11 @@ const Contact = () => {
         </select>
       </div>
       {Array.isArray(contactsData) ? (
-        <Table initialData={filterData(contactsData)} route="contacts" />
+        <Table
+          initialData={filterData(contactsData)}
+          route="contacts"
+          onDelete={() => {}}
+        />
       ) : (
         <p>Loading...</p>
       )}

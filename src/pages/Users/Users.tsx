@@ -37,7 +37,7 @@ const Users: React.FC<UserProps> = ({ handleLogout }) => {
     }
   }, [dispatch]);
 
-  const handleDelete = (user: { ID: string; Email: string }) => {
+  const handleDelete = (user: { ID: string; Email?: string }) => {
     dispatch(deleteUserAsync(user.ID));
     if (isLoggedIn && user.Email === userEmail) {
       handleLogout();

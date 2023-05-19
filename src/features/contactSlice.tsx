@@ -12,7 +12,7 @@ const initialState: ContactState = {
   error: null,
 };
 
-type Contact = {
+export type Contact = {
   "Order ID": string;
   Date: string;
   Customer: string;

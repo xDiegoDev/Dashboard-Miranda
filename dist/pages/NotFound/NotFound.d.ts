@@ -1,3 +1,2 @@
+declare function NotFound(): import("react/jsx-runtime").JSX.Element;
 export default NotFound;
-declare function NotFound(): React.JSX.Element;
-import React from "react";

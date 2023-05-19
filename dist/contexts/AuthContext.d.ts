@@ -15,5 +15,8 @@ export declare const AuthContext: React.Context<{
     authState: AuthState;
     authDispatch: Dispatch<AuthAction>;
 }>;
-declare const AuthProvider: React.FC;
+type AuthProviderProps = {
+    children: React.ReactNode;
+};
+declare const AuthProvider: React.FC<AuthProviderProps>;
 export { AuthProvider };

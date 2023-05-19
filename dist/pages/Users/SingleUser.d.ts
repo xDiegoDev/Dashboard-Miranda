@@ -1,3 +1,2 @@
+declare const SingleUser: () => import("react/jsx-runtime").JSX.Element;
 export default SingleUser;
-declare function SingleUser(): React.JSX.Element;
-import React from "react";

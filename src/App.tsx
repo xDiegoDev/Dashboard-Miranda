@@ -93,7 +93,7 @@ function App() {
             element={<Users handleLogout={handleLogout} />}
           />
           <Route path="/users/:id" element={<SingleUser />} />
-          {/* <Route path="/bookings/" element={<Bookings />} /> */}
+          <Route path="/bookings/" element={<Bookings />} />
           <Route path="/bookings/:id" element={<SingleBooking />} />
           <Route path="/contacts/" element={<Contact />} />
           <Route path="/contacts/:id" element={<SingleContact />} />

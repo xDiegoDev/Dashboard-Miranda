@@ -1,3 +1,2 @@
 export default SingleBooking;
-declare function SingleBooking(): React.JSX.Element;
-import React from "react";
+declare function SingleBooking(): import("react/jsx-runtime").JSX.Element;
