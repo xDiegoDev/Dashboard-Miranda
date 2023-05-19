@@ -11,7 +11,7 @@ import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
 import Users from "./pages/Users/Users.tsx";
 import Bookings from "./pages/Bookings/Bookings.jsx";
-import Contact from "./pages/Contact/Contact.jsx";
+import ContactComp from "./pages/Contact/Contact.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import SingleUser from "./pages/Users/SingleUser.tsx";
@@ -95,7 +95,7 @@ function App() {
           <Route path="/users/:id" element={<SingleUser />} />
           <Route path="/bookings/" element={<Bookings />} />
           <Route path="/bookings/:id" element={<SingleBooking />} />
-          <Route path="/contacts/" element={<Contact />} />
+          <Route path="/contacts/" element={<ContactComp />} />
           <Route path="/contacts/:id" element={<SingleContact />} />
         </Route>
         <Route path="*" element={<NotFound />} />

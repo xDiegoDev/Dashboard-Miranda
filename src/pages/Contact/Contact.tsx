@@ -156,7 +156,7 @@ export const ContactSlider = () => {
   );
 };
 
-const Contact = () => {
+const ContactComp = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const contactsData = useSelector(
@@ -222,4 +222,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactComp;
