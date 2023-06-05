@@ -18,7 +18,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const [value, onChange] = useState(new Date());
   useEffect(() => {
-    dispatch(fetchContactsAsync);
+    dispatch(fetchContactsAsync());
   }, []);
 
   return (

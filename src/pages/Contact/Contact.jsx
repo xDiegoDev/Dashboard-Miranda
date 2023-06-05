@@ -41,7 +41,7 @@ const Card = styled.div`
 `;
 
 const SliderContainer = styled.div`
-  width: 1100px;
+  width: 100%;
   margin: auto;
   margin-bottom: 20px;
   border-radius: 20px;
@@ -79,7 +79,7 @@ const Img = styled.img`
 `;
 
 const CardWrapper = styled.div`
-  margin-left: 10px;
+  margin-left: 0px;
 `;
 
 export const ContactSlider = () => {
@@ -94,10 +94,10 @@ export const ContactSlider = () => {
         margin: "auto",
         marginTop: "150px",
         borderRadius: "10px",
-        width: "80%",
+        width: "82%",
       }}
     >
-      <h2 style={{ marginLeft: "8%", marginBottom: "30px", color: "white" }}>
+      <h2 style={{ marginLeft: "0", marginBottom: "30px", color: "white" }}>
         Latest Reviews by Customers
       </h2>
       {Array.isArray(contactsData) && (

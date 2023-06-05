@@ -4,7 +4,7 @@ export const DashDivs = styled.div`
   @media (min-width: 800px) {
     display: flex;
     align-items: center;
-    width: 96%;
+    width: 92%;
     justify-content: space-between;
     margin: auto;
     margin-top: 130px;
@@ -64,7 +64,7 @@ export const DashDivs = styled.div`
   @media (min-width: 1000px) {
     display: flex;
     align-items: center;
-    width: 96%;
+    width: 92%;
     justify-content: space-between;
     margin: auto;
     margin-top: 130px;
@@ -122,7 +122,7 @@ export const DashDivs = styled.div`
   @media (min-width: 1300px) {
     display: flex;
     align-items: center;
-    width: 96%;
+    width: 92%;
     justify-content: space-between;
     margin: auto;
     margin-top: 130px;
@@ -180,7 +180,7 @@ export const DashDivs = styled.div`
   @media (min-width: 1600px) {
     display: flex;
     align-items: center;
-    width: 96%;
+    width: 92%;
     justify-content: space-between;
     margin: auto;
     margin-top: 130px;
@@ -238,7 +238,7 @@ export const DashDivs = styled.div`
   @media (min-width: 2000px) {
     display: flex;
     align-items: center;
-    width: 96%;
+    width: 92%;
     justify-content: space-between;
     margin: auto;
     margin-top: 130px;
