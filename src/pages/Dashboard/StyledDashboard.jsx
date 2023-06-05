@@ -3,10 +3,14 @@ import styled from "styled-components";
 export const DashDivs = styled.div`
   display: flex;
   align-items: center;
-  width: 80%;
-  justify-content: space-around;
+  width: 96%;
+  justify-content: space-between;
   margin: auto;
   margin-top: 130px;
+
+  .info__container:hover {
+    width: 280px;
+  }
 
   .info__container {
     display: flex;
@@ -15,9 +19,10 @@ export const DashDivs = styled.div`
     border-radius: 10px;
     color: white;
     justify-content: space-around;
-    width: 20%;
+    width: 250px;
     padding: 0px 0px 20px 10px;
     align-items: center;
+    transition: 0.2s;
 
     .icon {
       border: 3px solid #414141;
@@ -25,6 +30,13 @@ export const DashDivs = styled.div`
       padding: 10px;
       border-radius: 10px;
       margin-top: 25px;
+      transition: 0.1s;
+    }
+
+    .icon:hover {
+      background-color: white;
+      color: #010101;
+      padding: 14px;
     }
 
     .contained__info {

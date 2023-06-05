@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [value, onChange] = useState(new Date());
   useEffect(() => {
     dispatch(fetchContactsAsync);
-  }, [dispatch]);
+  }, []);
 
   return (
     <div style={{ width: "100%" }}>
