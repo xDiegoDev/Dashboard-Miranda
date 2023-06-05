@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/Dashboard-Miranda/static/css/main.d372507b.css",
+    "main.js": "/Dashboard-Miranda/static/js/main.3a185bdf.js",
+    "static/media/D logo.png": "/Dashboard-Miranda/static/media/D logo.e221d1c86cb60c5d7a7d.png",
+    "static/media/slick.svg": "/Dashboard-Miranda/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/Dashboard-Miranda/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/Dashboard-Miranda/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/Dashboard-Miranda/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/Dashboard-Miranda/index.html",
+    "main.d372507b.css.map": "/Dashboard-Miranda/static/css/main.d372507b.css.map",
+    "main.3a185bdf.js.map": "/Dashboard-Miranda/static/js/main.3a185bdf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d372507b.css",
+    "static/js/main.3a185bdf.js"
+  ]
+}
