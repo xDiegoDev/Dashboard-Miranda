@@ -65,9 +65,9 @@ const Dashboard = () => {
           </div>
         </div>
       </DashDivs>
-      <div style={{ display: "flex" }}>
+      {/* <div style={{ display: "flex" }}>
         <Calendar onChange={onChange} value={value} />
-      </div>
+      </div> */}
       <div style={{ marginTop: "-70px", marginBottom: "50px" }}>
         <ContactSlider />
       </div>
