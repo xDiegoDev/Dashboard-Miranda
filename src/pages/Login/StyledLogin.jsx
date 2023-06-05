@@ -13,25 +13,42 @@ export const StyledLogin = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  max-width: 500px;
-  border: 2px solid white;
+  width: 80%;
+  max-width: 650px;
+  /* border: 2px solid white; */
   border-radius: 20px;
   text-align: center;
   margin: auto;
   margin-top: 15%;
+  background-color: #0f0f0f;
+
+  p {
+    margin-bottom: 50px;
+    font-size: 15px;
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  img {
+    width: 80px;
+    margin-top: 30px;
+    border-radius: 100px;
+  }
 
   h1 {
     color: white;
     margin-bottom: 30px;
-    text-decoration: underline;
   }
   label {
     margin-bottom: 20px;
+    font-weight: bold;
   }
 
   .login-form {
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,11 +58,11 @@ export const StyledLogin = styled.div`
   .input-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 150%;
+    margin: auto;
     margin-bottom: 40px;
+
     input {
-      width: 250px;
+      width: 350px;
       padding: 10px;
       border-radius: 10px;
     }
@@ -53,13 +70,20 @@ export const StyledLogin = styled.div`
 
   button {
     align-self: center;
-    margin-top: 10px;
-    margin-bottom: 30px;
-    padding: 10px 20px;
+    margin-bottom: 80px;
+    padding: 10px 40px;
     font-size: 15px;
     font-weight: bold;
     background-color: white;
     border-radius: 10px;
     border: 1px solid black;
+    transition: 0.1s;
+  }
+
+  button:hover {
+    border: 1px solid white;
+    background-color: #000000;
+    color: white;
+    padding: 15px 60px;
   }
 `;

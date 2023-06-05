@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersAsync, validateUserAsync } from "../../features/userSlice";
 import { StyledLogin, GlobalStyle } from "./StyledLogin";
 import { ColorRing as Loader } from "react-loader-spinner";
+import logo from "../../images/D logo.png";
 
 const Login = () => {
   const { authState, authDispatch } = useContext(AuthContext);
@@ -40,7 +41,14 @@ const Login = () => {
   }, [authState.isLoggedIn, navigate]);
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "black",
+        width: "100%",
+        minHeight: "100vh",
+        height: "100%",
+      }}
+    >
       <GlobalStyle />
       <StyledLogin>
         {loading ? (
@@ -53,7 +61,12 @@ const Login = () => {
           />
         ) : (
           <div className="login-form">
-            <h1>Login</h1>
+            <img src={logo} />
+            <h1>travl</h1>
+            <p>
+              Use email = <span>admin@admin.com</span> and password
+              <span> admin</span> to test the application
+            </p>
             <div className="input-container">
               <label htmlFor="email">Email:</label>
               <input
@@ -80,7 +93,7 @@ const Login = () => {
           </div>
         )}
       </StyledLogin>
-    </>
+    </div>
   );
 };
 
