@@ -21,6 +21,7 @@ const Bookings = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [facilities, setFacilities] = useState([]);
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
     if (bookingsStatus === "idle") {
@@ -34,6 +35,7 @@ const Bookings = () => {
 
   const handleStatusFilterChange = (status) => {
     setStatusFilter(status);
+    setActive(status);
   };
 
   const handleDelete = (booking) => {
@@ -126,37 +128,12 @@ const Bookings = () => {
               display: "flex",
               alignItems: "center",
               marginTop: "150px",
-              marginLeft: "12%",
+              marginLeft: "-20%",
               marginBottom: "-130px",
               color: "white",
-              width: "85%",
             }}
           >
-            <div>
-              <label
-                htmlFor="search-user"
-                style={{
-                  fontSize: "20px",
-                  letterSpacing: "1.5px",
-                  marginTop: "5px",
-                }}
-              >
-                Search Guest
-              </label>
-              <input
-                type="text"
-                placeholder="Search Guest"
-                onChange={handleSearchChange}
-                style={{
-                  marginLeft: "18px",
-                  padding: "10px 20px",
-                  color: "white",
-                  border: "1px solid white",
-                  borderRadius: "10px",
-                  background: "#212121",
-                }}
-              />
-            </div>
+            <div></div>
             <div
               style={{
                 marginLeft: "23%",
@@ -167,14 +144,15 @@ const Bookings = () => {
               <button
                 onClick={() => handleStatusFilterChange("Check In")}
                 style={{
-                  fontSize: "18px",
-                  letterSpacing: "1.5px",
-                  background: "#282828",
                   color: "white",
-                  border: "1px solid white",
-                  borderRadius: "10px",
-                  padding: "0 10px",
-                  marginRight: "20px",
+                  fontSize: "14px",
+                  padding: "0 30px",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderBottom:
+                    active === "Check In"
+                      ? "2px solid white"
+                      : "1px solid gray",
                 }}
               >
                 <p>Check In</p>
@@ -182,14 +160,15 @@ const Bookings = () => {
               <button
                 onClick={() => handleStatusFilterChange("Check Out")}
                 style={{
-                  fontSize: "18px",
-                  letterSpacing: "1.5px",
-                  background: "#282828",
                   color: "white",
-                  border: "1px solid white",
-                  borderRadius: "10px",
-                  padding: "0 10px",
-                  marginRight: "20px",
+                  fontSize: "14px",
+                  padding: "0 30px",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderBottom:
+                    active === "Check Out"
+                      ? "2px solid white"
+                      : "1px solid gray",
                 }}
               >
                 <p>Check Out</p>
@@ -197,14 +176,15 @@ const Bookings = () => {
               <button
                 onClick={() => handleStatusFilterChange("Progress")}
                 style={{
-                  fontSize: "18px",
-                  letterSpacing: "1.5px",
-                  background: "#282828",
                   color: "white",
-                  border: "1px solid white",
-                  borderRadius: "10px",
-                  padding: "0 10px",
-                  marginRight: "20px",
+                  fontSize: "14px",
+                  padding: "0 30px",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderBottom:
+                    active === "Progress"
+                      ? "2px solid white"
+                      : "1px solid gray",
                 }}
               >
                 <p>In Progress</p>
@@ -212,19 +192,45 @@ const Bookings = () => {
               <button
                 onClick={() => handleStatusFilterChange("all")}
                 style={{
-                  fontSize: "18px",
-                  letterSpacing: "1.5px",
-                  background: "#282828",
                   color: "white",
-                  border: "1px solid white",
-                  borderRadius: "10px",
-                  padding: "0 10px",
-                  marginRight: "20px",
+                  fontSize: "14px",
+                  padding: "0 30px",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderBottom:
+                    active === "all" ? "2px solid white" : "1px solid gray",
                 }}
               >
-                <p>All</p>
+                <p>All Guest</p>
               </button>
             </div>
+            <button
+              style={{
+                padding: "10px 30px",
+                color: "white",
+                fontSize: "15px",
+                backgroundColor: "#222",
+                border: "2px solid white",
+                borderRadius: "10px",
+                marginLeft: "7%",
+              }}
+              onClick={handleAddRoom}
+            >
+              Add Booking
+            </button>
+            <input
+              type="text"
+              placeholder="Search Guest"
+              onChange={handleSearchChange}
+              style={{
+                marginLeft: "10%",
+                padding: "10px 20px",
+                color: "white",
+                border: "1px solid white",
+                borderRadius: "10px",
+                background: "#212121",
+              }}
+            />
           </div>
           <Table
             initialData={filteredBookings}
@@ -313,23 +319,6 @@ const Bookings = () => {
               </button>
             </Form>
           </Modal>
-          <button
-            style={{
-              display: "block",
-              padding: "10px 20px",
-              color: "white",
-              fontSize: "15px",
-              backgroundColor: "#222",
-              border: "3px solid #414141",
-              borderRadius: "20px",
-              margin: "auto",
-              marginTop: "50px",
-              marginBottom: "50px",
-            }}
-            onClick={handleAddRoom}
-          >
-            Add Booking
-          </button>
         </>
       )}
     </div>
