@@ -7,11 +7,11 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #222;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 13000;
 `;
 
 const ModalContent = styled.div`
@@ -23,7 +23,7 @@ const ModalContent = styled.div`
   max-width: 500px;
   width: 80%;
   position: relative;
-  z-index: 1001;
+  z-index: 13001;
   border: 2px solid #d2d2d2;
 `;
 

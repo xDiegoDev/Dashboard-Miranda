@@ -174,13 +174,24 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
   const getStatusStyle = (status) => {
     if (status === "Active") {
       return {
-        color: "#5ad07a",
+        color: "white",
         letterSpacing: "1.5px",
-        backgroundColor: "background: #5AD07A26 0% 0% no-repeat padding-box;",
         padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #25a246",
       };
     } else if (status === "Inactive") {
-      return { color: "red", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #e51d0f",
+      };
     } else if (status === "Available") {
       return {
         color: "white",

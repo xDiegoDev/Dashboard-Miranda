@@ -61,9 +61,21 @@ const Login = () => {
           />
         ) : (
           <div className="login-form">
-            <img src={logo} />
-            <h1>travl</h1>
-            <p>
+            <div className="login__form__logo">
+              <img src={logo} />
+              <div style={{ textAlign: "left" }}>
+                <h1 style={{ marginBottom: "5px", marginTop: "40px" }}>
+                  travl
+                </h1>
+                <p style={{ marginTop: "0", color: "gray" }}>
+                  Hotel Admin Dashboard
+                </p>
+              </div>
+            </div>
+
+            <h3 style={{ letterSpacing: "2px" }}>Sign in to your account</h3>
+
+            <p style={{ width: "80%" }}>
               Use email = <span>admin@admin.com</span> and password
               <span> admin</span> to test the application
             </p>

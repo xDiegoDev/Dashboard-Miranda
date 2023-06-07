@@ -15,12 +15,12 @@ export const StyledLogin = styled.div`
   align-items: center;
   width: 80%;
   max-width: 650px;
-  /* border: 2px solid white; */
   border-radius: 20px;
   text-align: center;
   margin: auto;
-  margin-top: 15%;
   background-color: #0f0f0f;
+  letter-spacing: 2px;
+  margin-top: 6.5%;
 
   p {
     margin-bottom: 50px;
@@ -34,8 +34,8 @@ export const StyledLogin = styled.div`
 
   img {
     width: 80px;
-    margin-top: 30px;
     border-radius: 100px;
+    margin-right: 30px;
   }
 
   h1 {
@@ -53,6 +53,21 @@ export const StyledLogin = styled.div`
     flex-direction: column;
     align-items: center;
     color: white;
+    .login__form__logo {
+      letter-spacing: 2px;
+      margin-top: 50px;
+      display: flex;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;
+      img {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
   }
 
   .input-container {

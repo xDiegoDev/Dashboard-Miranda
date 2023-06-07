@@ -98,6 +98,96 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
 
   return (
     <>
+      {" "}
+      <>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+        >
+          <h2
+            style={{
+              marginBottom: "30px",
+              fontSize: "27px",
+            }}
+          >
+            EDIT USER
+          </h2>
+          <form onSubmit={handleEditSubmit}>
+            <label
+              style={{
+                marginBottom: "32px",
+                fontSize: "17px",
+              }}
+            >
+              Name:
+              <input
+                style={{
+                  marginLeft: "30px",
+                  marginBottom: "20px",
+                  height: "30px",
+                  borderRadius: "10px",
+                  border: "2px solid #414141",
+                  paddingLeft: "10px",
+                  fontSize: "15px",
+                }}
+                type="text"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+              />
+            </label>
+            <br />
+            <label
+              style={{
+                fontSize: "17px",
+              }}
+            >
+              Email:
+              <input
+                style={{
+                  marginLeft: "30px",
+                  marginBottom: "20px",
+                  height: "30px",
+                  borderRadius: "10px",
+                  border: "2px solid #414141",
+                  paddingLeft: "10px",
+                  fontSize: "15px",
+                }}
+                type="email"
+                value={editedEmail}
+                onChange={(e) => setEditedEmail(e.target.value)}
+              />
+            </label>
+            <br />
+            <button
+              style={{
+                marginTop: "32px",
+                height: "30px",
+                borderRadius: "10px",
+                border: "2px solid #414141",
+                padding: "0 10px",
+                fontSize: "15px",
+              }}
+              onSubmit={handleEditSubmit}
+            >
+              Save
+            </button>
+            <button
+              style={{
+                marginTop: "32px",
+                marginLeft: "30px",
+                height: "30px",
+                borderRadius: "10px",
+                border: "2px solid #414141",
+                padding: "0 10px",
+                fontSize: "15px",
+              }}
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </form>
+        </Modal>
+      </>
       <StyledSidebar sidebarVisible={sidebarVisible}>
         <div className="logo">
           <img
@@ -215,96 +305,6 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
           </div>
         </div>
 
-        <>
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-          >
-            <h2
-              style={{
-                marginBottom: "30px",
-                fontSize: "27px",
-              }}
-            >
-              EDIT USER
-            </h2>
-            <form onSubmit={handleEditSubmit}>
-              <label
-                style={{
-                  marginBottom: "32px",
-                  fontSize: "17px",
-                }}
-              >
-                Name:
-                <input
-                  style={{
-                    marginLeft: "30px",
-                    marginBottom: "20px",
-                    height: "30px",
-                    borderRadius: "10px",
-                    border: "2px solid #414141",
-                    paddingLeft: "10px",
-                    fontSize: "15px",
-                  }}
-                  type="text"
-                  value={editedName}
-                  onChange={(e) => setEditedName(e.target.value)}
-                />
-              </label>
-              <br />
-              <label
-                style={{
-                  fontSize: "17px",
-                }}
-              >
-                Email:
-                <input
-                  style={{
-                    marginLeft: "30px",
-                    marginBottom: "20px",
-                    height: "30px",
-                    borderRadius: "10px",
-                    border: "2px solid #414141",
-                    paddingLeft: "10px",
-                    fontSize: "15px",
-                  }}
-                  type="email"
-                  value={editedEmail}
-                  onChange={(e) => setEditedEmail(e.target.value)}
-                />
-              </label>
-              <br />
-              <button
-                style={{
-                  marginTop: "32px",
-                  height: "30px",
-                  borderRadius: "10px",
-                  border: "2px solid #414141",
-                  padding: "0 10px",
-                  fontSize: "15px",
-                }}
-                onSubmit={handleEditSubmit}
-              >
-                Save
-              </button>
-              <button
-                style={{
-                  marginTop: "32px",
-                  marginLeft: "30px",
-                  height: "30px",
-                  borderRadius: "10px",
-                  border: "2px solid #414141",
-                  padding: "0 10px",
-                  fontSize: "15px",
-                }}
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </button>
-            </form>
-          </Modal>
-        </>
-
         <SidebarFooter>
           <h6>Travl Hotel Admin Dashboard</h6>
           <p style={{ marginTop: "0px", marginBottom: "40px" }}>
@@ -313,7 +313,6 @@ const Header = ({ title, sidebarVisible, setSidebarVisible, handleLogout }) => {
           <p>Made with LOVE by Diego</p>
         </SidebarFooter>
       </StyledSidebar>
-
       <StyledHeader sidebarVisible={sidebarVisible}>
         <div>
           <div className="hamburger__div" data-cy="burger">

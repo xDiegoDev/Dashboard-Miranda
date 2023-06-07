@@ -11,9 +11,20 @@
     "Password": 123
   },
   {
+    "IMG": "https://images.unsplash.com/photo-1580923368248-877f237696cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Z3Jvb3R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=700&q=60",
+    "Name": "Admin",
+    "ID": "123456",
+    "Email": "admin@admin.com",
+    "Start Date": "2022-01-01",
+    "Description": "Software developer with experience in Python and Java",
+    "Contact": "+34 612 345 678",
+    "Status": "Active",
+    "Password": "admin"
+  },
+  {
     "IMG": "https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTJ8OTg2NTg3OXx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
     "Name": "Diego Prieto",
-    "ID": "12345",
+    "ID": "123458",
     "Email": "diegoprietoiniguez@gmail.com",
     "Start Date": "2022-01-01",
     "Description": "Software developer with experience in Python and Java",

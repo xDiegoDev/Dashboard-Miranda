@@ -216,14 +216,14 @@ const Bookings = () => {
               }}
               onClick={handleAddRoom}
             >
-              Add Booking
+              + New Booking
             </button>
             <input
               type="text"
               placeholder="Search Guest"
               onChange={handleSearchChange}
               style={{
-                marginLeft: "10%",
+                marginLeft: "9%",
                 padding: "10px 20px",
                 color: "white",
                 border: "1px solid white",
