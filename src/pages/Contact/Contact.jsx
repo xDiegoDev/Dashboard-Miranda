@@ -7,27 +7,34 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import WestIcon from "@mui/icons-material/West";
 
-const Arrow = ({ direction, onClick }) => {
-  const styles = {
-    position: "absolute",
-    zIndex: 2,
-    top: direction === "left" ? "32%" : "35%",
-    cursor: "pointer",
-    fontSize: "3rem",
-    color: "white",
-    marginLeft: direction === "left" ? "-7%" : "102%",
-  };
+const StyledArrow = styled.div`
+  position: absolute;
+  z-index: 2;
+  top: ${({ direction }) => (direction === "left" ? "32%" : "32%")};
+  cursor: pointer;
+  color: white;
+  margin-left: ${({ direction }) => (direction === "left" ? "-7%" : "102%")};
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 8px 5px 5px 5px;
+  background-color: #222;
+  transition: 0.3s;
+  transform: ${({ direction }) =>
+    direction === "left" ? "rotate(0deg)" : "rotate(180deg)"};
 
-  const transform = direction === "left" ? "rotate(180deg)" : "rotate(0deg)";
+  &:hover {
+    background-color: white;
+    color: #222;
+  }
+`;
 
-  return (
-    <div style={{ ...styles, transform }} onClick={onClick}>
-      <FaChevronRight />
-    </div>
-  );
-};
+const Arrow = ({ direction, onClick }) => (
+  <StyledArrow direction={direction} onClick={onClick}>
+    <WestIcon style={{ fontSize: "18px" }} />
+  </StyledArrow>
+);
 
 const Card = styled.div`
   background-color: #212121;
@@ -137,7 +144,6 @@ export const ContactSlider = () => {
 };
 
 const Contact = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const contactsData = useSelector((state) => state.contacts.contacts);
   const [filter, setFilter] = useState("all");
@@ -146,7 +152,7 @@ const Contact = () => {
     return data.filter((row) => {
       if (filter === "all") return true;
       if (filter === "published") return row.Action === "Archive";
-      if (filter === "archived") return row.Action == "Publish";
+      if (filter === "archived") return row.Action === "Publish";
       return false;
     });
   };
@@ -155,8 +161,10 @@ const Contact = () => {
     dispatch(fetchContactsAsync());
   }, [dispatch]);
 
+  console.log(contactsData);
+
   return (
-    <div style={{ marginBottom: "100px" }}>
+    <div style={{ width: "100%" }}>
       <ContactSlider />
       <div
         style={{
@@ -164,6 +172,7 @@ const Contact = () => {
           marginTop: "50px",
           marginBottom: "-150px",
           color: "white",
+          display: "inline-block",
         }}
       >
         <label htmlFor="action-filter" style={{ fontSize: "20px" }}>
@@ -188,7 +197,7 @@ const Contact = () => {
         </select>
       </div>
       {Array.isArray(contactsData) ? (
-        <Table initialData={filterData(contactsData)} route="contacts" />
+        <Table initialData={contactsData} route="contacts" />
       ) : (
         <p>Loading...</p>
       )}

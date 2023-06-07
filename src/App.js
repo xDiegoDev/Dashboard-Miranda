@@ -77,6 +77,7 @@ function App() {
           isLoggedIn={authState.isLoggedIn}
         />
       )}
+
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<ProtectedRoute />}>
@@ -102,7 +103,7 @@ function App() {
 const WrappedApp = () => {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="Dashboard-Miranda">
         <App />
       </Router>
     </AuthProvider>

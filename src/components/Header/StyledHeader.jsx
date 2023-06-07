@@ -6,26 +6,34 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0px;
-  background-color: #202020;
+  background-color: #1b1b1b;
   position: fixed;
   top: 0;
-  left: ${({ sidebarVisible }) => (sidebarVisible ? "250px" : "0")};
+  left: ${({ sidebarVisible }) => (sidebarVisible ? "282px" : "0")};
   width: ${({ sidebarVisible }) =>
     sidebarVisible ? "calc(100% - 250px)" : "100%"};
   transition: left 0.4s;
   margin-bottom: 0px;
   z-index: 100;
 
-  .hamburger__div .hamburger__icon {
-    color: white;
-  }
-
-  .title {
+  div {
+    letter-spacing: 2px;
     background-clip: text;
     -webkit-background-clip: text;
+    font-size: 15px;
+    padding: 13px;
+  }
+
+  .hamburger__div .hamburger__icon {
     color: white;
-    font-size: 30px;
-    letter-spacing: 1.5px;
+    padding: 10px;
+    transition: 0.1;
+  }
+
+  .hamburger__icon:hover {
+    border: 2px solid white;
+    border-radius: 100px;
+    padding: "10px";
   }
 
   .icons {
@@ -56,21 +64,33 @@ export const StyledSidebar = styled.div`
   color: white;
   padding: 16px;
   font-size: 15px;
-  height: 100vh;
+  min-height: 100vh;
 
   .logo {
     margin-bottom: 30px;
-    margin-top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    justify-content: center;
     margin-bottom: 70px;
+    letter-spacing: 3px;
 
     img {
-      width: 80%;
-      margin: auto;
+      width: 60%;
       border: none;
-      margin-bottom: -2%;
+    }
+    div {
+      margin-left: 10px;
+      h1 {
+        margin-top: 3px;
+        font-size: 28px;
+      }
+      p {
+        font-size: 10px;
+        margin-top: -16px;
+        color: gray;
+        letter-spacing: 1px;
+      }
     }
   }
 
@@ -92,7 +112,7 @@ export const StyledSidebar = styled.div`
   }
 
   .sidebar__fullheight {
-    height: 100%;
+    min-height: 100vh;
   }
 
   .sidebar__spacebetween {
@@ -118,6 +138,8 @@ export const StyledLink = styled(RouterLink)`
   width: 100%;
   margin-top: 0px;
   height: 50px;
+  letter-spacing: 3px;
+  font-size: 19px;
 `;
 
 export const StyledLinkActive = styled(StyledLink)`
@@ -135,47 +157,76 @@ export const UserInfo = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #d4d4d4;
+  background-color: #292828;
   margin: auto;
   font-size: 15px;
   border-radius: 20px;
-  color: #212121;
-  width: 80%;
-  border: 2px solid #010101;
-  padding: 20px 0px;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  margin: auto;
+  margin-top: 70px;
   img {
     width: 60px;
     margin-top: -40px;
     border-radius: 20px;
   }
   h6 {
-    margin-bottom: 0px;
-    font-size: 15px;
-    padding: 10px 0;
+    margin-top: 12px;
+    font-size: 19px;
+    letter-spacing: 3px;
   }
 
   p {
+    margin-top: -20px;
     font-size: 12px;
-    padding: 20px 0;
+    padding-bottom: 10px;
+    color: gray;
+    letter-spacing: 1px;
+  }
+
+  button {
+    color: white;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: 1px solid white;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: 0.2s;
+  }
+  button:hover {
+    color: #222;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
   }
 `;
 
 export const SidebarFooter = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  text-align: left;
   line-height: 0;
   font-size: 12px;
   margin-top: 30px;
-  bottom: 33px;
-  left: 0;
-  width: 100%;
-  background-color: #414141;
+  bottom: 20px;
+  left: 30px;
+  width: 281px;
   color: white;
   padding-bottom: 10px;
+  h6 {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  p {
+    color: gray;
+    letter-spacing: 1.5px;
+  }
 `;
 
 export const Button = styled.button`
