@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Dashboard-Miranda/static/css/main.8096e6ee.css",
-    "main.js": "/Dashboard-Miranda/static/js/main.1592abca.js",
+    "main.js": "/Dashboard-Miranda/static/js/main.b63c8b9c.js",
     "static/media/D logo.png": "/Dashboard-Miranda/static/media/D logo.e221d1c86cb60c5d7a7d.png",
     "static/media/slick.svg": "/Dashboard-Miranda/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/Dashboard-Miranda/static/media/slick.a4e97f5a2a64f0ab1323.eot",
@@ -9,10 +9,10 @@
     "static/media/slick.woff": "/Dashboard-Miranda/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/Dashboard-Miranda/index.html",
     "main.8096e6ee.css.map": "/Dashboard-Miranda/static/css/main.8096e6ee.css.map",
-    "main.1592abca.js.map": "/Dashboard-Miranda/static/js/main.1592abca.js.map"
+    "main.b63c8b9c.js.map": "/Dashboard-Miranda/static/js/main.b63c8b9c.js.map"
   },
   "entrypoints": [
     "static/css/main.8096e6ee.css",
-    "static/js/main.1592abca.js"
+    "static/js/main.b63c8b9c.js"
   ]
 }
