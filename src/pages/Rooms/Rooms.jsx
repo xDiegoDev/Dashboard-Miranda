@@ -151,26 +151,34 @@ const Rooms = () => {
             style={{
               marginTop: "150px",
               display: "flex",
-              marginLeft: "12%",
+              marginLeft: "69%",
               marginBottom: "-150px",
               color: "white",
             }}
           >
-            <label
-              htmlFor="filter"
-              style={{ fontSize: "20px", letterSpacing: "1.5px" }}
+            <button
+              style={{
+                display: "block",
+                padding: "10px 30px",
+                color: "white",
+                fontSize: "15px",
+                backgroundColor: "#222",
+                border: "2px solid white",
+                borderRadius: "10px",
+              }}
+              onClick={handleAddRoom}
             >
-              Filter by:{" "}
-            </label>
+              + New Room
+            </button>
             <select
               id="filter"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               style={{
                 marginLeft: "18px",
-                padding: "10px 20px",
+                padding: "10px 10px",
                 color: "white",
-                border: "1px solid white",
+                border: "2px solid white",
                 borderRadius: "10px",
                 background: "#212121",
               }}
@@ -178,8 +186,9 @@ const Rooms = () => {
               <option value="roomNumber">Room Number</option>
               <option value="state">State</option>
               <option value="price">Price</option>
-            </select>
+            </select>{" "}
           </div>
+
           <Table
             initialData={getFilteredData(roomsData, filter)}
             onDelete={handleDelete}
@@ -254,23 +263,6 @@ const Rooms = () => {
               </button>
             </Form>
           </Modal>
-          <button
-            style={{
-              display: "block",
-              padding: "10px 20px",
-              color: "white",
-              fontSize: "15px",
-              backgroundColor: "#222",
-              border: "3px solid #414141",
-              borderRadius: "20px",
-              margin: "auto",
-              marginTop: "50px",
-              marginBottom: "50px",
-            }}
-            onClick={handleAddRoom}
-          >
-            Add Room
-          </button>
         </>
       )}
     </div>

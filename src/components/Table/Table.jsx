@@ -93,7 +93,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
           to={`/rooms/${row.ID}`}
           style={{ textDecoration: "none", color: "white" }}
         >
-          <p style={{ color: "white" }}>
+          <p style={{ color: "white", textAlign: "left", marginBottom: "0" }}>
             {row["Room Name"]}
             {row.Number}
           </p>
@@ -203,13 +203,34 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
       };
     } else if (status === "Check In") {
       return {
-        color: "lightgreen",
+        color: "white",
         letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #25a246",
       };
     } else if (status === "Check Out") {
-      return { color: "red", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #e51d0f",
+      };
     } else if (status === "Progress") {
-      return { color: "yellow", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #c5d000",
+      };
     }
     return {};
   };

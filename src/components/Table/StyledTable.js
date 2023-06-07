@@ -13,6 +13,7 @@ export const StyledTable = styled.table`
   min-width: 1100px;
   letter-spacing: 1.5px;
   height: auto;
+  margin-bottom: 100px;
 
   thead {
     tr {
@@ -38,7 +39,7 @@ export const StyledTable = styled.table`
   .delete__button {
     padding: 5px 15px;
     border-radius: 10px;
-    border: 1px solid white;
+    border: 2px solid white;
     background-color: #202020;
     color: white;
     /* letter-spacing: "2px"; */
