@@ -6,7 +6,7 @@ export const StyledTable = styled.table`
   color: white;
   display: block;
   margin: auto;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 200px;
   border-collapse: collapse;
   width: 70%;

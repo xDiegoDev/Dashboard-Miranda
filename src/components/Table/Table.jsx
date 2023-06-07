@@ -43,6 +43,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
       col !== "facilities" &&
       col !== "Number" &&
       col !== "Stars" && // Add this line
+      col !== "Offer" && // Add this line
       !(route === "contacts" && (col === "Telephone" || col === "Mail"))
   );
 
@@ -172,15 +173,39 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
 
   const getStatusStyle = (status) => {
     if (status === "Active") {
-      return { color: "lightgreen", letterSpacing: "1.5px" };
+      return {
+        color: "#5ad07a",
+        letterSpacing: "1.5px",
+        backgroundColor: "background: #5AD07A26 0% 0% no-repeat padding-box;",
+        padding: "10px",
+      };
     } else if (status === "Inactive") {
       return { color: "red", letterSpacing: "1.5px" };
     } else if (status === "Available") {
-      return { color: "lightgreen", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        background: "#25a246 0% 0% no-repeat padding-box",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+      };
     } else if (status === "Booked") {
-      return { color: "red", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #e51d0f",
+      };
     } else if (status === "Check In") {
-      return { color: "lightgreen", letterSpacing: "1.5px" };
+      return {
+        color: "lightgreen",
+        letterSpacing: "1.5px",
+      };
     } else if (status === "Check Out") {
       return { color: "red", letterSpacing: "1.5px" };
     } else if (status === "Progress") {
@@ -337,9 +362,6 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
                           ? () => onRowClick(row)
                           : undefined
                       }
-                      style={
-                        col === "Status" ? getStatusStyle(cellContent) : {}
-                      }
                     >
                       {col === "Description" ? (
                         <div style={getDescriptionWrapperStyle()}>
@@ -371,6 +393,10 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
                         >
                           {cellContent}
                         </button>
+                      ) : col === "Status" ? (
+                        <div style={getStatusStyle(cellContent)}>
+                          {cellContent}
+                        </div>
                       ) : (
                         cellContent
                       )}

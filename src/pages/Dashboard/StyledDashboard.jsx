@@ -308,7 +308,7 @@ export const BookingContainer = styled.div`
   margin-left: 50px;
   margin-top: 67px;
   .booking__more {
-    margin-top: 50px;
+    margin-top: 30px;
     border: none;
     background-color: transparent;
     color: white;
