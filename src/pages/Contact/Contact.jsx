@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Table from "../../components/Table/Table";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -157,6 +157,11 @@ const Contact = () => {
     });
   };
 
+  const filteredContacts = useMemo(
+    () => filterData(contactsData),
+    [contactsData, filter]
+  );
+
   useEffect(() => {
     dispatch(fetchContactsAsync());
   }, [dispatch]);
@@ -170,11 +175,14 @@ const Contact = () => {
         style={{
           marginLeft: "69%",
           marginTop: "50px",
-          marginBottom: "-650px",
+          marginBottom: "-150px",
           color: "white",
           display: "inline-block",
         }}
       >
+        <label htmlFor="action-filter" style={{ fontSize: "20px" }}>
+          Filter by action:
+        </label>
         <select
           id="action-filter"
           value={filter}
@@ -186,7 +194,6 @@ const Contact = () => {
             borderRadius: "10px",
             background: "#212121",
             fontSize: "15px",
-            marginBottom: "-1060px",
           }}
         >
           <option value="all">All</option>
@@ -194,12 +201,8 @@ const Contact = () => {
           <option value="archived">Archived</option>
         </select>
       </div>
-      {Array.isArray(contactsData) ? (
-        <Table
-          initialData={contactsData}
-          route="contacts"
-          style={{ marginTop: "-100px" }}
-        />
+      {Array.isArray(filteredContacts) ? (
+        <Table initialData={filteredContacts} route="contacts" />
       ) : (
         <p>Loading...</p>
       )}

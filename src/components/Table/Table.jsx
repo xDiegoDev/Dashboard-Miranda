@@ -432,10 +432,9 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
                       ) : col === "Action" ? (
                         <button
                           style={{
-                            ...getActionStyle(cellContent),
-                            background: "transparent",
                             border: "none",
                             cursor: "pointer",
+                            ...getActionStyle(cellContent),
                           }}
                           onClick={(event) => handleToggleAction(event, row)}
                         >
