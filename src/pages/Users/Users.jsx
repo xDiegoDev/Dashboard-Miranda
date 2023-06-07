@@ -118,79 +118,62 @@ const Users = ({ handleLogout }) => {
         <>
           <div
             style={{
+              width: "72%",
               display: "flex",
               justifyContent: "space-between",
-              marginLeft: "3%",
-              marginRight: "3%",
+              marginLeft: "13%",
               marginBottom: "-100px",
               color: "white",
               marginTop: "150px",
             }}
           >
-            <div
+            <input
+              type="text"
+              id="search-user"
+              placeholder="Search user"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                marginLeft: "12%",
-                marginBottom: "-150px",
+                padding: "10px 20px",
                 color: "white",
+                border: "1px solid white",
+                borderRadius: "10px",
+                background: "#212121",
+                marginLeft: "10px",
+              }}
+            />
+            <button
+              data-cy="addUser"
+              style={{
+                display: "block",
+                color: "white",
+                fontSize: "15px",
+                backgroundColor: "#222",
+                border: "2px solid white",
+                borderRadius: "10px",
+                width: "130px",
+                marginLeft: "380px",
+              }}
+              onClick={handleAddUser}
+            >
+              Add User
+            </button>
+            <select
+              id="sort-order"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              style={{
+                padding: "10px 30px",
+                color: "white",
+                border: "1px solid white",
+                borderRadius: "10px",
+                background: "#212121",
               }}
             >
-              <label
-                htmlFor="search-user"
-                style={{ fontSize: "20px", letterSpacing: "1.5px" }}
-              >
-                Search User:
-              </label>
-              <input
-                type="text"
-                id="search-user"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  marginLeft: "18px",
-                  padding: "10px 20px",
-                  color: "white",
-                  border: "1px solid white",
-                  borderRadius: "10px",
-                  background: "#212121",
-                }}
-              />
-            </div>{" "}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginLeft: "15%",
-                marginRight: "15%",
-                marginBottom: "-100px",
-                color: "white",
-              }}
-            >
-              <div>
-                <label
-                  htmlFor="sort-order"
-                  style={{ fontSize: "20px", letterSpacing: "1.5px" }}
-                >
-                  Sort by:
-                </label>
-                <select
-                  id="sort-order"
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value)}
-                  style={{
-                    marginLeft: "18px",
-                    padding: "10px 20px",
-                    color: "white",
-                    border: "1px solid white",
-                    borderRadius: "10px",
-                    background: "#212121",
-                  }}
-                >
-                  <option value="newest">Newest</option>
-                  <option value="oldest">Oldest</option>
-                  <option value="name">By Name</option>
-                </select>
-              </div>
-            </div>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="name">By Name</option>
+            </select>
           </div>
           <Table
             initialData={sortUsers(filterUsersByName(usersData))}
@@ -287,24 +270,6 @@ const Users = ({ handleLogout }) => {
               </button>
             </Form>
           </Modal>
-          <button
-            data-cy="addUser"
-            style={{
-              display: "block",
-              padding: "10px 20px",
-              color: "white",
-              fontSize: "15px",
-              backgroundColor: "#222",
-              border: "3px solid #424242",
-              borderRadius: "20px",
-              margin: "auto",
-              marginTop: "50px",
-              marginBottom: "50px",
-            }}
-            onClick={handleAddUser}
-          >
-            Add User
-          </button>
         </>
       )}
     </div>

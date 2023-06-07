@@ -41,6 +41,7 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
       col !== "UserIMG" &&
       col !== "price" &&
       col !== "facilities" &&
+      col !== "Contact" &&
       col !== "Number" &&
       col !== "Stars" && // Add this line
       col !== "Offer" && // Add this line
