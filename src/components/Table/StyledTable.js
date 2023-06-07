@@ -7,7 +7,7 @@ export const StyledTable = styled.table`
   display: block;
   margin: auto;
   font-size: 12px;
-  margin-top: 200px;
+  margin-top: 100px;
   border-collapse: collapse;
   width: 70%;
   min-width: 1100px;

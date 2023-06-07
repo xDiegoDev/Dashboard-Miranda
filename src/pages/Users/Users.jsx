@@ -122,7 +122,7 @@ const Users = ({ handleLogout }) => {
               display: "flex",
               justifyContent: "space-between",
               marginLeft: "13%",
-              marginBottom: "-100px",
+              marginBottom: "-0px",
               color: "white",
               marginTop: "150px",
             }}

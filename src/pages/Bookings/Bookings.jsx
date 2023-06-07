@@ -129,7 +129,7 @@ const Bookings = () => {
               alignItems: "center",
               marginTop: "150px",
               marginLeft: "-20%",
-              marginBottom: "-130px",
+              marginBottom: "0px",
               color: "white",
             }}
           >

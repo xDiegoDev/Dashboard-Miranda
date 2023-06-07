@@ -170,14 +170,11 @@ const Contact = () => {
         style={{
           marginLeft: "69%",
           marginTop: "50px",
-          marginBottom: "-150px",
+          marginBottom: "-650px",
           color: "white",
           display: "inline-block",
         }}
       >
-        <label htmlFor="action-filter" style={{ fontSize: "20px" }}>
-          Filter by action:
-        </label>
         <select
           id="action-filter"
           value={filter}
@@ -189,6 +186,7 @@ const Contact = () => {
             borderRadius: "10px",
             background: "#212121",
             fontSize: "15px",
+            marginBottom: "-1060px",
           }}
         >
           <option value="all">All</option>
@@ -197,7 +195,11 @@ const Contact = () => {
         </select>
       </div>
       {Array.isArray(contactsData) ? (
-        <Table initialData={contactsData} route="contacts" />
+        <Table
+          initialData={contactsData}
+          route="contacts"
+          style={{ marginTop: "-100px" }}
+        />
       ) : (
         <p>Loading...</p>
       )}

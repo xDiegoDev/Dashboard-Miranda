@@ -299,9 +299,25 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
 
   const getActionStyle = (action) => {
     if (action === "Archive") {
-      return { color: "red", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #e51d0f",
+      };
     } else {
-      return { color: "lightgreen", letterSpacing: "1.5px" };
+      return {
+        color: "white",
+        letterSpacing: "1.5px",
+        padding: "10px",
+        borderRadius: "12px",
+        fontWeight: "bold",
+        fontSize: "12px",
+        backgroundColor: " #25a246",
+      };
     }
   };
 
@@ -420,7 +436,6 @@ const Table = ({ initialData, onRowClick, onDelete, route }) => {
                             background: "transparent",
                             border: "none",
                             cursor: "pointer",
-                            textDecoration: "underline",
                           }}
                           onClick={(event) => handleToggleAction(event, row)}
                         >

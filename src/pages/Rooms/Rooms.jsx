@@ -152,7 +152,7 @@ const Rooms = () => {
               marginTop: "150px",
               display: "flex",
               marginLeft: "69%",
-              marginBottom: "-150px",
+              marginBottom: "0px",
               color: "white",
             }}
           >
